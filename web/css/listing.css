@@ -11,6 +11,7 @@
 .listing-toolbar .tabmenu a { border-bottom: 1px solid transparent; border-radius: 2px; }
 .listing-toolbar .tabmenu li.selected a { top: 0; border-color: var(--header-border); }
 .welcome-note {
+  position: relative;
   margin-bottom: var(--sp-3);
   padding: var(--sp-2) var(--sp-4);
   background: var(--submit-bg);
@@ -18,7 +19,9 @@
   border-radius: var(--radius);
   font-size: var(--fs-sm);
 }
-.welcome-note p { margin: 0; }
+.welcome-note p { margin: 0; padding-right: 28px; }
+/* In the corner, out of the flow: its full tap size without making the note taller. */
+.welcome-note .banner-close { position: absolute; top: 2px; right: 4px; }
 
 .sitetable { display: flex; flex-direction: column; }
 

@@ -267,8 +267,8 @@ export class LemmyV4 {
     };
   }
 
-  async resolve(q) {
-    const r = await this.get('resolve_object', { q }, { fresh: true });
+  async resolve(q, opts = {}) {
+    const r = await this.get('resolve_object', { q }, { fresh: true, ...opts });
     const v = r?.resolve || r;
     if (v?.type_ === 'post') return { post: V.post(v) };
     if (v?.type_ === 'comment') return { comment: V.comment(v) };

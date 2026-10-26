@@ -15,6 +15,7 @@ import { settings, setSettings } from '../state/settings.js';
 import { loggedIn } from '../state/session.js';
 import { allFeatures, enabled, setEnabled, option, setOption } from '../features/registry.js';
 import { PALETTES, LABEL as THEME_LABELS, setTheme } from '../features/themes.js';
+import { installControl } from '../features/pwa.js';
 import { setTitle } from '../components/common.js';
 import { tabMenu } from '../components/tab-menu.js';
 import { confirmAction } from '../components/dialog.js';
@@ -111,7 +112,14 @@ function optionsTab() {
       selectRow('Post sort', s.defaultSort, [['', 'account or instance default'], ...POST_SORTS.map((x) => [x, SORT_LABELS[x] || x])], set('defaultSort')),
       selectRow('Front page when logged out', s.defaultListing, [['', 'instance default'], ['Local', 'Local'], ['All', 'All']], set('defaultListing')),
       selectRow('Comment sort', s.commentSort, COMMENT_SORTS.map((x) => [x, x.toLowerCase()]), set('commentSort'))),
+    group('options', 'App', installRow()),
   ];
+}
+
+// The same control as the feature's (features › App and offline), where it's easier to find.
+function installRow() {
+  return row('Install as an app', installControl(),
+    { description: 'Opens Olemmy in its own window, with an icon on your desktop or home screen.', keywords: 'pwa install app home screen desktop', wide: true });
 }
 
 // The theme can't be turned off, so it's here rather than among the features.
@@ -126,7 +134,8 @@ function themeRow() {
 function optionControl(f, key, o) {
   const value = option(f.id, key);
   const id = nextId();
-  const line = (control) => h('div.option-row', h('label.option-name', { for: id }, o.label), control);
+  const name = h('div.option-text', h('label.option-name', { for: id }, o.label), o.description && h('p.setting-desc', o.description));
+  const line = (control) => h('div.option-row', name, control);
   switch (o.type) {
     case 'boolean': return line(toggle(!!value, (v) => setOption(f.id, key, v), o.label, id));
     case 'number': return line(h('input', {
@@ -134,7 +143,7 @@ function optionControl(f, key, o) {
       onchange: (e) => setOption(f.id, key, Number(e.target.value) || 0),
     }));
     case 'select': return line(select(value, o.choices, (v) => setOption(f.id, key, v), id));
-    case 'text': return h('div.option-row.wide', h('label.option-name', { for: id }, o.label),
+    case 'text': return h('div.option-row.wide', name,
       h('input', { id, type: 'text', value, onchange: (e) => setOption(f.id, key, e.target.value) }));
     case 'custom': return h('div.custom-option', o.label && h('p.option-label', o.label), o.render(f));
     default: return null;
@@ -149,7 +158,7 @@ function featureRow(f, open) {
   const off = () => !f.alwaysOn && !enabled(f.id);
   return h('div.setting.feature', {
     id: `feature-${f.id}`,
-    dataset: { search: `${f.name} ${f.description} ${f.keywords || ''} ${f.category} ${opts.map(([, o]) => o.label || '').join(' ')}`.toLowerCase() },
+    dataset: { search: `${f.name} ${f.description} ${f.keywords || ''} ${f.category} ${opts.map(([, o]) => `${o.label || ''} ${o.description || ''}`).join(' ')}`.toLowerCase() },
   },
   h('div.setting-text',
     h(f.alwaysOn ? 'span.setting-name' : 'label.setting-name', f.alwaysOn ? {} : { for: id }, f.name),
@@ -225,13 +234,29 @@ export function importData(json) {
   return n;
 }
 
+/**
+ * What an export [json] brings besides preferences that's worth a warning
+ * before importing a file from someone else: logins, and styles.
+ */
+export function importWarnings(json) {
+  const d = json?.data || {};
+  const out = [];
+  const logins = (d[`${PREFIX}accounts`]?.data?.list || []).filter((a) => a?.jwt);
+  if (logins.length) out.push(`It logs this browser in as ${logins.map((a) => `${a.username}@${a.instance}`).join(', ')}.`);
+  if (d[`${PREFIX}settings`]?.data?.features?.customCss?.css?.trim()) out.push('It adds custom CSS, which can change how every page looks and load images from other sites.');
+  return out;
+}
+
 async function importFile(e) {
   const file = e.target.files?.[0];
   e.target.value = '';
   if (!file) return;
   try {
     const json = JSON.parse(await file.text());
-    if (!await confirmAction('Import settings?', 'This replaces the settings in this browser, then reloads.', 'Import')) return;
+    const warnings = importWarnings(json);
+    const body = ['This replaces the settings in this browser, then reloads.', ...warnings,
+      warnings.length ? 'Only import a file you made yourself, or one from someone you trust.' : ''].filter(Boolean).join(' ');
+    if (!await confirmAction('Import settings?', body, 'Import')) return;
     importData(json);
     location.reload();
   } catch (err) {

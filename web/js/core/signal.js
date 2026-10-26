@@ -92,6 +92,8 @@ export function effect(fn) {
       } finally {
         current = prevCurrent; owner = prevOwner;
       }
+      // Made under an owner that's gone (onCleanup): nothing will dispose it later.
+      if (r.disposed) runCleanups(r);
     },
   };
   const dispose = () => {
@@ -131,10 +133,16 @@ export function untrack(fn) {
   try { return fn(); } finally { current = prev; }
 }
 
-/** Register [fn] to run when the current owner is disposed or re-run. */
+/**
+ * Register [fn] to run when the current owner is disposed or re-run. An
+ * owner that's gone already (code finishing after its view was left) runs
+ * it at once: an effect made there runs once and never subscribes.
+ */
 export function onCleanup(fn) {
   const o = owner || fallbackOwner;
-  if (o && !o.disposed) o.cleanups.push(fn);
+  if (!o) return;
+  if (!o.disposed) { o.cleanups.push(fn); return; }
+  try { fn(); } catch (e) { reportError(e, 'cleanup'); }
 }
 
 /**

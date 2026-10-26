@@ -26,16 +26,25 @@ export function nextVote(current, dir) {
   return current === dir ? 0 : dir;
 }
 
+/** The latest change asked of each state: answers to earlier ones don't overwrite it. */
+const latest = new WeakMap();
+
 async function optimistic(state, patch, call, onResult) {
   const before = {};
   for (const k of Object.keys(patch)) before[k] = state[k].peek();
   batch(() => { for (const [k, v] of Object.entries(patch)) state[k].value = v; });
+  // Two quick clicks: their answers can come back in either order.
+  const mine = (latest.get(state) || 0) + 1;
+  latest.set(state, mine);
+  const newest = () => latest.get(state) === mine;
   try {
     const result = await call();
-    if (result && onResult) onResult(result);
+    // [onResult](result, newest): only the newest answer should update the screen.
+    if (result && onResult) onResult(result, newest());
     return result;
   } catch (e) {
-    batch(() => { for (const [k, v] of Object.entries(before)) state[k].value = v; });
+    // A newer change is on screen now, and it was made from this one's.
+    if (newest()) batch(() => { for (const [k, v] of Object.entries(before)) state[k].value = v; });
     toastError(e);
     return null;
   }
@@ -57,8 +66,8 @@ export function votePost(post, dir) {
   const s = postState(post);
   const before = s.myVote.peek();
   const score = nextVote(before, dir);
-  return optimistic(s, voteDelta(s, score), () => api.peek().vote(post.id, score), (p) => {
-    updatePost(p);
+  return optimistic(s, voteDelta(s, score), () => api.peek().vote(post.id, score), (p, newest) => {
+    if (newest) updatePost(p);
     runHook('onVote', post.creator, before, score);
   });
 }
@@ -69,8 +78,8 @@ export function voteComment(comment, dir) {
   const s = commentState(comment);
   const before = s.myVote.peek();
   const score = nextVote(before, dir);
-  return optimistic(s, voteDelta(s, score), () => api.peek().voteComment(comment.id, score), (c) => {
-    updateComment(c);
+  return optimistic(s, voteDelta(s, score), () => api.peek().voteComment(comment.id, score), (c, newest) => {
+    if (newest) updateComment(c);
     runHook('onVote', comment.creator, before, score);
   });
 }
@@ -79,14 +88,14 @@ export function savePost(post) {
   if (!requireLogin('Log in to save posts')) return;
   const s = postState(post);
   const save = !s.saved.peek();
-  return optimistic(s, { saved: save }, () => api.peek().save(post.id, save), updatePost);
+  return optimistic(s, { saved: save }, () => api.peek().save(post.id, save), (p, newest) => newest && updatePost(p));
 }
 
 export function saveComment(comment) {
   if (!requireLogin('Log in to save comments')) return;
   const s = commentState(comment);
   const save = !s.saved.peek();
-  return optimistic(s, { saved: save }, () => api.peek().saveComment(comment.id, save), updateComment);
+  return optimistic(s, { saved: save }, () => api.peek().saveComment(comment.id, save), (c, newest) => newest && updateComment(c));
 }
 
 /** Hide on the account (server-side). Local hiding is the filters feature. */

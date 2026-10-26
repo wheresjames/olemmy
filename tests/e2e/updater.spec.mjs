@@ -64,3 +64,18 @@ test('a build found while the app is open shows a banner, not a reload', async (
   await expect(page.locator('.banner')).toContainText('A new version of Olemmy is available');
   await expect(page.locator('.thing.link').first()).toBeVisible();
 });
+
+test('an update that fails partway closes its dialog and carries on', async ({ page }) => {
+  const state = { build: 'aaaa000000000001', files: { 'index.html': '1', 'js/main.js': '1' } };
+  await deploy(page, state);
+  await installedBefore(page, state.build, state.files);
+  state.build = 'dddd000000000004';
+  state.files = { ...state.files, 'js/main.js': '2' };
+  // The updater loads this part of itself mid-update: as if the connection dropped then.
+  await page.route(/\/js\/cache-bust\.js/, (r) => r.abort());
+  await page.goto('/#/');
+  await expect(page.locator('dialog.ol-update')).toContainText('The update stopped');
+  await expect(page.locator('dialog.ol-update')).toHaveCount(0, { timeout: 10000 });
+  await expect(page.locator('.thing.link').first()).toBeVisible();
+  expect((await stored(page))?.build).toBe('aaaa000000000001');
+});

@@ -46,7 +46,13 @@ function matcher() {
   const keywords = f.keywords.map((k) => {
     const re = k.match(/^\/(.+)\/([a-z]*)$/);
     try {
-      return re ? new RegExp(re[1], re[2].includes('i') ? re[2] : `${re[2]}i`) : new RegExp(`(^|\\W)${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|\\W)`, 'i');
+      if (re) {
+        // g and y make test() carry on from the last match: every other post would slip through.
+        const flags = re[2].replace(/[gy]/g, '');
+        return new RegExp(re[1], flags.includes('i') ? flags : `${flags}i`);
+      }
+      // A whole word in any script: \W would count é or я as a word's edge.
+      return new RegExp(`(^|[^\\p{L}\\p{M}\\p{N}_])${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[^\\p{L}\\p{M}\\p{N}_])`, 'iu');
     } catch { return null; }
   }).filter(Boolean);
   compiled = {

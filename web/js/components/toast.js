@@ -1,6 +1,7 @@
 // Short messages at the bottom of the screen, and persistent banners at the top.
 
 import { h } from '../core/h.js';
+import { reportError } from '../core/errors.js';
 
 let region = null;
 
@@ -14,12 +15,17 @@ function host() {
 
 /**
  * Show [message] for a few seconds. [kind] 'info' | 'error' | 'success'.
- * [action] is an optional { label, run } button.
+ * [action] is an optional { label, run } button, [actions] several of them.
+ * [ms] 0 keeps it until dismissed.
  */
-export function toast(message, { kind = 'info', ms = 4000, action } = {}) {
+export function toast(message, { kind = 'info', ms = 4000, action, actions = action ? [action] : [] } = {}) {
+  const run = (a) => {
+    el.remove();
+    Promise.resolve().then(a.run).catch((e) => reportError(e, `toast "${a.label}"`));
+  };
   const el = h(`div.toast.toast-${kind}`,
     h('span', message),
-    action && h('button.toast-action', { type: 'button', onclick: () => { action.run(); el.remove(); } }, action.label),
+    actions.length > 0 && h('span.toast-actions', actions.map((a) => h('button.toast-action', { type: 'button', onclick: () => run(a) }, a.label))),
     h('button.toast-close', { type: 'button', 'aria-label': 'Dismiss', onclick: () => el.remove() }, '×'));
   host().append(el);
   if (ms) setTimeout(() => el.remove(), ms);

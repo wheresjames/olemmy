@@ -4,7 +4,7 @@
 
 **An old-school, information-dense web client for [Lemmy](https://join-lemmy.org/).** Lots of posts on one screen, vote arrows and thumbnails, nested comments, keyboard shortcuts, and no clutter.
 
-### 👉 [Try it: wheresjames.github.io/olemmy](https://wheresjames.github.io/olemmy/)
+### 👉 [Try it: olemmy.com](https://olemmy.com/)
 
 Pick your instance and start reading. Nothing to install and no sign-up: Olemmy runs in your browser and talks straight to the Lemmy instance you choose.
 

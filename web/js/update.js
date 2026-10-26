@@ -238,6 +238,14 @@ async function install(deployment, was, forced = false) {
     dialog.done('Restarting…');
     await wait(600);
     return reload();
+  } catch (e) {
+    // Offline mid-update, say: not installed, so the next visit tries again.
+    // The dialog is modal and can't be dismissed, so it mustn't stay up.
+    console.warn('updating', e);
+    dialog.fail('The update stopped - carrying on');
+    await wait(2200);
+    dialog.close();
+    return true;
   } finally {
     store.remove(local, LOCK);
   }

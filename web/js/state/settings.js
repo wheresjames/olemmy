@@ -26,6 +26,7 @@ export const DEFAULTS = {
   apiVersion: 'v3',           // 'v3', or 'auto': API v4 on Lemmy 1.x instances (§15 #3)
   displayMode: 'normal',      // normal | compact | text
   hideNsfwThumbnails: false,  // local, on top of the account's blur (§15 #13)
+  hideWelcome: false,         // the front page's "browsing without an account" note, closed with its ×
   features: {},               // per feature: { enabled, ...options } (features/registry.js)
 };
 

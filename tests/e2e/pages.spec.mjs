@@ -73,3 +73,14 @@ test.describe('logged in', () => {
     await expect(page.locator('#post-body')).toHaveValue(/^cross-posted from: https:/);
   });
 });
+
+test('the front page\'s welcome note closes for good', async ({ page }) => {
+  await page.goto('/#/');
+  const note = page.locator('.welcome-note');
+  await expect(note).toContainText('without an account');
+  await note.getByRole('button', { name: 'Close' }).click();
+  await expect(note).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator('.thing.link').first()).toBeVisible();
+  await expect(note).toHaveCount(0);
+});

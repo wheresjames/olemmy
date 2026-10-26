@@ -14,6 +14,7 @@ import { confirmAction } from '../components/dialog.js';
 import { shareLink, appUrl } from '../components/send-link.js';
 import { passes } from '../features/registry.js';
 import { age, number, shortDate, parseTime } from '../util/format.js';
+import { safeUrl } from '../util/links.js';
 
 const LIMIT = 20;
 const SORTS = [['New', 'new'], ['Hot', 'hot'], ['TopAll', 'top'], ['Old', 'old']];
@@ -100,6 +101,6 @@ function userBox(p, moderates, isMe) {
     isMe && h('p', h('a.btn.btn-small', { href: href('/account') }, 'account settings')),
     h('p.small',
       h('button.link-button.share-button', { type: 'button', onclick: () => shareLink(appUrl(userHref(p)), p.displayName || p.name) }, 'share'),
-      p.actorId && [' · ', h('a', { href: p.actorId, rel: 'noopener noreferrer', target: '_blank' }, 'view on their instance')]),
+      safeUrl(p.actorId) && [' · ', h('a', { href: safeUrl(p.actorId), rel: 'noopener noreferrer', target: '_blank' }, 'view on their instance')]),
     moderates.length > 0 && h('div.side-mods', h('h3', 'moderates'), h('ul', moderates.map((c) => h('li', communityLink(c))))));
 }

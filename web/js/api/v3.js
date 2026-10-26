@@ -274,8 +274,8 @@ export class LemmyV3 {
   }
 
   /** Look up a URL or !name@host on this instance: { post|comment|community|person } or null. */
-  async resolve(q) {
-    const r = await this.get('resolve_object', { q }, { fresh: true });
+  async resolve(q, opts = {}) {
+    const r = await this.get('resolve_object', { q }, { fresh: true, ...opts });
     if (r.post) return { post: N.post(r.post) };
     if (r.comment) return { comment: N.comment(r.comment) };
     if (r.community) return { community: N.communityView(r.community) };

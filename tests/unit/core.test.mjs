@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { migrate, mergeDefaults } from '../../web/js/core/store.js';
-import { signal, computed, effect, batch, root } from '../../web/js/core/signal.js';
+import { signal, computed, effect, batch, root, getOwner, runWithOwner } from '../../web/js/core/signal.js';
 import { parseHash, compile, href } from '../../web/js/core/router.js';
 import { lemmyRoute, embedFor, isImageUrl, isVideoUrl, thumbnailUrl, safeUrl, shareRoute, shareOriginal, validHost, shareToSubmit } from '../../web/js/util/links.js';
 import { baseUrl, hostOf, describe } from '../../web/js/api/client.js';
@@ -22,6 +22,18 @@ test('migrate: missing data gets defaults, old versions run each migration', () 
 test('mergeDefaults keeps stored values and fills nested gaps', () => {
   assert.deepEqual(mergeDefaults({ a: 1, b: { c: 2, d: 3 } }, { b: { c: 9 }, x: 1 }), { a: 1, b: { c: 9, d: 3 }, x: 1 });
   assert.deepEqual(mergeDefaults({ list: [1] }, { list: [] }), { list: [] });
+});
+
+test('signals: an effect made after its owner is gone never subscribes, and is cleaned up', () => {
+  const a = signal(1);
+  let owner;
+  root((dispose) => { owner = getOwner(); dispose(); });
+  let runs = 0;
+  let cleaned = 0;
+  runWithOwner(owner, () => effect(() => { a.value; runs++; return () => { cleaned++; }; }));
+  a.value = 2;
+  assert.equal(runs, 1, 'ran once, not again on change');
+  assert.equal(cleaned, 1, 'its cleanup ran');
 });
 
 test('signals: effects follow, batch groups, dispose stops', () => {
@@ -137,6 +149,17 @@ test('local filters', () => {
   assert.equal(postPasses(post()), false);
   filters.set({ keywords: [], domains: [], communities: [], users: [], instances: [] });
   assert.equal(postPasses(post()), true);
+});
+
+test('filter keywords: /g/ regexes match every time; whole words in any script', () => {
+  const post = (title) => ({ title, url: '', community: { fullName: 'c@x.y', host: 'x.y' }, creator: { fullName: 'u@x.y', host: 'x.y' } });
+  filters.set({ keywords: ['/spoiler/g'], domains: [], communities: [], users: [], instances: [] });
+  assert.deepEqual([1, 2, 3].map(() => postPasses(post('A spoiler here'))), [false, false, false]);
+  filters.set({ keywords: ['кот', 'caf'], domains: [], communities: [], users: [], instances: [] });
+  assert.equal(postPasses(post('Мой кот спит')), false);
+  assert.equal(postPasses(post('Новый котёл')), true, 'not inside a longer Cyrillic word');
+  assert.equal(postPasses(post('Le café du coin')), true, 'not inside café');
+  filters.set({ keywords: [], domains: [], communities: [], users: [], instances: [] });
 });
 
 test('shared into Olemmy from another app: a new post', () => {

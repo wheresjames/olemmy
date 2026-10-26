@@ -174,6 +174,8 @@ export async function request(base, { method = 'GET', path, query, body, form, j
   else if (body !== undefined) { headers['Content-Type'] = 'application/json'; payload = JSON.stringify(body); }
 
   const queue = queueFor(base);
+  // A GET may be shared by several callers: one leaving mustn't cancel it for the rest.
+  const own = isGet ? undefined : signal;
   const run = async () => {
     for (let attempt = 0; ; attempt++) {
       let res;
@@ -186,19 +188,23 @@ export async function request(base, { method = 'GET', path, query, body, form, j
           referrerPolicy: 'no-referrer',
         }));
       } catch (e) {
-        if (isGet && attempt === 0 && !signal?.aborted && e?.name !== 'TimeoutError') { await sleep(800, signal); continue; }
-        throw networkError(e, signal);
+        if (isGet && attempt === 0 && e?.name !== 'TimeoutError') { await sleep(800); continue; }
+        throw networkError(e, own);
       }
       if (res.status === 429 && attempt < MAX_429_RETRIES) {
         const wait = retryAfter(res, attempt);
         queue.pause(wait);
-        await sleep(wait, isGet ? undefined : signal);
+        await sleep(wait, own);
         continue;
       }
-      if (res.status >= 500 && isGet && attempt === 0) { await sleep(1000, signal); continue; }
+      if (res.status >= 500 && isGet && attempt === 0) { await sleep(1000); continue; }
       if (!res.ok) throw await readError(res);
       const text = await res.text();
-      const data = text ? JSON.parse(text) : {};
+      let data;
+      try { data = text ? JSON.parse(text) : {}; } catch {
+        // A web page, say: the address isn't a Lemmy instance's API.
+        throw new ApiError('The instance\'s answer wasn\'t one Olemmy can read. Is this a Lemmy instance?', { kind: 'http', status: res.status, code: 'not_json' });
+      }
       if (isGet) {
         cache.set(key, { time: Date.now(), data });
         if (cache.size > MAX_CACHE) cache.delete(cache.keys().next().value);

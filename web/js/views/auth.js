@@ -14,6 +14,15 @@ import { toast } from '../components/toast.js';
 /** A few big general-purpose instances for the picker; any other can be typed in. */
 export const POPULAR = ['lemmy.world', 'lemmy.ml', 'sh.itjust.works', 'lemmy.zip', 'programming.dev', 'feddit.org', 'lemmy.ca', 'lemmy.dbzer0.com', 'sopuli.xyz', 'lemmy.today'];
 
+/**
+ * Where ?return= says to go afterwards: an address in the app (#/...), or
+ * the front page. It ends up in links, so nothing else (javascript:...).
+ */
+export function returnTo(route) {
+  const ret = route.query.get('return') || '';
+  return /^#\//.test(ret) ? ret : '#/';
+}
+
 function plainChrome(ctx, text) {
   ctx.chrome.pageName.value = { text, href: location.hash };
   ctx.chrome.tabs.value = null;
@@ -26,7 +35,7 @@ export function instanceView(route, ctx) {
   const input = h('input#instance-input', { type: 'text', required: true, placeholder: 'lemmy.world', value: instance.peek() || '', autocomplete: 'url', inputmode: 'url', autocapitalize: 'off', spellcheck: false });
   const busy = signal(false);
   const error = signal(null);
-  const ret = route.query.get('return') || '#/';
+  const ret = returnTo(route);
 
   const use = async (inst) => {
     error.value = null;
@@ -73,7 +82,7 @@ export function instanceView(route, ctx) {
 
 export function loginView(route, ctx) {
   plainChrome(ctx, 'log in');
-  const ret = route.query.get('return') || '#/';
+  const ret = returnTo(route);
   const inst = h('input#login-instance', { type: 'text', required: true, value: instance.peek() || '', placeholder: 'lemmy.world', autocapitalize: 'off', spellcheck: false, list: 'instance-options' });
   const user = h('input#login-user', { type: 'text', required: true, autocomplete: 'username', autocapitalize: 'off', spellcheck: false });
   const pass = h('input#login-pass', { type: 'password', required: true, autocomplete: 'current-password' });
@@ -125,7 +134,7 @@ export function signupView(route, ctx) {
   const s = site.value;
   if (!s) {
     page.append(siteError.peek() ? errorBox(siteError.peek()) : spinner());
-    loadSite().then(() => navigate(route.hash, { replace: true }));
+    loadSite().then(() => { if (!ctx.signal.aborted) navigate(route.hash, { replace: true }); });
     return page;
   }
   if (s.registrationMode === 'Closed') {
@@ -211,7 +220,9 @@ export function resolveView(route, ctx) {
   plainChrome(ctx, 'opening…');
   const q = route.query.get('q') || '';
   const box = h('div.form-page', spinner(`Looking up ${q} on ${hostOf(instance.peek())}…`));
-  api.peek().resolve(q).then((r) => {
+  api.peek().resolve(q, { signal: ctx.signal }).then((r) => {
+    // Gone elsewhere meanwhile: don't take them back.
+    if (ctx.signal.aborted) return;
     if (r?.post) navigate(postHref(r.post), { replace: true });
     else if (r?.comment) navigate(commentHref(r.comment), { replace: true });
     else if (r?.community) navigate(href(`/c/${r.community.fullName}`), { replace: true });

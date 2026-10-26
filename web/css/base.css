@@ -247,7 +247,14 @@ button { cursor: pointer; }
   box-shadow: var(--shadow);
   pointer-events: auto;
 }
-.toast > span { flex: 1; }
+.toast > span:first-child { flex: 1; }
+.toast-actions { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-3); }
+/* A phone: the buttons under the message, with × still beside it. */
+@media (max-width: 30rem) {
+  .toast:has(.toast-actions) { flex-wrap: wrap; }
+  .toast:has(.toast-actions) > span:first-child { flex-basis: calc(100% - 40px); }
+  .toast-actions { order: 1; flex-basis: 100%; }
+}
 .toast-error { border-color: var(--error-border); background: var(--error-bg); color: var(--error-text); }
 .toast-success { border-left: 4px solid var(--success); }
 .toast-action { background: none; border: 0; color: var(--link); font-weight: bold; }

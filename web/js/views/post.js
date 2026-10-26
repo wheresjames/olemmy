@@ -20,6 +20,7 @@ import { recordVisit, setHighlightSince } from '../features/new-comments.js';
 import { isCollapsed, setCollapsed, collapseAllButton } from '../features/comment-collapse.js';
 import { enabled } from '../features/registry.js';
 import { plural } from '../util/format.js';
+import { toastError } from '../components/toast.js';
 import { COMMENT_SORTS } from '../api/v3.js';
 
 const MAX_DEPTH = 8;
@@ -168,10 +169,14 @@ function morePages(client, post, sort, threadCtx, tree, first) {
         const list = page.comments;
         next = page.next;
         const known = new Set([...tree.querySelectorAll('.comment')].map((el) => Number(el.dataset.id)));
-        const roots = commentTree(list.filter((c) => !known.has(c.id)));
-        tree.querySelector('.comment-tree')?.append(...roots.map((r) => commentNode(r, threadCtx)));
+        // Replies to comments already shown go under them, not at the top.
+        for (const r of commentTree(list.filter((c) => !known.has(c.id)))) {
+          const parent = r.parentId != null && tree.querySelector(`#c${r.parentId}`);
+          parent?.olemmyComment?.children.push(r);
+          (parent?.querySelector(':scope > .children') || tree.querySelector('.comment-tree'))?.append(commentNode(r, threadCtx));
+        }
         if (!next) button.remove();
-      } finally { busy.value = false; }
+      } catch (e) { toastError(e, 'Couldn\'t load more comments'); } finally { busy.value = false; }
     },
   }, () => (busy.value ? 'loading…' : 'load more comments')));
   return button;

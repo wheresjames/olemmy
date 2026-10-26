@@ -52,7 +52,8 @@ const loadV4 = async () => { LemmyV4 ??= (await import('../api/v4.js')).LemmyV4;
 
 async function probeVersion(b) {
   const cached = readRaw(PROBED, 'session');
-  const known = cached ? JSON.parse(cached) : {};
+  let known = {};
+  try { known = (cached && JSON.parse(cached)) || {}; } catch { /* unreadable: probe again */ }
   if (known[b]) {
     if (known[b] === 4) await loadV4();
     apiVersions.value = { ...apiVersions.peek(), [b]: known[b] };

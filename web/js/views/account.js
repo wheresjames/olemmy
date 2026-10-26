@@ -5,13 +5,14 @@
 import { h } from '../core/h.js';
 import { signal } from '../core/signal.js';
 import { href } from '../core/router.js';
-import { api, me, refreshSite } from '../state/session.js';
+import { api, me, refreshSite, account, setActiveAccount } from '../state/session.js';
 import { requireLogin, blockCommunity, blockPerson, blockInstance } from '../state/actions.js';
 import { setTitle, spinner, errorBox } from '../components/common.js';
 import { editor } from '../components/editor.js';
 import { toast, toastError } from '../components/toast.js';
 import { SORT_LABELS } from '../util/format.js';
 import { POST_SORTS } from '../api/v3.js';
+import { safeUrl } from '../util/links.js';
 
 export function accountView(route, ctx) {
   const { chrome } = ctx;
@@ -69,7 +70,7 @@ function profileForm(m) {
   h('label', { for: 'acct-display' }, 'display name'), displayName,
   h('label', { for: 'acct-email' }, 'email'), email,
   h('label', { for: 'acct-bio' }, 'bio'), bio.el,
-  h('p.small', 'Change your avatar, banner and two-factor authentication on ', h('a', { href: `${p.actorId.replace(/\/u\/.*$/, '')}/settings`, target: '_blank', rel: 'noopener noreferrer' }, 'your instance\'s site'), '.'),
+  h('p.small', 'Change your avatar, banner and two-factor authentication on ', h('a', { href: safeUrl(`${p.actorId.replace(/\/u\/.*$/, '')}/settings`) || undefined, target: '_blank', rel: 'noopener noreferrer' }, 'your instance\'s site'), '.'),
   h('h2', 'content'),
   Object.entries(checks).map(([k, [text]]) => h('label.checkbox', boxes[k], ` ${text}`)),
   h('label', { for: 'acct-sort' }, 'default sort'), sort,
@@ -86,7 +87,11 @@ function passwordForm() {
       e.preventDefault();
       error.value = null;
       try {
-        await api.peek().changePassword(old.value, next.value);
+        const r = await api.peek().changePassword(old.value, next.value);
+        // The instance logs out every other session and answers with a new
+        // token: without it, this one would be logged out on the next request.
+        const a = account.peek();
+        if (r?.jwt && a) setActiveAccount({ ...a, jwt: r.jwt });
         old.value = ''; next.value = '';
         toast('Password changed', { kind: 'success' });
       } catch (err) { error.value = err; }

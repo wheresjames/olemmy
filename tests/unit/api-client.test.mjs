@@ -27,3 +27,31 @@ test('rate-limit retries never exceed the per-instance request limit', async () 
     globalThis.fetch = originalFetch;
   }
 });
+
+test('a shared GET retrying keeps going when the first caller leaves', async () => {
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => (++calls === 1 ? new Response('', { status: 503 }) : Response.json({ ok: true }));
+  try {
+    const leaving = new AbortController();
+    const first = request('https://shared-fixture.test', { path: 'api/v3/x', signal: leaving.signal, fresh: true });
+    const second = request('https://shared-fixture.test', { path: 'api/v3/x' });
+    // During the retry's wait.
+    setTimeout(() => leaving.abort(), 50);
+    await assert.rejects(first, (e) => e.kind === 'aborted');
+    assert.deepEqual(await second, { ok: true });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('an answer that isn\'t JSON is a readable error', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('<!doctype html><title>Not Lemmy</title>', { status: 200 });
+  try {
+    await assert.rejects(request('https://html-fixture.test', { path: 'api/v3/site', fresh: true }),
+      (e) => e.kind === 'http' && e.code === 'not_json' && /Lemmy instance/.test(e.message));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

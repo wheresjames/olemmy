@@ -10,7 +10,7 @@ import { h, add } from '../core/h.js';
 import { signal } from '../core/signal.js';
 import { href, entryState, restoreScroll } from '../core/router.js';
 import { api, account, loggedIn, me, site } from '../state/session.js';
-import { settings } from '../state/settings.js';
+import { settings, setSettings } from '../state/settings.js';
 import { postRow } from '../components/post-row.js';
 import { tabMenu, navSelect } from '../components/tab-menu.js';
 import { searchBox, submitButtons, communityBox, siteBox, sidebar } from '../components/sidebar.js';
@@ -216,9 +216,13 @@ function communitySideExtras(community) { return communitySideHooks.map((fn) => 
 function listingToolbarExtras() { return listingToolbarHooks.map((fn) => fn()); }
 
 function welcome() {
-  return h('div.welcome-note',
+  if (settings.peek().hideWelcome) return null;
+  const note = h('div.welcome-note',
     h('p', 'You\'re browsing ', h('strong', homeHost()), ' without an account. ',
       h('a', { href: href('/login') }, 'Log in'), ' or ', h('a', { href: href('/signup') }, 'sign up'),
-      ' to vote, comment and subscribe, or ', h('a', { href: href('/instance') }, 'choose another instance'), '.'));
+      ' to vote, comment and subscribe, or ', h('a', { href: href('/instance') }, 'choose another instance'), '.'),
+    // Closed for good, in this browser.
+    h('button.banner-close', { type: 'button', 'aria-label': 'Close', title: 'Close', onclick: () => { setSettings({ hideWelcome: true }); note.remove(); } }, '×'));
+  return note;
 }
 

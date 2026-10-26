@@ -79,7 +79,7 @@ export function shareView(route, ctx) {
         return;
       }
       try {
-        const r = await client.resolve(original);
+        const r = await client.resolve(original, { signal: ctx.signal });
         if (aborted()) return;
         if (r?.post) { rememberAddress(original, { post: r.post.id }); show(r.post.id); return; }
         if (r?.comment) {

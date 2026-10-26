@@ -154,6 +154,7 @@ label.setting-name { cursor: pointer; }
 }
 .option-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
 .option-row.wide { flex-direction: column; align-items: stretch; }
+.option-text { flex: 1; min-width: 0; }
 .option-name { flex: 1; min-width: 0; font-size: var(--fs-sm); }
 .option-label { margin: 0 0 var(--sp-1); font-size: var(--fs-sm); font-weight: bold; }
 

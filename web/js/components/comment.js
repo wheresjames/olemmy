@@ -133,6 +133,8 @@ export function commentNode(c, ctx) {
   children,
   () => (collapsed.value || ctx.flat ? null : moreLink(c, ctx, children, loaded)));
 
+  // For replies loaded later (post.js morePages): they join this comment's children.
+  node.olemmyComment = c;
   // Children stay in the DOM when collapsed (cheap to reopen), just hidden.
   effect(() => { children.hidden = collapsed.value; });
   queueChildren(c.children, ctx, children, getOwner());

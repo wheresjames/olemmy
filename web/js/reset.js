@@ -32,14 +32,13 @@
   async function stopOfflineCopy() {
     var n = 0;
     if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+      // Only Olemmy's: another site on this origin (a folder beside it) keeps its own.
       var regs = await navigator.serviceWorker.getRegistrations();
-      for (var i = 0; i < regs.length; i++) if (await regs[i].unregister()) n++;
+      for (var i = 0; i < regs.length; i++) if (regs[i].scope.indexOf(root.href) === 0 && await regs[i].unregister()) n++;
     }
     var c = 0;
-    if (window.caches) {
-      var keys = await caches.keys();
-      for (var j = 0; j < keys.length; j++) if (await caches.delete(keys[j])) c++;
-    }
+    // sw.js's cache.
+    if (window.caches && await caches.delete('olemmy-shell')) c++;
     say(n || c ? 'Cleared the offline copy.' : 'No offline copy to clear.', 'ok');
   }
 
