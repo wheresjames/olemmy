@@ -1,0 +1,311 @@
+/* Design tokens: spacing, type, and the light and dark palettes (§6a).
+   Components use these only; no component hard-codes a color.
+   Light is on :root. Dark is defined twice: for Auto (no data-theme) under
+   prefers-color-scheme, and for a forced Dark under [data-theme="dark"].
+   Black and High contrast build on Dark and Light, whatever the system's
+   own setting. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Type: smaller on wide screens (dense), larger on phones. */
+  --font-scale: 1;
+  --font-ui: Verdana, "DejaVu Sans", "Segoe UI", system-ui, Arial, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --fs-base: calc(clamp(13px, 17px - 0.4vw, 15px) * var(--font-scale));
+  --fs-xs: 0.77em;
+  --fs-sm: 0.85em;
+  --fs-title: 1.23em;
+  --fs-h1: 1.5em;
+
+  /* Spacing, scaled by density. */
+  --density: 1;
+  --sp-1: calc(2px * var(--density));
+  --sp-2: calc(4px * var(--density));
+  --sp-3: calc(8px * var(--density));
+  --sp-4: calc(12px * var(--density));
+  --sp-5: calc(20px * var(--density));
+  --radius: 3px;
+  --sidebar-width: 300px;
+  --max-page-width: 1600px;  /* settings.maxWidth; 0 = none */
+  --thumb: 70px;
+  --tap: 44px;
+
+  /* Light palette: soft sage with a plum notification accent. */
+  --bg: #ffffff;
+  --bg-alt: #f6f7f8;
+  --bg-raised: #ffffff;
+  --text: #222222;
+  --text-muted: #6a6a6a;
+  --text-faint: #888888;
+  --border: #e3e3e3;
+  --border-strong: #c4cfdb;
+  --header-bg: #dce9e2;
+  --header-border: #648e7b;
+  --header-text: #222222;
+  --sr-bar-bg: #f0f0f0;
+  --sr-bar-text: #444444;
+  --sr-bar-border: #808080;
+  --tab-bg: #eef5ef;
+  --tab-text: #315f51;
+  --tab-selected-bg: #ffffff;
+  --attention-text: #764f72;
+  --badge-bg: #764f72;
+  --badge-text: #ffffff;
+  --tab-selected-text: var(--attention-text);
+  --link: #0645ad;
+  --link-visited: #551a8b;
+  --title-link: #0000ff;
+  --title-visited: #551a8b;
+  --meta-link: #336699;
+  --button-text: #707070;
+  --accent: #3f7663;
+  --accent-text: #ffffff;
+  --upvote: #ff8b60;
+  --downvote: #9494ff;
+  --arrow: #c6c6c6;
+  --rank: #a0a0a0;
+  --nsfw: #d10023;
+  --pinned: #228822;
+  --locked: #b8860b;
+  --op-bg: #0055df;
+  --op-text: #ffffff;
+  --mod: #228822;
+  --admin: #ff0011;
+  --new-comment-bg: #f4faf6;
+  --new-comment-border: #a9cbb7;
+  --highlight-bg: #fffcd4;
+  --selected-bg: #f1f7f2;
+  --selected-border: #b4d2c2;
+  --comment-bg-odd: #f7f7f8;
+  --comment-bg-even: #ffffff;
+  --code-bg: #f4f4f4;
+  --quote-border: #c5c1ad;
+  --quote-text: #4f4f4f;
+  --spoiler-bg: #eef1f5;
+  --side-box-bg: #f6f7f8;
+  --submit-bg: #eef5ef;
+  --submit-border: #bed7c8;
+  --input-bg: #ffffff;
+  --input-border: #a9a9a9;
+  --error-bg: #fff0f0;
+  --error-border: #e0a0a0;
+  --error-text: #8a1c1c;
+  --info-bg: #fffbe6;
+  --info-border: #e6d58b;
+  --success: #2a7d2a;
+  --overlay: rgb(0 0 0 / 0.45);
+  --shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+  --focus: #1a73e8;
+  --depth-1: #648e7b;
+  --depth-2: #6dbf6d;
+  --depth-3: #e0b84c;
+  --depth-4: #e07b5f;
+  --depth-5: #b67fd6;
+  --depth-6: #4fb5b5;
+}
+
+/* Dark: a night palette, checked for WCAG AA contrast. */
+@media (prefers-color-scheme: dark) {
+  /* Auto only: every other theme sets data-theme and its own palette. */
+  :root:not([data-theme]) {
+    --bg: #18191a;
+    --bg-alt: #202224;
+    --bg-raised: #242628;
+    --text: #dcdcdc;
+    --text-muted: #a8a8a8;
+    --text-faint: #8f8f8f;
+    --border: #34373a;
+    --border-strong: #46505a;
+    --header-bg: #20322f;
+    --header-border: #4e8271;
+    --header-text: #dcdcdc;
+    --sr-bar-bg: #111213;
+    --sr-bar-text: #b8b8b8;
+    --sr-bar-border: #34373a;
+    --tab-bg: #294039;
+    --tab-text: #acd6c3;
+    --tab-selected-bg: #18191a;
+    --attention-text: #d9a5ce;
+    --link: #8cb3e6;
+    --link-visited: #b9a3e3;
+    --title-link: #9cc2f0;
+    --title-visited: #b9a3e3;
+    --meta-link: #8cb3d9;
+    --button-text: #a0a0a0;
+    --accent: #3f7663;
+    --accent-text: #ffffff;
+    --upvote: #ff8b60;
+    --downvote: #9c9cff;
+    --arrow: #6b6e72;
+    --rank: #8a8a8a;
+    --nsfw: #ff5c7a;
+    --pinned: #6cc66c;
+    --locked: #e0b84c;
+    --op-bg: #3a7bf0;
+    --op-text: #ffffff;
+    --mod: #6cc66c;
+    --admin: #ff6b6b;
+    --new-comment-bg: #1d2836;
+    --new-comment-border: #3d6a94;
+    --highlight-bg: #3a3620;
+    --selected-bg: #1f2a36;
+    --selected-border: #3d6a94;
+    --comment-bg-odd: #1e1f21;
+    --comment-bg-even: #18191a;
+    --code-bg: #26282b;
+    --quote-border: #55524a;
+    --quote-text: #b4b4b4;
+    --spoiler-bg: #23272d;
+    --side-box-bg: #202224;
+    --submit-bg: #23303d;
+    --submit-border: #3d5a76;
+    --input-bg: #111213;
+    --input-border: #55595e;
+    --error-bg: #3a1d1d;
+    --error-border: #7a3a3a;
+    --error-text: #ffb4b4;
+    --info-bg: #33301d;
+    --info-border: #6b6236;
+    --success: #6cc66c;
+    --overlay: rgb(0 0 0 / 0.6);
+    --shadow: 0 2px 12px rgb(0 0 0 / 0.6);
+    --focus: #8ab4f8;
+  }
+}
+
+:root[data-theme="dark"],
+:root[data-theme="oled"] {
+  color-scheme: dark;
+  --bg: #18191a;
+  --bg-alt: #202224;
+  --bg-raised: #242628;
+  --text: #dcdcdc;
+  --text-muted: #a8a8a8;
+  --text-faint: #8f8f8f;
+  --border: #34373a;
+  --border-strong: #46505a;
+  --header-bg: #20322f;
+  --header-border: #4e8271;
+  --header-text: #dcdcdc;
+  --sr-bar-bg: #111213;
+  --sr-bar-text: #b8b8b8;
+  --sr-bar-border: #34373a;
+  --tab-bg: #294039;
+  --tab-text: #acd6c3;
+  --tab-selected-bg: #18191a;
+  --attention-text: #d9a5ce;
+  --link: #8cb3e6;
+  --link-visited: #b9a3e3;
+  --title-link: #9cc2f0;
+  --title-visited: #b9a3e3;
+  --meta-link: #8cb3d9;
+  --button-text: #a0a0a0;
+  --accent: #3f7663;
+  --accent-text: #ffffff;
+  --upvote: #ff8b60;
+  --downvote: #9c9cff;
+  --arrow: #6b6e72;
+  --rank: #8a8a8a;
+  --nsfw: #ff5c7a;
+  --pinned: #6cc66c;
+  --locked: #e0b84c;
+  --op-bg: #3a7bf0;
+  --op-text: #ffffff;
+  --mod: #6cc66c;
+  --admin: #ff6b6b;
+  --new-comment-bg: #1d2836;
+  --new-comment-border: #3d6a94;
+  --highlight-bg: #3a3620;
+  --selected-bg: #1f2a36;
+  --selected-border: #3d6a94;
+  --comment-bg-odd: #1e1f21;
+  --comment-bg-even: #18191a;
+  --code-bg: #26282b;
+  --quote-border: #55524a;
+  --quote-text: #b4b4b4;
+  --spoiler-bg: #23272d;
+  --side-box-bg: #202224;
+  --submit-bg: #23303d;
+  --submit-border: #3d5a76;
+  --input-bg: #111213;
+  --input-border: #55595e;
+  --error-bg: #3a1d1d;
+  --error-border: #7a3a3a;
+  --error-text: #ffb4b4;
+  --info-bg: #33301d;
+  --info-border: #6b6236;
+  --success: #6cc66c;
+  --overlay: rgb(0 0 0 / 0.6);
+  --shadow: 0 2px 12px rgb(0 0 0 / 0.6);
+  --focus: #8ab4f8;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+
+/* Extra palettes (Tier 3). Black: dark, with true black for OLED screens. */
+:root[data-theme="oled"] {
+  --bg: #000000;
+  --bg-alt: #0b0b0b;
+  --bg-raised: #111111;
+  --header-bg: #000000;
+  --header-border: #2b2b2b;
+  --sr-bar-bg: #000000;
+  --tab-bg: #141414;
+  --tab-selected-bg: #000000;
+  --side-box-bg: #0b0b0b;
+  --comment-bg-odd: #0a0a0a;
+  --comment-bg-even: #000000;
+  --code-bg: #111111;
+  --input-bg: #000000;
+  --submit-bg: #0f1620;
+  --selected-bg: #0f1620;
+  --new-comment-bg: #0d1724;
+}
+
+/* High contrast: black on white, stronger borders and links, for low vision. */
+:root[data-theme="contrast"] {
+  color-scheme: light;
+  --text: #000000;
+  --text-muted: #2b2b2b;
+  --text-faint: #3d3d3d;
+  --border: #6b6b6b;
+  --border-strong: #000000;
+  --header-bg: #ffffff;
+  --header-border: #000000;
+  --header-text: #000000;
+  --sr-bar-bg: #ffffff;
+  --sr-bar-text: #000000;
+  --sr-bar-border: #000000;
+  --tab-bg: #ffffff;
+  --tab-text: #00339a;
+  --attention-text: #5d385e;
+  --link: #00339a;
+  --title-link: #0000cc;
+  --meta-link: #00339a;
+  --button-text: #2b2b2b;
+  --arrow: #555555;
+  --rank: #3d3d3d;
+  --side-box-bg: #ffffff;
+  --comment-bg-odd: #ffffff;
+  --focus: #b30000;
+}
+
+:root[data-density="compact"] { --density: 0.65; --thumb: 56px; }
+:root[data-density="comfortable"] { --density: 1.4; }
+
+@media (prefers-contrast: more) {
+  :root {
+    --text-muted: #444444;
+    --text-faint: #555555;
+    --border: #999999;
+    --button-text: #444444;
+  }
+  :root[data-theme="dark"] {
+    --text-muted: #cccccc;
+    --text-faint: #bbbbbb;
+    --border: #777777;
+    --button-text: #cccccc;
+  }
+}

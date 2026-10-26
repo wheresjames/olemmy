@@ -1,0 +1,13 @@
+.*
+_*
+!.editorconfig
+!.gitignore
+!.github/
+/tmp/
+/dist/
+/output/
+/docs/
+
+node_modules/
+test-results/
+playwright-report/

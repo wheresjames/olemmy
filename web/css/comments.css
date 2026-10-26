@@ -1,0 +1,89 @@
+/* Nested comments: bordered, with a colored depth line, indentation that
+   shrinks with the width of the comment area, and a flat style past a few
+   levels on narrow screens (§6), via container queries. */
+
+.commentarea { container-type: inline-size; container-name: comments; margin-top: var(--sp-4); }
+
+.panestack-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-4);
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px dotted var(--border-strong);
+}
+.panestack-title .title { font-size: 1.1em; font-weight: bold; color: var(--text-muted); text-transform: lowercase; }
+.remember-sort .link-button { color: var(--meta-link); }
+.collapse-all { margin-left: auto; }
+
+.comment-tree { --indent: 18px; }
+@container comments (max-width: 700px) { .comment-tree { --indent: 12px; } }
+@container comments (max-width: 420px) { .comment-tree { --indent: 7px; } }
+
+.comment {
+  position: relative;
+  margin: var(--sp-2) 0 0;
+  padding: var(--sp-2) 0 var(--sp-1) 0;
+  border-radius: var(--radius);
+  outline: none;
+}
+.comment-inner { display: flex; align-items: flex-start; gap: var(--sp-2); }
+.comment .midcol { width: auto; min-width: 26px; padding-top: 1px; }
+.comment .midcol .score { display: none; }
+.comment .entry { flex: 1; min-width: 0; }
+.comment .tagline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 2px; margin-bottom: 2px; }
+.comment .tagline .score { color: var(--text-muted); font-weight: normal; font-size: inherit; }
+.comment.likes .tagline .score { color: var(--upvote); }
+.comment .expand {
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 1em;
+}
+.comment .expand:hover { color: var(--link); }
+@media (pointer: coarse) {
+  .comment .expand { min-width: 36px; min-height: 30px; margin: -6px 0; }
+}
+.comment .md { font-size: 1.05em; }
+.comment .gone { color: var(--text-faint); font-style: italic; }
+.child-count { color: var(--text-faint); }
+.comment-context { margin: 0 0 var(--sp-2); font-size: var(--fs-sm); color: var(--text-muted); }
+.context-title { font-weight: bold; }
+
+/* Children: indented, with a line in the depth's color. */
+.children { margin-left: var(--indent); padding-left: var(--sp-2); border-left: 2px solid var(--depth-1); }
+.comment.depth-1 > .children { border-left-color: var(--depth-2); }
+.comment.depth-2 > .children { border-left-color: var(--depth-3); }
+.comment.depth-3 > .children { border-left-color: var(--depth-4); }
+.comment.depth-4 > .children { border-left-color: var(--depth-5); }
+.comment.depth-5 > .children { border-left-color: var(--depth-6); }
+.children:empty { display: none; }
+
+/* Narrow: stop indenting after five levels; the colored line still tells depth. */
+@container comments (max-width: 480px) {
+  .comment .comment .comment .comment .comment .children { margin-left: 0; }
+}
+
+/* Alternating backgrounds by depth. */
+.comment-tree > .comment { background: var(--comment-bg-odd); padding-left: var(--sp-2); padding-right: var(--sp-2); border: 1px solid var(--border); }
+.comment-tree > .comment .children > .comment { background: var(--comment-bg-even); }
+.comment-tree > .comment .children > .comment .children > .comment { background: var(--comment-bg-odd); }
+
+.comment.collapsed > .comment-inner .midcol { visibility: hidden; height: 0; }
+.comment.collapsed > .comment-inner .tagline { margin-bottom: 0; opacity: 0.75; }
+.comment.by-op > .comment-inner .author { background: var(--op-bg); color: var(--op-text) !important; padding: 0 3px; border-radius: 3px; }
+.comment.distinguished > .comment-inner .md { color: var(--mod); }
+.comment.new-comment > .comment-inner { box-shadow: inset 3px 0 0 var(--new-comment-border); background: var(--new-comment-bg); border-radius: 2px; }
+.comment.highlighted > .comment-inner, .comment.flash > .comment-inner { background: var(--highlight-bg); }
+.comment.kb-selected > .comment-inner, .comment:focus-visible > .comment-inner { box-shadow: inset 3px 0 0 var(--selected-border); background: var(--selected-bg); }
+.comment.kb-selected, .comment:focus-visible { box-shadow: none; }
+
+.more-comments { margin: var(--sp-2) 0 var(--sp-2) var(--sp-3); font-size: var(--fs-xs); font-weight: bold; }
+.more-comments .link-button, .more-comments a { color: var(--meta-link); }
+.more-top { margin: var(--sp-4) 0; text-align: center; }
+
+.reply-form { margin: var(--sp-3) 0; max-width: 52em; }
+.form-buttons { display: flex; gap: var(--sp-3); margin-top: var(--sp-2); }

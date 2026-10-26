@@ -1,0 +1,8 @@
+name            olemmy
+version         1.0.0
+description     An old-school, information-dense web client for Lemmy.
+company         wheresjames
+author          Robert Umbehant
+email           olemmy@wheresjames.com
+url             https://github.com/wheresjames/olemmy
+license         MIT

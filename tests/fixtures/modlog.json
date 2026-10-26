@@ -1,0 +1,2439 @@
+{
+  "removed_posts": [
+    {
+      "mod_remove_post": {
+        "id": 700056,
+        "mod_person_id": 300025,
+        "post_id": 100071,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:16:00.000000Z"
+      },
+      "post": {
+        "id": 100071,
+        "name": "A small library display",
+        "url": "https://assets.example/posts/100071.png",
+        "body": "A short, fictional note about a small library display. What would you add?",
+        "creator_id": 300135,
+        "community_id": 400036,
+        "removed": true,
+        "locked": false,
+        "published": "2026-10-25T18:31:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100071.png",
+        "ap_id": "https://remote13.example/post/100071",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/jpeg"
+      },
+      "community": {
+        "id": 400036,
+        "name": "topic_36",
+        "title": "Topic 36",
+        "description": "A friendly place to share notes and questions about topic 36.",
+        "removed": false,
+        "published": "2023-06-14T12:36:00.000000Z",
+        "updated": "2023-06-14T12:46:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_36",
+        "local": false,
+        "icon": "https://assets.example/communities/400036.png",
+        "banner": "https://assets.example/banners/400036.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_post": {
+        "id": 700055,
+        "mod_person_id": 300025,
+        "post_id": 100068,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:15:00.000000Z"
+      },
+      "post": {
+        "id": 100068,
+        "name": "Notes from the neighborhood garden",
+        "url": "https://articles.example/posts/100068",
+        "creator_id": 300095,
+        "community_id": 400036,
+        "removed": true,
+        "locked": false,
+        "published": "2026-10-25T17:28:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "embed_title": "Notes from the neighborhood garden",
+        "embed_description": "A brief overview of notes from the neighborhood garden.",
+        "thumbnail_url": "https://assets.example/posts/100068.png",
+        "ap_id": "https://remote14.example/post/100068",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "text/html; charset=utf-8"
+      },
+      "community": {
+        "id": 400036,
+        "name": "topic_36",
+        "title": "Topic 36",
+        "description": "A friendly place to share notes and questions about topic 36.",
+        "removed": false,
+        "published": "2023-06-14T12:36:00.000000Z",
+        "updated": "2023-06-14T12:46:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_36",
+        "local": false,
+        "icon": "https://assets.example/communities/400036.png",
+        "banner": "https://assets.example/banners/400036.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_post": {
+        "id": 700054,
+        "mod_person_id": 300029,
+        "post_id": 100026,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:14:00.000000Z"
+      },
+      "post": {
+        "id": 100026,
+        "name": "Tips for keeping notes tidy",
+        "url": "https://assets.example/posts/100026.png",
+        "body": "A short, fictional note about tips for keeping notes tidy. What would you add?",
+        "creator_id": 300019,
+        "community_id": 400031,
+        "removed": true,
+        "locked": false,
+        "published": "2026-10-25T17:26:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100026.png",
+        "ap_id": "https://remote3.example/post/100026",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/jpeg",
+        "alt_text": "Illustration for tips for keeping notes tidy"
+      },
+      "community": {
+        "id": 400031,
+        "name": "topic_31",
+        "title": "Topic 31",
+        "description": "A friendly place to share notes and questions about topic 31.",
+        "removed": false,
+        "published": "2023-06-14T12:31:00.000000Z",
+        "updated": "2023-06-14T12:41:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_31",
+        "local": false,
+        "icon": "https://assets.example/communities/400031.png",
+        "banner": "https://assets.example/banners/400031.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_post": {
+        "id": 700053,
+        "mod_person_id": 300029,
+        "post_id": 100028,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:13:00.000000Z"
+      },
+      "post": {
+        "id": 100028,
+        "name": "A map of nearby walking paths",
+        "body": "A short, fictional note about a map of nearby walking paths. What would you add?",
+        "creator_id": 300118,
+        "community_id": 400031,
+        "removed": true,
+        "locked": false,
+        "published": "2026-10-25T17:28:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://fixture.test/post/100028",
+        "local": true,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400031,
+        "name": "topic_31",
+        "title": "Topic 31",
+        "description": "A friendly place to share notes and questions about topic 31.",
+        "removed": false,
+        "published": "2023-06-14T12:31:00.000000Z",
+        "updated": "2023-06-14T12:41:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_31",
+        "local": false,
+        "icon": "https://assets.example/communities/400031.png",
+        "banner": "https://assets.example/banners/400031.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_post": {
+        "id": 700052,
+        "mod_person_id": 300104,
+        "post_id": 100025,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:12:00.000000Z"
+      },
+      "post": {
+        "id": 100025,
+        "name": "A photo of the morning sky",
+        "url": "https://articles.example/posts/100025",
+        "body": "A short, fictional note about a photo of the morning sky. What would you add?",
+        "creator_id": 300139,
+        "community_id": 400093,
+        "removed": true,
+        "locked": false,
+        "published": "2026-10-25T18:25:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://remote15.example/post/100025",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "application/binary"
+      },
+      "community": {
+        "id": 400093,
+        "name": "topic_93",
+        "title": "Topic 93",
+        "description": "A friendly place to share notes and questions about topic 93.",
+        "removed": false,
+        "published": "2023-06-14T12:13:00.000000Z",
+        "updated": "2023-06-14T12:23:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote16.example/c/topic_93",
+        "local": false,
+        "banner": "https://assets.example/banners/400093.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600029,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "locked_posts": [
+    {
+      "mod_lock_post": {
+        "id": 700041,
+        "mod_person_id": 300112,
+        "post_id": 100031,
+        "locked": true,
+        "when_": "2026-10-25T18:01:00.000000Z"
+      },
+      "post": {
+        "id": 100031,
+        "name": "A calm place to read",
+        "url": "https://assets.example/posts/100031.png",
+        "body": "A short, fictional note about a calm place to read. What would you add?",
+        "creator_id": 300013,
+        "community_id": 400023,
+        "removed": false,
+        "locked": true,
+        "published": "2026-10-25T18:31:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100031.png",
+        "ap_id": "https://remote3.example/post/100031",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/webp",
+        "alt_text": "Illustration for a calm place to read"
+      },
+      "community": {
+        "id": 400023,
+        "name": "topic_23",
+        "title": "Topic 23",
+        "description": "A friendly place to share notes and questions about topic 23.",
+        "removed": false,
+        "published": "2023-06-14T12:23:00.000000Z",
+        "updated": "2023-06-14T12:33:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_23",
+        "local": false,
+        "icon": "https://assets.example/communities/400023.png",
+        "banner": "https://assets.example/banners/400023.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_lock_post": {
+        "id": 700040,
+        "mod_person_id": 300026,
+        "post_id": 100030,
+        "locked": true,
+        "when_": "2026-10-25T17:00:00.000000Z"
+      },
+      "post": {
+        "id": 100030,
+        "name": "A collection of public domain photos",
+        "url": "https://assets.example/posts/100030.png",
+        "creator_id": 300024,
+        "community_id": 400040,
+        "removed": false,
+        "locked": true,
+        "published": "2026-10-25T17:30:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100030.png",
+        "ap_id": "https://remote17.example/post/100030",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/png"
+      },
+      "community": {
+        "id": 400040,
+        "name": "topic_40",
+        "title": "Topic 40",
+        "description": "A friendly place to share notes and questions about topic 40.",
+        "removed": false,
+        "published": "2023-06-14T12:00:00.000000Z",
+        "updated": "2023-06-14T12:10:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_40",
+        "local": false,
+        "icon": "https://assets.example/communities/400040.png",
+        "banner": "https://assets.example/banners/400040.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_lock_post": {
+        "id": 700039,
+        "mod_person_id": 300026,
+        "post_id": 100030,
+        "locked": false,
+        "when_": "2026-10-25T18:39:00.000000Z"
+      },
+      "post": {
+        "id": 100030,
+        "name": "A collection of public domain photos",
+        "url": "https://assets.example/posts/100030.png",
+        "creator_id": 300024,
+        "community_id": 400040,
+        "removed": false,
+        "locked": true,
+        "published": "2026-10-25T17:30:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100030.png",
+        "ap_id": "https://remote17.example/post/100030",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/png"
+      },
+      "community": {
+        "id": 400040,
+        "name": "topic_40",
+        "title": "Topic 40",
+        "description": "A friendly place to share notes and questions about topic 40.",
+        "removed": false,
+        "published": "2023-06-14T12:00:00.000000Z",
+        "updated": "2023-06-14T12:10:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_40",
+        "local": false,
+        "icon": "https://assets.example/communities/400040.png",
+        "banner": "https://assets.example/banners/400040.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_lock_post": {
+        "id": 700038,
+        "mod_person_id": 300026,
+        "post_id": 100030,
+        "locked": true,
+        "when_": "2026-10-25T17:38:00.000000Z"
+      },
+      "post": {
+        "id": 100030,
+        "name": "A collection of public domain photos",
+        "url": "https://assets.example/posts/100030.png",
+        "creator_id": 300024,
+        "community_id": 400040,
+        "removed": false,
+        "locked": true,
+        "published": "2026-10-25T17:30:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100030.png",
+        "ap_id": "https://remote17.example/post/100030",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/png"
+      },
+      "community": {
+        "id": 400040,
+        "name": "topic_40",
+        "title": "Topic 40",
+        "description": "A friendly place to share notes and questions about topic 40.",
+        "removed": false,
+        "published": "2023-06-14T12:00:00.000000Z",
+        "updated": "2023-06-14T12:10:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_40",
+        "local": false,
+        "icon": "https://assets.example/communities/400040.png",
+        "banner": "https://assets.example/banners/400040.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_lock_post": {
+        "id": 700037,
+        "mod_person_id": 300071,
+        "post_id": 100021,
+        "locked": true,
+        "when_": "2026-10-25T18:37:00.000000Z"
+      },
+      "post": {
+        "id": 100021,
+        "name": "An afternoon walking route",
+        "url": "https://assets.example/posts/100021.png",
+        "body": "A short, fictional note about an afternoon walking route. What would you add?",
+        "creator_id": 300074,
+        "community_id": 400075,
+        "removed": false,
+        "locked": true,
+        "published": "2026-10-25T18:21:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100021.png",
+        "ap_id": "https://remote9.example/post/100021",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/jpeg"
+      },
+      "community": {
+        "id": 400075,
+        "name": "topic_75",
+        "title": "Topic 75",
+        "description": "A friendly place to share notes and questions about topic 75.",
+        "removed": false,
+        "published": "2023-06-14T12:35:00.000000Z",
+        "updated": "2023-06-14T12:45:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote9.example/c/topic_75",
+        "local": false,
+        "icon": "https://assets.example/communities/400075.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600025,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "featured_posts": [
+    {
+      "mod_feature_post": {
+        "id": 700046,
+        "mod_person_id": 300051,
+        "post_id": 100019,
+        "featured": false,
+        "when_": "2026-10-25T17:06:00.000000Z",
+        "is_featured_community": true
+      },
+      "post": {
+        "id": 100019,
+        "name": "A useful shortcut for everyday tasks",
+        "url": "https://assets.example/posts/100019.png",
+        "body": "A short, fictional note about a useful shortcut for everyday tasks. What would you add?",
+        "creator_id": 300055,
+        "community_id": 423801,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T18:19:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100019.png",
+        "ap_id": "https://remote18.example/post/100019",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/jpeg"
+      },
+      "community": {
+        "id": 423801,
+        "name": "topic_23801",
+        "title": "Topic 23801",
+        "description": "A friendly place to share notes and questions about topic 23801.",
+        "removed": false,
+        "published": "2023-06-14T12:01:00.000000Z",
+        "updated": "2023-06-14T12:11:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote18.example/c/topic_23801",
+        "local": false,
+        "icon": "https://assets.example/communities/423801.png",
+        "banner": "https://assets.example/banners/423801.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600036,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_feature_post": {
+        "id": 700045,
+        "mod_person_id": 300051,
+        "post_id": 100069,
+        "featured": true,
+        "when_": "2026-10-25T18:05:00.000000Z",
+        "is_featured_community": true
+      },
+      "post": {
+        "id": 100069,
+        "name": "A simple desk setup",
+        "url": "https://assets.example/posts/100069.png",
+        "body": "A short, fictional note about a simple desk setup. What would you add?",
+        "creator_id": 300055,
+        "community_id": 423801,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T18:29:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100069.png",
+        "ap_id": "https://remote18.example/post/100069",
+        "local": false,
+        "language_id": 37,
+        "featured_community": true,
+        "featured_local": false,
+        "url_content_type": "image/jpeg"
+      },
+      "community": {
+        "id": 423801,
+        "name": "topic_23801",
+        "title": "Topic 23801",
+        "description": "A friendly place to share notes and questions about topic 23801.",
+        "removed": false,
+        "published": "2023-06-14T12:01:00.000000Z",
+        "updated": "2023-06-14T12:11:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote18.example/c/topic_23801",
+        "local": false,
+        "icon": "https://assets.example/communities/423801.png",
+        "banner": "https://assets.example/banners/423801.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600036,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_feature_post": {
+        "id": 700044,
+        "mod_person_id": 300114,
+        "post_id": 100070,
+        "featured": true,
+        "when_": "2026-10-25T17:04:00.000000Z",
+        "is_featured_community": true
+      },
+      "post": {
+        "id": 100070,
+        "name": "A useful shortcut for everyday tasks",
+        "body": "A short, fictional note about a useful shortcut for everyday tasks. What would you add?",
+        "creator_id": 300114,
+        "community_id": 400100,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:30:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://piefed.example/c/topic@fixture.test/p/100070/quiet-weekend-project",
+        "local": false,
+        "language_id": 37,
+        "featured_community": true,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400100,
+        "name": "topic_100",
+        "title": "Topic 100",
+        "description": "A friendly place to share notes and questions about topic 100.",
+        "removed": false,
+        "published": "2023-06-14T12:20:00.000000Z",
+        "updated": "2023-06-14T12:30:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://piefed.example/c/topic_100",
+        "local": false,
+        "icon": "https://assets.example/communities/400100.png",
+        "banner": "https://assets.example/banners/400100.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600037,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_feature_post": {
+        "id": 700043,
+        "mod_person_id": 300053,
+        "post_id": 100067,
+        "featured": true,
+        "when_": "2026-10-25T18:03:00.000000Z",
+        "is_featured_community": true
+      },
+      "post": {
+        "id": 100067,
+        "name": "The weekly open thread",
+        "body": "A short, fictional note about the weekly open thread. What would you add?",
+        "creator_id": 300054,
+        "community_id": 400094,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T18:27:00.000000Z",
+        "updated": "2026-10-25T18:37:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://remote18.example/post/100067",
+        "local": false,
+        "language_id": 37,
+        "featured_community": true,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400094,
+        "name": "topic_94",
+        "title": "Topic 94",
+        "description": "A friendly place to share notes and questions about topic 94.",
+        "removed": false,
+        "published": "2023-06-14T12:14:00.000000Z",
+        "updated": "2023-06-14T12:24:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote18.example/c/topic_94",
+        "local": false,
+        "icon": "https://assets.example/communities/400094.png",
+        "banner": "https://assets.example/banners/400094.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600036,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_feature_post": {
+        "id": 700042,
+        "mod_person_id": 300105,
+        "post_id": 100022,
+        "featured": false,
+        "when_": "2026-10-25T17:02:00.000000Z",
+        "is_featured_community": true
+      },
+      "post": {
+        "id": 100022,
+        "name": "Ideas for organizing a shared workspace",
+        "body": "A short, fictional note about ideas for organizing a shared workspace. What would you add?",
+        "creator_id": 300105,
+        "community_id": 400026,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:22:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100022",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400026,
+        "name": "topic_26",
+        "title": "Topic 26",
+        "description": "A friendly place to share notes and questions about topic 26.",
+        "removed": false,
+        "published": "2023-06-14T12:26:00.000000Z",
+        "updated": "2023-06-14T12:36:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_26",
+        "local": false,
+        "icon": "https://assets.example/communities/400026.png",
+        "banner": "https://assets.example/banners/400026.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "removed_comments": [
+    {
+      "mod_remove_comment": {
+        "id": 700066,
+        "mod_person_id": 300015,
+        "comment_id": 200038,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:26:00.000000Z"
+      },
+      "comment": {
+        "id": 200038,
+        "creator_id": 300096,
+        "post_id": 100020,
+        "content": "The extra detail in the second step is helpful.",
+        "removed": true,
+        "published": "2026-10-25T19:38:00.000000Z",
+        "deleted": false,
+        "ap_id": "https://remote19.example/comment/200038",
+        "local": false,
+        "path": "0.200035.200036.200037.200038",
+        "distinguished": false,
+        "language_id": 37
+      },
+      "commenter": {
+        "id": 300096,
+        "name": "reader_300096",
+        "display_name": "Reader 96",
+        "avatar": "https://assets.example/avatars/300096.png",
+        "banned": true,
+        "published": "2024-04-12T12:16:00.000000Z",
+        "actor_id": "https://remote19.example/u/reader_300096",
+        "local": false,
+        "banner": "https://assets.example/banners/300096.png",
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600045
+      },
+      "post": {
+        "id": 100020,
+        "name": "A small library display",
+        "body": "A short, fictional note about a small library display. What would you add?",
+        "creator_id": 300119,
+        "community_id": 400038,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:20:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://fixture.test/post/100020",
+        "local": true,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400038,
+        "name": "topic_38",
+        "title": "Topic 38",
+        "description": "A friendly place to share notes and questions about topic 38.",
+        "removed": false,
+        "published": "2023-06-14T12:38:00.000000Z",
+        "updated": "2023-06-14T12:48:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_38",
+        "local": false,
+        "icon": "https://assets.example/communities/400038.png",
+        "banner": "https://assets.example/banners/400038.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_comment": {
+        "id": 700065,
+        "mod_person_id": 300015,
+        "comment_id": 200036,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:25:00.000000Z"
+      },
+      "comment": {
+        "id": 200036,
+        "creator_id": 300096,
+        "post_id": 100020,
+        "content": "Thanks for sharing this. The steps are easy to follow.",
+        "removed": true,
+        "published": "2026-10-25T19:36:00.000000Z",
+        "updated": "2026-10-25T19:46:00.000000Z",
+        "deleted": false,
+        "ap_id": "https://remote19.example/comment/200036",
+        "local": false,
+        "path": "0.200035.200036",
+        "distinguished": false,
+        "language_id": 37
+      },
+      "commenter": {
+        "id": 300096,
+        "name": "reader_300096",
+        "display_name": "Reader 96",
+        "avatar": "https://assets.example/avatars/300096.png",
+        "banned": true,
+        "published": "2024-04-12T12:16:00.000000Z",
+        "actor_id": "https://remote19.example/u/reader_300096",
+        "local": false,
+        "banner": "https://assets.example/banners/300096.png",
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600045
+      },
+      "post": {
+        "id": 100020,
+        "name": "A small library display",
+        "body": "A short, fictional note about a small library display. What would you add?",
+        "creator_id": 300119,
+        "community_id": 400038,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:20:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://fixture.test/post/100020",
+        "local": true,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400038,
+        "name": "topic_38",
+        "title": "Topic 38",
+        "description": "A friendly place to share notes and questions about topic 38.",
+        "removed": false,
+        "published": "2023-06-14T12:38:00.000000Z",
+        "updated": "2023-06-14T12:48:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_38",
+        "local": false,
+        "icon": "https://assets.example/communities/400038.png",
+        "banner": "https://assets.example/banners/400038.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_comment": {
+        "id": 700064,
+        "mod_person_id": 300017,
+        "comment_id": 200030,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:24:00.000000Z"
+      },
+      "comment": {
+        "id": 200030,
+        "creator_id": 300111,
+        "post_id": 100018,
+        "content": "Thanks for sharing this. The steps are easy to follow.",
+        "removed": true,
+        "published": "2026-10-25T19:30:00.000000Z",
+        "deleted": false,
+        "ap_id": "https://remote20.example/comment/200030",
+        "local": false,
+        "path": "0.200027.200028.200029.200030",
+        "distinguished": false,
+        "language_id": 37
+      },
+      "commenter": {
+        "id": 300111,
+        "name": "reader_300111",
+        "display_name": "Reader 111",
+        "banned": false,
+        "published": "2024-04-12T12:31:00.000000Z",
+        "actor_id": "https://remote20.example/u/reader_300111",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600034
+      },
+      "post": {
+        "id": 100018,
+        "name": "A simple desk setup",
+        "body": "A short, fictional note about a simple desk setup. What would you add?",
+        "creator_id": 300066,
+        "community_id": 400031,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:18:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://remote8.example/post/100018",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400031,
+        "name": "topic_31",
+        "title": "Topic 31",
+        "description": "A friendly place to share notes and questions about topic 31.",
+        "removed": false,
+        "published": "2023-06-14T12:31:00.000000Z",
+        "updated": "2023-06-14T12:41:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_31",
+        "local": false,
+        "icon": "https://assets.example/communities/400031.png",
+        "banner": "https://assets.example/banners/400031.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_comment": {
+        "id": 700063,
+        "mod_person_id": 300017,
+        "comment_id": 200028,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:23:00.000000Z"
+      },
+      "comment": {
+        "id": 200028,
+        "creator_id": 300111,
+        "post_id": 100018,
+        "content": "I would be interested in seeing a follow-up.",
+        "removed": true,
+        "published": "2026-10-25T19:28:00.000000Z",
+        "deleted": false,
+        "ap_id": "https://remote20.example/comment/200028",
+        "local": false,
+        "path": "0.200027.200028",
+        "distinguished": false,
+        "language_id": 37
+      },
+      "commenter": {
+        "id": 300111,
+        "name": "reader_300111",
+        "display_name": "Reader 111",
+        "banned": false,
+        "published": "2024-04-12T12:31:00.000000Z",
+        "actor_id": "https://remote20.example/u/reader_300111",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600034
+      },
+      "post": {
+        "id": 100018,
+        "name": "A simple desk setup",
+        "body": "A short, fictional note about a simple desk setup. What would you add?",
+        "creator_id": 300066,
+        "community_id": 400031,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:18:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "ap_id": "https://remote8.example/post/100018",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      },
+      "community": {
+        "id": 400031,
+        "name": "topic_31",
+        "title": "Topic 31",
+        "description": "A friendly place to share notes and questions about topic 31.",
+        "removed": false,
+        "published": "2023-06-14T12:31:00.000000Z",
+        "updated": "2023-06-14T12:41:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_31",
+        "local": false,
+        "icon": "https://assets.example/communities/400031.png",
+        "banner": "https://assets.example/banners/400031.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_comment": {
+        "id": 700062,
+        "mod_person_id": 300087,
+        "comment_id": 200040,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:22:00.000000Z"
+      },
+      "comment": {
+        "id": 200040,
+        "creator_id": 300090,
+        "post_id": 100034,
+        "content": "I would be interested in seeing a follow-up.",
+        "removed": true,
+        "published": "2026-10-25T19:00:00.000000Z",
+        "deleted": false,
+        "ap_id": "https://remote2.example/comment/200040",
+        "local": false,
+        "path": "0.200040",
+        "distinguished": false,
+        "language_id": 37
+      },
+      "commenter": {
+        "id": 300090,
+        "name": "reader_300090",
+        "banned": false,
+        "published": "2024-04-12T12:10:00.000000Z",
+        "actor_id": "https://remote2.example/u/reader_300090",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600016
+      },
+      "post": {
+        "id": 100034,
+        "name": "Notes from the neighborhood garden",
+        "url": "https://assets.example/posts/100034.png",
+        "body": "A short, fictional note about notes from the neighborhood garden. What would you add?",
+        "creator_id": 300087,
+        "community_id": 400090,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:34:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "thumbnail_url": "https://assets.example/posts/100034.png",
+        "ap_id": "https://remote20.example/post/100034",
+        "local": false,
+        "language_id": 37,
+        "featured_community": false,
+        "featured_local": false,
+        "url_content_type": "image/webp",
+        "alt_text": "Illustration for notes from the neighborhood garden"
+      },
+      "community": {
+        "id": 400090,
+        "name": "topic_90",
+        "title": "Topic 90",
+        "description": "A friendly place to share notes and questions about topic 90.",
+        "removed": false,
+        "published": "2023-06-14T12:10:00.000000Z",
+        "updated": "2023-06-14T12:20:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote20.example/c/topic_90",
+        "local": false,
+        "icon": "https://assets.example/communities/400090.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600034,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "removed_communities": [
+    {
+      "mod_remove_community": {
+        "id": 700031,
+        "mod_person_id": 300011,
+        "community_id": 400095,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:31:00.000000Z"
+      },
+      "community": {
+        "id": 400095,
+        "name": "topic_95",
+        "title": "Topic 95",
+        "description": "A friendly place to share notes and questions about topic 95.",
+        "removed": true,
+        "published": "2023-06-14T12:15:00.000000Z",
+        "updated": "2023-06-14T12:25:00.000000Z",
+        "deleted": false,
+        "nsfw": true,
+        "actor_id": "https://remote21.example/c/topic_95",
+        "local": false,
+        "icon": "https://assets.example/communities/400095.png",
+        "banner": "https://assets.example/banners/400095.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600019,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_community": {
+        "id": 700030,
+        "mod_person_id": 300011,
+        "community_id": 400092,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:30:00.000000Z"
+      },
+      "community": {
+        "id": 400092,
+        "name": "topic_92",
+        "title": "Topic 92",
+        "description": "A friendly place to share notes and questions about topic 92.",
+        "removed": true,
+        "published": "2023-06-14T12:12:00.000000Z",
+        "updated": "2023-06-14T12:22:00.000000Z",
+        "deleted": false,
+        "nsfw": true,
+        "actor_id": "https://remote22.example/c/topic_92",
+        "local": false,
+        "icon": "https://assets.example/communities/400092.png",
+        "banner": "https://assets.example/banners/400092.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600044,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_community": {
+        "id": 700029,
+        "mod_person_id": 300011,
+        "community_id": 400099,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:29:00.000000Z"
+      },
+      "community": {
+        "id": 400099,
+        "name": "topic_99",
+        "title": "Topic 99",
+        "description": "A friendly place to share notes and questions about topic 99.",
+        "removed": true,
+        "published": "2023-06-14T12:19:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_99",
+        "local": true,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_community": {
+        "id": 700028,
+        "mod_person_id": 300011,
+        "community_id": 400098,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T17:28:00.000000Z"
+      },
+      "community": {
+        "id": 400098,
+        "name": "topic_98",
+        "title": "Topic 98",
+        "description": "A friendly place to share notes and questions about topic 98.",
+        "removed": true,
+        "published": "2023-06-14T12:18:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_98",
+        "local": true,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      }
+    },
+    {
+      "mod_remove_community": {
+        "id": 700027,
+        "mod_person_id": 300011,
+        "community_id": 400097,
+        "reason": "Off topic for this community",
+        "removed": true,
+        "when_": "2026-10-25T18:27:00.000000Z"
+      },
+      "community": {
+        "id": 400097,
+        "name": "topic_97",
+        "title": "Topic 97",
+        "description": "A friendly place to share notes and questions about topic 97.",
+        "removed": true,
+        "published": "2023-06-14T12:17:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_97",
+        "local": true,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "banned_from_community": [
+    {
+      "mod_ban_from_community": {
+        "id": 700061,
+        "mod_person_id": 300048,
+        "other_person_id": 300113,
+        "community_id": 400056,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T18:21:00.000000Z"
+      },
+      "community": {
+        "id": 400056,
+        "name": "topic_56",
+        "title": "Topic 56",
+        "description": "A friendly place to share notes and questions about topic 56.",
+        "removed": false,
+        "published": "2023-06-14T12:16:00.000000Z",
+        "updated": "2023-06-14T12:26:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote18.example/c/topic_56",
+        "local": false,
+        "icon": "https://assets.example/communities/400056.png",
+        "banner": "https://assets.example/banners/400056.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600036,
+        "visibility": "Public"
+      },
+      "banned_person": {
+        "id": 300113,
+        "name": "reader_300113",
+        "banned": false,
+        "published": "2024-04-12T12:33:00.000000Z",
+        "actor_id": "https://remote13.example/u/reader_300113",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600020
+      }
+    },
+    {
+      "mod_ban_from_community": {
+        "id": 700060,
+        "mod_person_id": 300116,
+        "other_person_id": 300077,
+        "community_id": 400052,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T17:20:00.000000Z"
+      },
+      "community": {
+        "id": 400052,
+        "name": "topic_52",
+        "title": "Topic 52",
+        "description": "A friendly place to share notes and questions about topic 52.",
+        "removed": false,
+        "published": "2023-06-14T12:12:00.000000Z",
+        "updated": "2023-06-14T12:22:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_52",
+        "local": false,
+        "icon": "https://assets.example/communities/400052.png",
+        "banner": "https://assets.example/banners/400052.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      },
+      "banned_person": {
+        "id": 300077,
+        "name": "reader_300077",
+        "display_name": "Reader 77",
+        "avatar": "https://assets.example/avatars/300077.png",
+        "banned": false,
+        "published": "2024-04-12T12:37:00.000000Z",
+        "actor_id": "https://remote23.example/u/reader_300077",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": false,
+        "banner": "https://assets.example/banners/300077.png",
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600008
+      }
+    },
+    {
+      "mod_ban_from_community": {
+        "id": 700059,
+        "mod_person_id": 300116,
+        "other_person_id": 300136,
+        "community_id": 400024,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T18:19:00.000000Z"
+      },
+      "community": {
+        "id": 400024,
+        "name": "topic_24",
+        "title": "Topic 24",
+        "removed": false,
+        "published": "2023-06-14T12:24:00.000000Z",
+        "updated": "2023-06-14T12:34:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_24",
+        "local": false,
+        "icon": "https://assets.example/communities/400024.png",
+        "banner": "https://assets.example/banners/400024.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      },
+      "banned_person": {
+        "id": 300136,
+        "name": "reader_300136",
+        "banned": false,
+        "published": "2024-04-12T12:16:00.000000Z",
+        "actor_id": "https://remote7.example/u/reader_300136",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600001
+      }
+    },
+    {
+      "mod_ban_from_community": {
+        "id": 700058,
+        "mod_person_id": 300044,
+        "other_person_id": 300102,
+        "community_id": 400041,
+        "reason": "Off topic for this community",
+        "banned": false,
+        "when_": "2026-10-25T17:18:00.000000Z"
+      },
+      "community": {
+        "id": 400041,
+        "name": "topic_41",
+        "title": "Topic 41",
+        "description": "A friendly place to share notes and questions about topic 41.",
+        "removed": false,
+        "published": "2023-06-14T12:01:00.000000Z",
+        "updated": "2023-06-14T12:11:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_41",
+        "local": false,
+        "icon": "https://assets.example/communities/400041.png",
+        "banner": "https://assets.example/banners/400041.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      },
+      "banned_person": {
+        "id": 300102,
+        "name": "reader_300102",
+        "display_name": "Reader 102",
+        "banned": false,
+        "published": "2024-04-12T12:22:00.000000Z",
+        "actor_id": "https://remote24.example/u/reader_300102",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600043
+      }
+    },
+    {
+      "mod_ban_from_community": {
+        "id": 700057,
+        "mod_person_id": 300078,
+        "other_person_id": 300085,
+        "community_id": 400086,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "expires": "2027-01-01T00:00:00Z",
+        "when_": "2026-10-25T18:17:00.000000Z"
+      },
+      "community": {
+        "id": 400086,
+        "name": "topic_86",
+        "title": "Topic 86",
+        "description": "A friendly place to share notes and questions about topic 86.",
+        "removed": false,
+        "published": "2023-06-14T12:06:00.000000Z",
+        "updated": "2023-06-14T12:16:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote25.example/c/topic_86",
+        "local": false,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600002,
+        "visibility": "Public"
+      },
+      "banned_person": {
+        "id": 300085,
+        "name": "reader_300085",
+        "banned": false,
+        "published": "2024-04-12T12:05:00.000000Z",
+        "actor_id": "https://remote3.example/u/reader_300085",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600013
+      }
+    }
+  ],
+  "banned": [
+    {
+      "mod_ban": {
+        "id": 700051,
+        "mod_person_id": 300116,
+        "other_person_id": 300122,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T18:11:00.000000Z"
+      },
+      "banned_person": {
+        "id": 300122,
+        "name": "reader_300122",
+        "display_name": "Reader 122",
+        "banned": true,
+        "published": "2024-04-12T12:02:00.000000Z",
+        "actor_id": "https://remote3.example/u/reader_300122",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600013
+      }
+    },
+    {
+      "mod_ban": {
+        "id": 700050,
+        "mod_person_id": 300116,
+        "other_person_id": 300126,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T17:10:00.000000Z"
+      },
+      "banned_person": {
+        "id": 300126,
+        "name": "reader_300126",
+        "banned": true,
+        "published": "2024-04-12T12:06:00.000000Z",
+        "actor_id": "https://remote3.example/u/reader_300126",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600013
+      }
+    },
+    {
+      "mod_ban": {
+        "id": 700049,
+        "mod_person_id": 300087,
+        "other_person_id": 300127,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "expires": "2027-01-01T00:00:00Z",
+        "when_": "2026-10-25T18:09:00.000000Z"
+      },
+      "banned_person": {
+        "id": 300127,
+        "name": "reader_300127",
+        "display_name": "Reader 127",
+        "banned": true,
+        "published": "2024-04-12T12:07:00.000000Z",
+        "actor_id": "https://remote20.example/u/reader_300127",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "ban_expires": "2027-01-01T00:00:00Z",
+        "instance_id": 600034
+      }
+    },
+    {
+      "mod_ban": {
+        "id": 700048,
+        "mod_person_id": 300087,
+        "other_person_id": 300134,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "expires": "2027-01-01T00:00:00Z",
+        "when_": "2026-10-25T17:08:00.000000Z"
+      },
+      "banned_person": {
+        "id": 300134,
+        "name": "reader_300134",
+        "display_name": "Reader 134",
+        "banned": true,
+        "published": "2024-04-12T12:14:00.000000Z",
+        "actor_id": "https://remote20.example/u/reader_300134",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "ban_expires": "2027-01-01T00:00:00Z",
+        "instance_id": 600034
+      }
+    },
+    {
+      "mod_ban": {
+        "id": 700047,
+        "mod_person_id": 300061,
+        "other_person_id": 300128,
+        "reason": "Off topic for this community",
+        "banned": true,
+        "when_": "2026-10-25T18:07:00.000000Z"
+      },
+      "banned_person": {
+        "id": 300128,
+        "name": "reader_300128",
+        "banned": true,
+        "published": "2024-04-12T12:08:00.000000Z",
+        "actor_id": "https://remote2.example/u/reader_300128",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600016
+      }
+    }
+  ],
+  "added_to_community": [
+    {
+      "mod_add_community": {
+        "id": 700036,
+        "mod_person_id": 300045,
+        "other_person_id": 300125,
+        "community_id": 400045,
+        "removed": false,
+        "when_": "2026-10-25T17:36:00.000000Z"
+      },
+      "community": {
+        "id": 400045,
+        "name": "topic_45",
+        "title": "Topic 45",
+        "description": "A friendly place to share notes and questions about topic 45.",
+        "removed": false,
+        "published": "2023-06-14T12:05:00.000000Z",
+        "updated": "2023-06-14T12:15:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_45",
+        "local": false,
+        "icon": "https://assets.example/communities/400045.png",
+        "banner": "https://assets.example/banners/400045.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300125,
+        "name": "reader_300125",
+        "banned": false,
+        "published": "2024-04-12T12:05:00.000000Z",
+        "actor_id": "https://remote3.example/u/reader_300125",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600013
+      }
+    },
+    {
+      "mod_add_community": {
+        "id": 700035,
+        "mod_person_id": 300045,
+        "other_person_id": 300125,
+        "community_id": 400083,
+        "removed": false,
+        "when_": "2026-10-25T18:35:00.000000Z"
+      },
+      "community": {
+        "id": 400083,
+        "name": "topic_83",
+        "title": "Topic 83",
+        "description": "A friendly place to share notes and questions about topic 83.",
+        "removed": false,
+        "published": "2023-06-14T12:03:00.000000Z",
+        "updated": "2023-06-14T12:13:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote3.example/c/topic_83",
+        "local": false,
+        "icon": "https://assets.example/communities/400083.png",
+        "banner": "https://assets.example/banners/400083.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300125,
+        "name": "reader_300125",
+        "banned": false,
+        "published": "2024-04-12T12:05:00.000000Z",
+        "actor_id": "https://remote3.example/u/reader_300125",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600013
+      }
+    },
+    {
+      "mod_add_community": {
+        "id": 700034,
+        "mod_person_id": 300070,
+        "other_person_id": 300082,
+        "community_id": 400046,
+        "removed": false,
+        "when_": "2026-10-25T17:34:00.000000Z"
+      },
+      "community": {
+        "id": 400046,
+        "name": "topic_46",
+        "title": "Topic 46",
+        "description": "A friendly place to share notes and questions about topic 46.",
+        "removed": true,
+        "published": "2023-06-14T12:06:00.000000Z",
+        "updated": "2023-06-14T12:16:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote2.example/c/topic_46",
+        "local": false,
+        "icon": "https://assets.example/communities/400046.png",
+        "banner": "https://assets.example/banners/400046.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600016,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300082,
+        "name": "reader_300082",
+        "display_name": "Reader 82",
+        "banned": true,
+        "published": "2024-04-12T12:02:00.000000Z",
+        "actor_id": "https://remote26.example/u/reader_300082",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600035
+      }
+    },
+    {
+      "mod_add_community": {
+        "id": 700033,
+        "mod_person_id": 300001,
+        "other_person_id": 300005,
+        "community_id": 400013,
+        "removed": false,
+        "when_": "2026-10-25T18:33:00.000000Z"
+      },
+      "community": {
+        "id": 400013,
+        "name": "topic_13",
+        "title": "Topic 13",
+        "description": "A friendly place to share notes and questions about topic 13.",
+        "removed": false,
+        "published": "2023-06-14T12:13:00.000000Z",
+        "updated": "2023-06-14T12:23:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_13",
+        "local": true,
+        "icon": "https://assets.example/communities/400013.png",
+        "banner": "https://assets.example/banners/400013.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300005,
+        "name": "reader_300005",
+        "display_name": "Reader 5",
+        "avatar": "https://assets.example/avatars/300005.png",
+        "banned": false,
+        "published": "2024-04-12T12:05:00.000000Z",
+        "updated": "2024-04-12T12:15:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300005",
+        "local": true,
+        "banner": "https://assets.example/banners/300005.png",
+        "deleted": false,
+        "matrix_user_id": "@reader_300005:chat.example",
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_add_community": {
+        "id": 700032,
+        "mod_person_id": 300032,
+        "other_person_id": 300138,
+        "community_id": 400080,
+        "removed": false,
+        "when_": "2026-10-25T17:32:00.000000Z"
+      },
+      "community": {
+        "id": 400080,
+        "name": "topic_80",
+        "title": "Topic 80",
+        "description": "A friendly place to share notes and questions about topic 80.",
+        "removed": false,
+        "published": "2023-06-14T12:00:00.000000Z",
+        "updated": "2023-06-14T12:10:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote8.example/c/topic_80",
+        "local": false,
+        "icon": "https://assets.example/communities/400080.png",
+        "banner": "https://assets.example/banners/400080.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600026,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300138,
+        "name": "reader_300138",
+        "banned": false,
+        "published": "2024-04-12T12:18:00.000000Z",
+        "actor_id": "https://remote8.example/u/reader_300138",
+        "local": false,
+        "deleted": false,
+        "bot_account": true,
+        "instance_id": 600026
+      }
+    }
+  ],
+  "transferred_to_community": [
+    {
+      "mod_transfer_community": {
+        "id": 700026,
+        "mod_person_id": 300041,
+        "other_person_id": 300100,
+        "community_id": 400087,
+        "when_": "2026-10-25T17:26:00.000000Z"
+      },
+      "community": {
+        "id": 400087,
+        "name": "topic_87",
+        "title": "Topic 87",
+        "description": "A friendly place to share notes and questions about topic 87.",
+        "removed": false,
+        "published": "2023-06-14T12:07:00.000000Z",
+        "updated": "2023-06-14T12:17:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote21.example/c/topic_87",
+        "local": false,
+        "icon": "https://assets.example/communities/400087.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600019,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300100,
+        "name": "reader_300100",
+        "avatar": "https://assets.example/avatars/300100.png",
+        "banned": false,
+        "published": "2024-04-12T12:20:00.000000Z",
+        "actor_id": "https://remote27.example/u/reader_300100",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": false,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600023
+      }
+    },
+    {
+      "mod_transfer_community": {
+        "id": 700025,
+        "mod_person_id": 300001,
+        "other_person_id": 300092,
+        "community_id": 400017,
+        "when_": "2026-10-25T18:25:00.000000Z"
+      },
+      "community": {
+        "id": 400017,
+        "name": "topic_17",
+        "title": "Topic 17",
+        "description": "A friendly place to share notes and questions about topic 17.",
+        "removed": false,
+        "published": "2023-06-14T12:17:00.000000Z",
+        "updated": "2023-06-14T12:27:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_17",
+        "local": true,
+        "icon": "https://assets.example/communities/400017.png",
+        "banner": "https://assets.example/banners/400017.png",
+        "hidden": false,
+        "posting_restricted_to_mods": true,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300092,
+        "name": "reader_300092",
+        "avatar": "https://assets.example/avatars/300092.png",
+        "banned": false,
+        "published": "2024-04-12T12:12:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300092",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_transfer_community": {
+        "id": 700024,
+        "mod_person_id": 300037,
+        "other_person_id": 300037,
+        "community_id": 400015,
+        "when_": "2026-10-25T17:24:00.000000Z"
+      },
+      "community": {
+        "id": 400015,
+        "name": "topic_15",
+        "title": "Topic 15",
+        "removed": false,
+        "published": "2023-06-14T12:15:00.000000Z",
+        "updated": "2023-06-14T12:25:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_15",
+        "local": true,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300037,
+        "name": "reader_300037",
+        "avatar": "https://assets.example/avatars/300037.png",
+        "banned": false,
+        "published": "2024-04-12T12:37:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300037",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_transfer_community": {
+        "id": 700023,
+        "mod_person_id": 300037,
+        "other_person_id": 300064,
+        "community_id": 400007,
+        "when_": "2026-10-25T18:23:00.000000Z"
+      },
+      "community": {
+        "id": 400007,
+        "name": "topic_7",
+        "title": "Topic 7",
+        "description": "A friendly place to share notes and questions about topic 7.",
+        "removed": false,
+        "published": "2023-06-14T12:07:00.000000Z",
+        "updated": "2023-06-14T12:17:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_7",
+        "local": true,
+        "icon": "https://assets.example/communities/400007.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300064,
+        "name": "reader_300064",
+        "avatar": "https://assets.example/avatars/300064.png",
+        "banned": true,
+        "published": "2024-04-12T12:24:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300064",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "ban_expires": "2027-01-01T00:00:00Z",
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_transfer_community": {
+        "id": 700022,
+        "mod_person_id": 300001,
+        "other_person_id": 300037,
+        "community_id": 400014,
+        "when_": "2026-10-25T17:22:00.000000Z"
+      },
+      "community": {
+        "id": 400014,
+        "name": "topic_14",
+        "title": "Topic 14",
+        "description": "A friendly place to share notes and questions about topic 14.",
+        "removed": false,
+        "published": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/topic_14",
+        "local": true,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "modded_person": {
+        "id": 300037,
+        "name": "reader_300037",
+        "avatar": "https://assets.example/avatars/300037.png",
+        "banned": false,
+        "published": "2024-04-12T12:37:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300037",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    }
+  ],
+  "added": [
+    {
+      "mod_add": {
+        "id": 700013,
+        "mod_person_id": 300001,
+        "other_person_id": 300130,
+        "removed": false,
+        "when_": "2026-10-25T18:13:00.000000Z"
+      },
+      "modded_person": {
+        "id": 300130,
+        "name": "reader_300130",
+        "display_name": "Reader 130",
+        "avatar": "https://assets.example/avatars/300130.png",
+        "banned": false,
+        "published": "2024-04-12T12:10:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300130",
+        "local": true,
+        "deleted": false,
+        "bot_account": true,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_add": {
+        "id": 700012,
+        "mod_person_id": 300001,
+        "other_person_id": 300037,
+        "removed": false,
+        "when_": "2026-10-25T17:12:00.000000Z"
+      },
+      "modded_person": {
+        "id": 300037,
+        "name": "reader_300037",
+        "avatar": "https://assets.example/avatars/300037.png",
+        "banned": false,
+        "published": "2024-04-12T12:37:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300037",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_add": {
+        "id": 700011,
+        "mod_person_id": 300004,
+        "other_person_id": 300006,
+        "removed": true,
+        "when_": "2026-10-25T18:11:00.000000Z"
+      },
+      "modded_person": {
+        "id": 300006,
+        "name": "reader_300006",
+        "display_name": "Reader 6",
+        "banned": false,
+        "published": "2024-04-12T12:06:00.000000Z",
+        "updated": "2024-04-12T12:16:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300006",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_add": {
+        "id": 700010,
+        "mod_person_id": 300001,
+        "other_person_id": 300009,
+        "removed": false,
+        "when_": "2026-10-25T17:10:00.000000Z"
+      },
+      "modded_person": {
+        "id": 300009,
+        "name": "reader_300009",
+        "display_name": "Reader 9",
+        "avatar": "https://assets.example/avatars/300009.png",
+        "banned": false,
+        "published": "2024-04-12T12:09:00.000000Z",
+        "updated": "2024-04-12T12:19:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300009",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "mod_add": {
+        "id": 700009,
+        "mod_person_id": 300001,
+        "other_person_id": 300011,
+        "removed": false,
+        "when_": "2026-10-25T18:09:00.000000Z"
+      },
+      "modded_person": {
+        "id": 300011,
+        "name": "reader_300011",
+        "display_name": "Reader 11",
+        "avatar": "https://assets.example/avatars/300011.png",
+        "banned": false,
+        "published": "2024-04-12T12:11:00.000000Z",
+        "updated": "2024-04-12T12:21:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300011",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "banner": "https://assets.example/banners/300011.png",
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    }
+  ],
+  "admin_purged_persons": [
+    {
+      "admin_purge_person": {
+        "id": 700021,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:21:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_person": {
+        "id": 700020,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:20:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_person": {
+        "id": 700019,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:19:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_person": {
+        "id": 700018,
+        "admin_person_id": 300004,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:18:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_person": {
+        "id": 700017,
+        "admin_person_id": 300011,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:17:00.000000Z"
+      }
+    }
+  ],
+  "admin_purged_communities": [
+    {
+      "admin_purge_community": {
+        "id": 700005,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:05:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_community": {
+        "id": 700004,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:04:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_community": {
+        "id": 700003,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:03:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_community": {
+        "id": 700002,
+        "admin_person_id": 300037,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:02:00.000000Z"
+      }
+    },
+    {
+      "admin_purge_community": {
+        "id": 700001,
+        "admin_person_id": 300011,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:01:00.000000Z"
+      }
+    }
+  ],
+  "admin_purged_posts": [
+    {
+      "admin_purge_post": {
+        "id": 700018,
+        "admin_person_id": 300037,
+        "community_id": 400066,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:18:00.000000Z"
+      },
+      "community": {
+        "id": 400066,
+        "name": "topic_66",
+        "title": "Topic 66",
+        "description": "A friendly place to share notes and questions about topic 66.",
+        "removed": false,
+        "published": "2023-06-14T12:26:00.000000Z",
+        "updated": "2023-06-14T12:36:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote2.example/c/topic_66",
+        "local": false,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600016,
+        "visibility": "Public"
+      }
+    },
+    {
+      "admin_purge_post": {
+        "id": 700017,
+        "admin_person_id": 300037,
+        "community_id": 400029,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:17:00.000000Z"
+      },
+      "community": {
+        "id": 400029,
+        "name": "topic_29",
+        "title": "Topic 29",
+        "description": "A friendly place to share notes and questions about topic 29.",
+        "removed": true,
+        "published": "2023-06-14T12:29:00.000000Z",
+        "updated": "2023-06-14T12:39:00.000000Z",
+        "deleted": false,
+        "nsfw": true,
+        "actor_id": "https://remote3.example/c/topic_29",
+        "local": false,
+        "icon": "https://assets.example/communities/400029.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600013,
+        "visibility": "Public"
+      }
+    },
+    {
+      "admin_purge_post": {
+        "id": 700016,
+        "admin_person_id": 300037,
+        "community_id": 400091,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:16:00.000000Z"
+      },
+      "community": {
+        "id": 400091,
+        "name": "topic_91",
+        "title": "Topic 91",
+        "description": "A friendly place to share notes and questions about topic 91.",
+        "removed": false,
+        "published": "2023-06-14T12:11:00.000000Z",
+        "updated": "2023-06-14T12:21:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote21.example/c/topic_91",
+        "local": false,
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600019,
+        "visibility": "Public"
+      }
+    },
+    {
+      "admin_purge_post": {
+        "id": 700015,
+        "admin_person_id": 300037,
+        "community_id": 400049,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:15:00.000000Z"
+      },
+      "community": {
+        "id": 400049,
+        "name": "topic_49",
+        "title": "Topic 49",
+        "description": "A friendly place to share notes and questions about topic 49.",
+        "removed": false,
+        "published": "2023-06-14T12:09:00.000000Z",
+        "updated": "2023-06-14T12:19:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote28.example/c/topic_49",
+        "local": false,
+        "icon": "https://assets.example/communities/400049.png",
+        "banner": "https://assets.example/banners/400049.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600033,
+        "visibility": "Public"
+      }
+    },
+    {
+      "admin_purge_post": {
+        "id": 700014,
+        "admin_person_id": 300037,
+        "community_id": 400048,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:14:00.000000Z"
+      },
+      "community": {
+        "id": 400048,
+        "name": "topic_48",
+        "title": "Topic 48",
+        "description": "A friendly place to share notes and questions about topic 48.",
+        "removed": false,
+        "published": "2023-06-14T12:08:00.000000Z",
+        "updated": "2023-06-14T12:18:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://remote28.example/c/topic_48",
+        "local": false,
+        "icon": "https://assets.example/communities/400048.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600033,
+        "visibility": "Public"
+      }
+    }
+  ],
+  "admin_purged_comments": [
+    {
+      "admin_purge_comment": {
+        "id": 700008,
+        "admin_person_id": 300037,
+        "post_id": 100012,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:08:00.000000Z"
+      },
+      "post": {
+        "id": 100012,
+        "name": "A question about growing herbs",
+        "body": "A short, fictional note about a question about growing herbs. What would you add?",
+        "creator_id": 300107,
+        "community_id": 400008,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:12:00.000000Z",
+        "updated": "2026-10-25T17:22:00.000000Z",
+        "deleted": true,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100012",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      }
+    },
+    {
+      "admin_purge_comment": {
+        "id": 700007,
+        "admin_person_id": 300037,
+        "post_id": 100012,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:07:00.000000Z"
+      },
+      "post": {
+        "id": 100012,
+        "name": "A question about growing herbs",
+        "body": "A short, fictional note about a question about growing herbs. What would you add?",
+        "creator_id": 300107,
+        "community_id": 400008,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:12:00.000000Z",
+        "updated": "2026-10-25T17:22:00.000000Z",
+        "deleted": true,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100012",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      }
+    },
+    {
+      "admin_purge_comment": {
+        "id": 700006,
+        "admin_person_id": 300037,
+        "post_id": 100012,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:06:00.000000Z"
+      },
+      "post": {
+        "id": 100012,
+        "name": "A question about growing herbs",
+        "body": "A short, fictional note about a question about growing herbs. What would you add?",
+        "creator_id": 300107,
+        "community_id": 400008,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:12:00.000000Z",
+        "updated": "2026-10-25T17:22:00.000000Z",
+        "deleted": true,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100012",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      }
+    },
+    {
+      "admin_purge_comment": {
+        "id": 700005,
+        "admin_person_id": 300037,
+        "post_id": 100012,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T18:05:00.000000Z"
+      },
+      "post": {
+        "id": 100012,
+        "name": "A question about growing herbs",
+        "body": "A short, fictional note about a question about growing herbs. What would you add?",
+        "creator_id": 300107,
+        "community_id": 400008,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:12:00.000000Z",
+        "updated": "2026-10-25T17:22:00.000000Z",
+        "deleted": true,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100012",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      }
+    },
+    {
+      "admin_purge_comment": {
+        "id": 700004,
+        "admin_person_id": 300037,
+        "post_id": 100012,
+        "reason": "Off topic for this community",
+        "when_": "2026-10-25T17:04:00.000000Z"
+      },
+      "post": {
+        "id": 100012,
+        "name": "A question about growing herbs",
+        "body": "A short, fictional note about a question about growing herbs. What would you add?",
+        "creator_id": 300107,
+        "community_id": 400008,
+        "removed": false,
+        "locked": false,
+        "published": "2026-10-25T17:12:00.000000Z",
+        "updated": "2026-10-25T17:22:00.000000Z",
+        "deleted": true,
+        "nsfw": false,
+        "ap_id": "https://remote3.example/post/100012",
+        "local": false,
+        "language_id": 0,
+        "featured_community": false,
+        "featured_local": false
+      }
+    }
+  ],
+  "hidden_communities": []
+}

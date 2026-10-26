@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: http: data: blob:; media-src 'self' https: http: data: blob:; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; frame-src blob: https:; font-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>Olemmy</title>
+<meta name="description" content="An old-school, information-dense web client for Lemmy.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#dce9e2">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#20322f">
+<script src="js/theme-init.js"></script>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/listing.css">
+<link rel="stylesheet" href="css/comments.css">
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/features.css">
+<link rel="stylesheet" href="css/update.css">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<script defer src="vendor/markdown-it@15.0.2/markdown-it.min.js" integrity="sha384-eaXixoauKhs0THQDG40r2SPao0FZmzCXLMECD9sbA02doHE3APxry0Az2P/oBq9E"></script>
+<script defer src="vendor/markdown-it-sub@2.0.0/markdown-it-sub.min.js" integrity="sha384-dnh7GS1nJIO1r6Y84i1YDPbiYRDLNusnRQkkw/EI7wHnT+gdT5tPanBjnoetYetM"></script>
+<script defer src="vendor/markdown-it-sup@2.0.0/markdown-it-sup.min.js" integrity="sha384-T5eNrld1wzCdLyam9/fp1IcmYo3wtEdyjCW/tcSUrWOcV/HTmaKa4jUz5fKtvVsW"></script>
+<script defer src="vendor/markdown-it-footnote@4.0.0/markdown-it-footnote.min.js" integrity="sha384-7mE/Iobn0ulfWG/11wQHPJLIV11r3mVxTdSnuNIL71f/DM1wFjtMREh+nxliUVdY"></script>
+<script defer src="vendor/markdown-it-container@4.0.0/markdown-it-container.min.js" integrity="sha384-bWzHiMNUM1IUEAvXG1AKK4I2GvZTOM+a1a4gKj90vO+65ETsMbwmqkvfNvjJFpnh"></script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="header"></header>
+<div id="banners" class="banners"></div>
+<div class="page">
+  <main id="main" tabindex="-1">
+    <noscript>
+      <div class="error-box">
+        <h1>Olemmy needs JavaScript</h1>
+        <p>Olemmy is a Lemmy client that runs entirely in your browser, so it needs JavaScript turned on. You can also use your instance's own website.</p>
+      </div>
+    </noscript>
+  </main>
+  <aside id="sidebar" class="sidebar" tabindex="-1" aria-label="Sidebar"></aside>
+</div>
+<div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+<footer id="footer" class="footer"></footer>
+</body>
+</html>

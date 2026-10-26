@@ -1,0 +1,100 @@
+# Test every push and pull request; deploy the default branch to GitHub Pages.
+#
+# One-time setup on GitHub: Settings › Pages › Build and deployment › Source:
+# "GitHub Actions". With a custom domain (Settings › Pages › Custom domain),
+# the site is at its root; without one it's at /<repository>/, which the
+# build is told (-b) for its not-found page.
+
+name: Test and deploy
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Unit tests
+        run: npm test
+
+      - name: End-to-end tests (the source, web/)
+        run: npx playwright test
+
+      - name: End-to-end tests (a fresh build, dist/web)
+        run: npm run test:e2e:dist
+
+      - name: Keep the test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: test
+    # Only the default branch, and not from pull requests.
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # One deployment at a time; a newer one waits rather than cutting this off.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        # Pages compresses on its own (no -z). base_path is empty with a
+        # custom domain, /<repository> without one.
+        run: |
+          BASE="${{ steps.pages.outputs.base_path }}"
+          ./scripts/build.sh -c ${BASE:+-b "$BASE"}
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/web
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

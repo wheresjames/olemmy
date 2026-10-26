@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Olemmy's own icons, drawn for this app. All use currentColor, so they
+       follow the theme. Referenced as assets/icons.svg#name. -->
+  <symbol id="up" viewBox="0 0 16 16"><path d="M8 2 14 9H10.5V14H5.5V9H2Z" fill="currentColor"/></symbol>
+  <symbol id="down" viewBox="0 0 16 16"><path d="M8 14 2 7H5.5V2H10.5V7H14Z" fill="currentColor"/></symbol>
+  <symbol id="mail" viewBox="0 0 20 16"><path d="M2 2H18V14H2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M2.5 2.8 10 9 17.5 2.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="gear" viewBox="0 0 16 16"><path d="M6.8 1h2.4l.4 1.9a5.4 5.4 0 0 1 1.3.7l1.8-.7 1.2 2.1-1.4 1.3a5.6 5.6 0 0 1 0 1.5l1.4 1.3-1.2 2.1-1.8-.7a5.4 5.4 0 0 1-1.3.7L9.2 15H6.8l-.4-1.9a5.4 5.4 0 0 1-1.3-.7l-1.8.7-1.2-2.1 1.4-1.3a5.6 5.6 0 0 1 0-1.5L2.1 6.9l1.2-2.1 1.8.7a5.4 5.4 0 0 1 1.3-.7ZM8 5.6A2.4 2.4 0 1 0 8 10.4 2.4 2.4 0 0 0 8 5.6Z" fill="currentColor" fill-rule="evenodd"/></symbol>
+  <symbol id="menu" viewBox="0 0 16 16"><path d="M2 3.5H14M2 8H14M2 12.5H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="image" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="5.5" cy="6.5" r="1.4" fill="currentColor"/><path d="M2.5 12.5 6.5 8.5 9 11 11 9 13.5 12.5Z" fill="currentColor"/></symbol>
+  <symbol id="play" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6.4 5.2 11 8 6.4 10.8Z" fill="currentColor"/></symbol>
+  <symbol id="text" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 5H11.5M4.5 8H11.5M4.5 11H9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="collapse" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.2 5.2 10.8 10.8M10.8 5.2 5.2 10.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="theme-auto" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.8A6.2 6.2 0 0 1 8 14.2Z" fill="currentColor"/></symbol>
+  <symbol id="theme-light" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><path d="M8 .8V3M8 13V15.2M.8 8H3M13 8H15.2M2.9 2.9 4.5 4.5M11.5 11.5 13.1 13.1M2.9 13.1 4.5 11.5M11.5 4.5 13.1 2.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="theme-dark" viewBox="0 0 16 16"><path d="M10.5 1.5A6.6 6.6 0 1 0 14.5 11 5.4 5.4 0 0 1 10.5 1.5Z" fill="currentColor"/></symbol>
+  <symbol id="thumb-self" viewBox="0 0 70 70"><rect x="17" y="13" width="36" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M25 25H45M25 33H45M25 41H38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="thumb-link" viewBox="0 0 70 70"><path d="M31 39a7 7 0 0 0 10 0l8-8a7 7 0 0 0-10-10l-3 3M39 31a7 7 0 0 0-10 0l-8 8a7 7 0 0 0 10 10l3-3" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></symbol>
+  <symbol id="thumb-image" viewBox="0 0 70 70"><rect x="13" y="17" width="44" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="25" cy="29" r="4" fill="currentColor"/><path d="M16 50 30 36 39 45 45 39 54 50Z" fill="currentColor"/></symbol>
+  <symbol id="thumb-video" viewBox="0 0 70 70"><circle cx="35" cy="35" r="20" fill="none" stroke="currentColor" stroke-width="3"/><path d="M30 26 45 35 30 44Z" fill="currentColor"/></symbol>
+  <symbol id="thumb-nsfw" viewBox="0 0 70 70"><rect x="10" y="22" width="50" height="26" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><text x="35" y="41" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="bold" fill="currentColor">NSFW</text></symbol>
+  <symbol id="tag" viewBox="0 0 16 16"><path d="M2 2.5V8l6.5 6.5 6-6L8 2H2.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="5.2" cy="5.2" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="arrow-up" viewBox="0 0 16 16"><path d="M3.5 10 8 5.5 12.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="arrow-down" viewBox="0 0 16 16"><path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="grid" viewBox="0 0 16 16"><path d="M2 2h5v5H2ZM9 2h5v5H9ZM2 9h5v5H2ZM9 9h5v5H9Z" fill="currentColor"/></symbol>
+  <symbol id="alert" viewBox="0 0 16 16"><path d="M8 1.6 15 14.2H1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6V9.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="12" r="1" fill="currentColor"/></symbol>
+  <symbol id="shield" viewBox="0 0 16 16"><path d="M8 1.5 13.5 3.5V8c0 3.3-2.4 5.6-5.5 6.5C4.9 13.6 2.5 11.3 2.5 8V3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</svg>

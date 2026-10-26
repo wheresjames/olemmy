@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olemmy compatibility check</title>
+<style>
+  :root { color-scheme: light dark; font: 14px/1.4 system-ui, sans-serif; }
+  body { max-width: 72rem; margin: 1rem auto; padding: 0 1rem; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #8884; padding: .25rem .5rem; text-align: left; }
+  .yes { color: #2a7d2a; } .no { color: #c0392b; font-weight: 600; }
+  textarea { width: 100%; height: 6rem; font: inherit; }
+</style>
+</head>
+<body>
+<h1>Olemmy compatibility check</h1>
+<p>Runs the checks of <code>scripts/compat.mjs</code> from a real browser, so CORS is decided by the browser itself.
+Serve this folder from any origin (<code>python3 -m http.server -d tools/compat 8000</code>) and press Run.
+The upload check posts a 1×1 PNG with a made-up token: it can't upload anything, but shows whether the browser lets the request through.</p>
+<label for="hosts">Instances, one per line</label>
+<textarea id="hosts">lemmy.world
+sh.itjust.works
+lemmy.zip
+lemmy.ml
+feddit.org
+hexbear.net
+lemmy.ca
+lemmy.dbzer0.com
+lemmy.blahaj.zone
+programming.dev
+discuss.tchncs.de
+lemmygrad.ml
+sopuli.xyz
+lemmy.today
+feddit.uk
+aussie.zone
+infosec.pub
+reddthat.com
+jlai.lu
+crustaceanson.theshelf.top</textarea>
+<p><button id="run" type="button">Run</button> <span id="state"></span></p>
+<table>
+  <thead><tr><th>Instance</th><th>Version</th><th>Read</th><th>Auth call</th><th>Upload</th><th>API v4</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<script type="module" src="compat.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+/* The not-found page (404.html): Olemmy's header and a titled box,
+   with the theme tokens, so it matches the app in every theme. */
+.notfound { min-height: 100vh; display: flex; flex-direction: column; }
+.nf-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+}
+.nf-home { display: flex; align-items: center; gap: 6px; text-decoration: none; }
+.nf-home:hover { text-decoration: none; }
+.nf-home img { border-radius: 6px; }
+.nf-wordmark { font-size: 1.6em; font-weight: bold; letter-spacing: -0.02em; color: var(--title-link); }
+.nf-pagename { font-weight: bold; font-size: var(--fs-sm); text-transform: uppercase; color: var(--header-text); }
+.nf-page { flex: 1; width: 100%; max-width: 40rem; margin: 0 auto; padding: var(--sp-5) var(--sp-3); }
+.nf-box { border: 1px solid var(--header-border); border-radius: var(--radius); background: var(--bg); }
+.nf-box-title {
+  margin: 0;
+  padding: var(--sp-1) var(--sp-3);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  color: var(--header-text);
+  font-size: var(--fs-sm);
+}
+.nf-box-body { padding: var(--sp-3); line-height: 1.5; }
+.nf-box-body p { margin: 0 0 var(--sp-3); }
+.nf-box-body code { overflow-wrap: anywhere; }
+.nf-hint { color: var(--text-muted); font-size: var(--fs-sm); }
+.nf-search { display: flex; flex-direction: column; gap: var(--sp-1); margin: 0 0 var(--sp-3); }
+.nf-search label { font-weight: bold; font-size: var(--fs-sm); }
+.nf-search-row { display: flex; gap: var(--sp-2); }
+.nf-search input { flex: 1; min-width: 0; padding: var(--sp-1) var(--sp-2); border: 1px solid var(--input-border); border-radius: var(--radius); background: var(--input-bg); font-size: max(16px, 1em); }
+.nf-links { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.nf-footer { padding: var(--sp-4) var(--sp-3); text-align: center; color: var(--text-muted); font-size: var(--fs-sm); border-top: 1px solid var(--border); background: var(--bg-alt); }
+@media (max-width: 600px) { .nf-wordmark { display: none; } }

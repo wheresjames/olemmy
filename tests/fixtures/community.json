@@ -1,0 +1,250 @@
+{
+  "community_view": {
+    "community": {
+      "id": 400004,
+      "name": "linux",
+      "title": "Linux",
+      "description": "A friendly place to share notes and questions about linux.",
+      "removed": false,
+      "published": "2023-06-14T12:04:00.000000Z",
+      "updated": "2023-06-14T12:14:00.000000Z",
+      "deleted": false,
+      "nsfw": false,
+      "actor_id": "https://fixture.test/c/linux",
+      "local": true,
+      "icon": "https://assets.example/communities/400004.png",
+      "hidden": false,
+      "posting_restricted_to_mods": false,
+      "instance_id": 600003,
+      "visibility": "Public"
+    },
+    "subscribed": "NotSubscribed",
+    "blocked": false,
+    "counts": {
+      "community_id": 400004,
+      "subscribers": 44,
+      "posts": 24,
+      "comments": 114,
+      "published": "2023-06-14T12:04:00.000000Z",
+      "users_active_day": 298,
+      "users_active_week": 3428,
+      "users_active_month": 6307,
+      "users_active_half_year": 12881,
+      "subscribers_local": 24
+    },
+    "banned_from_community": false
+  },
+  "site": {
+    "id": 500001,
+    "name": "Example Forum",
+    "sidebar": "Welcome to Example Forum. Share useful notes, ask questions, and be kind to others.\n\n## Community guidelines\n1. Stay on topic.\n2. Be respectful.\n3. Keep discussions welcoming.",
+    "published": "2026-10-25T18:01:00.000000Z",
+    "updated": "2026-10-25T18:11:00.000000Z",
+    "icon": "https://assets.example/site/500001.png",
+    "description": "A fictional discussion forum used for offline tests.",
+    "actor_id": "https://fixture.test/",
+    "last_refreshed_at": "2026-10-25T18:01:00.000000Z",
+    "inbox_url": "https://fixture.test/inbox",
+    "public_key": "Fictional test key",
+    "instance_id": 600003
+  },
+  "moderators": [
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300003,
+        "name": "reader_300003",
+        "banned": false,
+        "published": "2024-04-12T12:03:00.000000Z",
+        "updated": "2024-04-12T12:13:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300003",
+        "local": true,
+        "deleted": true,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300002,
+        "name": "reader_300002",
+        "banned": false,
+        "published": "2024-04-12T12:02:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300002",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300008,
+        "name": "reader_300008",
+        "banned": false,
+        "published": "2024-04-12T12:08:00.000000Z",
+        "updated": "2024-04-12T12:18:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300008",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300011,
+        "name": "reader_300011",
+        "display_name": "Reader 11",
+        "avatar": "https://assets.example/avatars/300011.png",
+        "banned": false,
+        "published": "2024-04-12T12:11:00.000000Z",
+        "updated": "2024-04-12T12:21:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300011",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "banner": "https://assets.example/banners/300011.png",
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300010,
+        "name": "reader_300010",
+        "display_name": "Reader 10",
+        "banned": false,
+        "published": "2024-04-12T12:10:00.000000Z",
+        "updated": "2024-04-12T12:20:00.000000Z",
+        "actor_id": "https://fixture.test/u/reader_300010",
+        "bio": "Enjoys quiet projects, useful notes, and friendly discussion.",
+        "local": true,
+        "deleted": false,
+        "bot_account": false,
+        "instance_id": 600003
+      }
+    },
+    {
+      "community": {
+        "id": 400004,
+        "name": "linux",
+        "title": "Linux",
+        "description": "A friendly place to share notes and questions about linux.",
+        "removed": false,
+        "published": "2023-06-14T12:04:00.000000Z",
+        "updated": "2023-06-14T12:14:00.000000Z",
+        "deleted": false,
+        "nsfw": false,
+        "actor_id": "https://fixture.test/c/linux",
+        "local": true,
+        "icon": "https://assets.example/communities/400004.png",
+        "hidden": false,
+        "posting_restricted_to_mods": false,
+        "instance_id": 600003,
+        "visibility": "Public"
+      },
+      "moderator": {
+        "id": 300014,
+        "name": "reader_300014",
+        "banned": false,
+        "published": "2024-04-12T12:14:00.000000Z",
+        "actor_id": "https://remote12.example/u/reader_300014",
+        "local": false,
+        "deleted": true,
+        "bot_account": false,
+        "instance_id": 600015
+      }
+    }
+  ],
+  "discussion_languages": []
+}

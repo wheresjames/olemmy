@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<!-- Served at whatever address wasn't found, so every path is from the
+     site's root (server.json's policy allows no <base>). -->
+<title>Page not found · Olemmy</title>
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#dce9e2">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#20322f">
+<script src="/js/404.js"></script>
+<script src="/js/theme-init.js"></script>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/notfound.css">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icon-192.png">
+</head>
+<body class="notfound">
+<header class="nf-header">
+  <a class="nf-home" href="/#/" aria-label="Olemmy front page">
+    <img src="/assets/favicon.svg" alt="" width="32" height="32">
+    <span class="nf-wordmark">olemmy</span>
+  </a>
+  <span class="nf-pagename">page not found</span>
+</header>
+<main class="nf-page">
+  <section class="nf-box" aria-labelledby="nf-title">
+    <h1 class="nf-box-title" id="nf-title">page not found</h1>
+    <div class="nf-box-body">
+      <p>There's nothing at <code id="nf-path">this address</code>. It may have been mistyped, or it's from somewhere else.</p>
+      <p class="nf-hint">Olemmy's own pages have a <code>#</code> in their address, like <code>olemmy.com/#/c/linux@lemmy.ml</code>.</p>
+      <form class="nf-search" id="nf-search" role="search">
+        <label for="nf-q">Search Lemmy for it</label>
+        <span class="nf-search-row"><input id="nf-q" type="search" name="q" autocomplete="off"><button class="btn" type="submit">search</button></span>
+      </form>
+      <p class="nf-links"><a class="btn btn-primary" href="/#/">front page</a> <a class="btn" href="/#/communities">communities</a></p>
+    </div>
+  </section>
+</main>
+<footer class="nf-footer"><a href="/#/about">about Olemmy</a> · <a href="/reset.html">app not working?</a></footer>
+</body>
+</html>
