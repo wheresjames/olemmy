@@ -270,3 +270,15 @@ test.describe('API v4', () => {
     await expect(page.locator('.comment-tree > .comment').first()).toBeVisible();
   });
 });
+
+test('single-click opener: off by default; when on, only beside links that don\'t show inline', async ({ page }) => {
+  await page.goto('/#/');
+  await expect(page.locator('.thing.link')).toHaveCount(25);
+  await expect(page.locator('.single-click')).toHaveCount(0);
+  await page.evaluate(async () => (await import('./js/features/registry.js')).setEnabled('singleClick', true));
+  await page.reload();
+  await expect(page.locator('.thing.link')).toHaveCount(25);
+  await expect(page.locator('.thing.link[data-domain="articles.example"] .single-click').first()).toBeVisible();
+  await expect(page.locator('.thing.link[data-domain="assets.example"] .single-click')).toHaveCount(0);
+  await expect(page.locator('.thing.link.has-video .single-click')).toHaveCount(0);
+});

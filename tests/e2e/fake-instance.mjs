@@ -9,7 +9,7 @@ import * as v4 from '../helpers/v4.mjs';
 
 export const INSTANCE = 'fixture.test';
 const ORIGIN = `https://${INSTANCE}`;
-const NOW = new Date('2026-10-25T20:00:00Z');
+export const NOW = new Date('2026-10-25T20:00:00Z');
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
 const COLORS = [['#dae8e5', '#74a59b'], ['#eee3d5', '#c6976c'], ['#e2e4f1', '#8798c5'], ['#e8e5db', '#9b9c78']];
 function thumbnail(url) {
@@ -58,6 +58,18 @@ function v4Answer(path, req, authed) {
   }
 }
 
+/** The picker's instance list (Lemmyverse's format), with the fake instance in it. */
+const directoryEntry = (baseurl, name, extra) => ({
+  baseurl, name, desc: '', icon: `https://${baseurl}/icon.png`, reg_mode: 2, private: false, langs: ['all'], tags: [],
+  counts: { users: 100, users_active_month: 10 }, published: 1688335167000, score: 1, isSuspicious: false, ...extra,
+});
+export const DIRECTORY = [
+  directoryEntry('big.example', 'Big Place', { desc: 'A general purpose instance for everyone.', score: 90, counts: { users: 50000, users_active_month: 3000 }, tags: ['general purpose'] }),
+  directoryEntry(INSTANCE, 'Fixture', { desc: 'The test instance.', score: 50, langs: ['en'] }),
+  directoryEntry('quiet.example', 'Quiet Corner', { desc: 'Small, about gardening.', score: 5, reg_mode: 0, langs: ['de'] }),
+  directoryEntry('spam.example', 'Spam Farm', { score: 999, isSuspicious: true }),
+];
+
 /**
  * Serve the fake instance on [page]. Returns the requests it got, for
  * tests to check what the app sent.
@@ -67,6 +79,9 @@ export async function fakeInstance(page, { loggedIn = false, siteFails = false, 
   await page.route((url) => url.hostname !== 'localhost', async (route) => {
     const req = route.request();
     const url = new URL(req.url());
+    if (url.hostname === 'data.lemmyverse.net') {
+      return route.fulfill({ contentType: 'application/json', body: JSON.stringify(DIRECTORY), headers: { 'access-control-allow-origin': '*' } });
+    }
     if (url.origin !== ORIGIN) {
       // Fictional post thumbnails; other remote images are a pixel. No network.
       if (req.resourceType() === 'image' && url.hostname === 'assets.example' && url.pathname.startsWith('/posts/')) {

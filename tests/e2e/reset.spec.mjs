@@ -2,7 +2,7 @@
 // shares no code with the app, and the link that appears when the page is
 // still empty after loading.
 
-import { test, expect } from './fake-instance.mjs';
+import { test, expect, NOW } from './fake-instance.mjs';
 
 const settings = (page) => page.evaluate(() => localStorage.getItem('olemmy:settings'));
 
@@ -53,12 +53,14 @@ test('"Erase" removes Olemmy\'s data, and only that', async ({ page }) => {
 });
 
 test('when the app doesn\'t start, a link to the reset page appears', async ({ page }) => {
-  test.setTimeout(30000);
   // A broken main.js: the header and page stay empty.
   await page.route(/\/js\/main\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: 'throw new Error("stale file");' }));
+  await page.clock.install({ time: NOW });
   await page.goto('/#/');
+  await page.waitForLoadState('load');
+  await page.clock.runFor(8000);
   const notice = page.locator('#main .start-failed');
-  await expect(notice).toBeVisible({ timeout: 12000 });
+  await expect(notice).toBeVisible();
   await expect(notice.locator('a', { hasText: 'refresh the app' })).toHaveAttribute('href', 'reset.html');
   // ...with what went wrong.
   await expect(notice.locator('.start-errors')).toContainText('stale file');
@@ -89,17 +91,27 @@ test('a file that stays broken: one automatic try, then the notice (no loop)', a
     const real = await (await route.fetch()).text();
     await route.fulfill({ contentType: 'text/javascript', body: real.replace(/export function shareRoute/, 'function shareRoute') });
   });
+  await page.clock.install({ time: NOW });
   await page.goto('/#/');
-  await expect(page.locator('#main .start-failed')).toBeVisible({ timeout: 30000 });
+  // Off to the reset page and back; then the start-up check's wait, run at once.
+  await expect.poll(() => visits.filter((p) => p.endsWith('reset.html')).length, { timeout: 30000 }).toBe(1);
+  await expect(page).toHaveURL(/\/#\/$/, { timeout: 30000 });
+  await page.waitForLoadState('load');
+  await page.clock.runFor(8000);
+  await expect(page.locator('#main .start-failed')).toBeVisible();
   await expect(page.locator('#main .start-errors')).toContainText('shareRoute');
   expect(visits.filter((p) => p.endsWith('reset.html')).length).toBe(1);
 });
 
 test('/?debug shows a diagnostics panel, kept for the session; ?debug=off ends it', async ({ page }) => {
   await page.route(/\/js\/features\/gallery\.js$/, (r) => r.fulfill({ status: 404, body: '' }));
+  // The panel waits a few seconds for the app; the fake clock skips them.
+  await page.clock.install({ time: NOW });
   await page.goto('/?debug#/');
+  await page.waitForLoadState('load');
+  await page.clock.runFor(3000);
   const panel = page.locator('.olemmy-debug');
-  await expect(panel).toBeVisible({ timeout: 8000 });
+  await expect(panel).toBeVisible();
   const text = panel.locator('pre');
   await expect(text).toContainText('address: /?debug#/');
   await expect(text).toContainText('middle of screen:');
@@ -109,9 +121,12 @@ test('/?debug shows a diagnostics panel, kept for the session; ?debug=off ends i
   await expect(text).toContainText('failed to load /js/main.js');
   // Still on after moving around (no ?debug in the address any more).
   await page.goto('/#/settings');
-  await expect(panel).toBeVisible({ timeout: 8000 });
+  await page.waitForLoadState('load');
+  await page.clock.runFor(3000);
+  await expect(panel).toBeVisible();
   await page.goto('/?debug=off#/');
-  await page.waitForTimeout(3500);
+  await page.waitForLoadState('load');
+  await page.clock.runFor(3500);
   await expect(panel).toHaveCount(0);
 });
 

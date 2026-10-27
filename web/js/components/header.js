@@ -4,9 +4,12 @@
 
 import { h, icon, fill } from '../core/h.js';
 import { signal } from '../core/signal.js';
-import { href } from '../core/router.js';
-import { loggedIn, account, accounts, instance, subscriptions, unread, unreadTotal, logout, site, switchAccount, hasToken, moderated, isAdmin, reportCount } from '../state/session.js';
-import { hostOf } from '../api/client.js';
+import { href, navigate } from '../core/router.js';
+import { loggedIn, account, accounts, instance, subscriptions, unread, unreadTotal, logout, site, switchAccount, hasToken, moderated, isAdmin, reportCount, chooseInstance } from '../state/session.js';
+import { starred } from '../state/starred-instances.js';
+import { baseUrl, hostOf } from '../api/client.js';
+import { LemmyV3 } from '../api/v3.js';
+import { toastError } from './toast.js';
 import { onErrors, unseenErrors } from '../core/errors.js';
 import { communityHref } from './common.js';
 import { shortcutBar } from '../features/shortcut-bar.js';
@@ -60,6 +63,38 @@ function accountMenu(a) {
       h('li.account-manage', h('a', { href: href('/settings', { feature: 'accounts' }) }, 'manage accounts'))));
 }
 
+/** Switch to starred instance [host], once it answers, and go to its front page. */
+async function switchInstance(host) {
+  try {
+    await new LemmyV3(baseUrl(host)).site({ fresh: true });
+    chooseInstance(host);
+    navigate('#/');
+  } catch (e) {
+    toastError(e, `Couldn't switch to ${host}`);
+  }
+}
+
+/**
+ * The instance, linking to the picker; with starred instances, a menu of
+ * them headed by the picker.
+ */
+function instanceMenu() {
+  const label = () => site.value?.host || instance.value || 'choose an instance';
+  const current = () => (instance.value ? hostOf(baseUrl(instance.value)) : '');
+  return () => {
+    const stars = starred.value.list;
+    if (!stars.length) return h('span.instance-name', { title: 'Your instance' }, h('a', { href: href('/instance') }, label));
+    return h('details.account-menu.instance-menu',
+      h('summary', { title: 'Your instance' }, h('span.instance-name', label)),
+      h('ul.account-list', { 'aria-label': 'Switch instance' },
+        h('li.instance-choose', h('a', { href: href('/instance') }, 'choose an instance…')),
+        stars.map((host) => h('li', { class: { current: () => host === current() } },
+          () => (host === current()
+            ? h('a', { href: href('/'), 'aria-current': 'true' }, host)
+            : h('button.link-button', { type: 'button', onclick: () => switchInstance(host) }, host))))));
+  };
+}
+
 /** ⚠ and a count while there are errors not yet seen at #/errors (core/errors.js). */
 function errorsLink() {
   const changed = signal(0);
@@ -97,7 +132,7 @@ function userArea() {
     () => {
       if (!loggedIn.value) {
         return h('span.user',
-          h('span.instance-name', { title: 'Your instance' }, h('a', { href: href('/instance') }, () => site.value?.host || instance.value || 'choose an instance')),
+          instanceMenu(),
           h('span.separator', '|'),
           h('a.login-link', { href: href('/login') }, 'log in'),
           ' or ',

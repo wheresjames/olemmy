@@ -76,7 +76,11 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
   let rank = startRank;
   let cursor = startCursor;
   let ended = false;
-  let loading = false;
+  let loading = null;              // the page load in flight
+  let watcher = null;              // never-ending scroll's sentinel watch
+  // In the tree from the start: a revisit renders from the snapshot before the
+  // feed is mounted, so it can't be inserted next to [status] later.
+  const sentinel = ner ? h('div.ner-sentinel', { 'aria-hidden': 'true' }) : null;
   const pages = [];                // { posts, cursor } per page loaded
 
   function renderPage(posts, n) {
@@ -98,10 +102,15 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
     entryState(route.key, { scope, cursors: pages.map((pg) => pg.cursor ?? null) });
   }
 
-  /** Load the next page; resolves to whether there may be more. */
-  async function loadNext() {
-    if (loading || ended || ctx.signal.aborted) return false;
-    loading = true;
+  /** Load the next page; resolves to whether there may be more. A call while
+   * a page is loading shares that load, so the sentinel doesn't give up. */
+  function loadNext() {
+    if (loading) return loading;
+    if (ended || ctx.signal.aborted) return Promise.resolve(false);
+    return (loading = fetchNext());
+  }
+
+  async function fetchNext() {
     status.replaceChildren(spinner('Loading posts…'));
     try {
       const at = cursor;
@@ -115,10 +124,10 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
       status.replaceChildren(footer());
       return !ended;
     } catch (e) {
-      if (e.kind !== 'aborted') status.replaceChildren(errorBox(e, () => loadNext()));
+      if (e.kind !== 'aborted') status.replaceChildren(errorBox(e, () => loadNext().then(() => watcher?.resume())));
       return false;
     } finally {
-      loading = false;
+      loading = null;
       list.setAttribute('aria-busy', 'false');
     }
   }
@@ -152,11 +161,9 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
       for (let i = 0; i < want; i++) if (!await loadNext()) break;
     }
     restoreScroll(route);
-    if (ner) {
-      const sentinel = h('div.ner-sentinel', { 'aria-hidden': 'true' });
-      status.after(sentinel);
-      const stop = watchSentinel(sentinel, loadNext);
-      ctx.signal.addEventListener('abort', stop, { once: true });
+    if (ner && !ctx.signal.aborted) {
+      watcher = watchSentinel(sentinel, loadNext);
+      ctx.signal.addEventListener('abort', watcher.stop, { once: true });
     }
   })();
 
@@ -166,7 +173,7 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
       showImagesButton(() => list),
       ...toolbar,
       () => (filteredNote.value ? h('span.small.filtered-note', `${filteredNote.value} hidden by your filters · `, h('a', { href: href('/settings', { tab: 'filters' }) }, 'edit filters')) : null)),
-    list, status);
+    list, status, sentinel);
 }
 
 /**

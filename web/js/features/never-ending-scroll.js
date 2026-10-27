@@ -11,8 +11,9 @@ export const nerEnabled = () => enabled('neverEndingScroll');
 const MAX_EMPTY = 5;
 
 /**
- * Watch [sentinel]; call [load] when it comes near the viewport. Returns stop.
+ * Watch [sentinel]; call [load] when it comes near the viewport.
  * After [pauseAfter] automatic pages, waits for a click (so the footer stays reachable).
+ * Returns { stop, resume }; resume re-arms it after a failed load is retried.
  */
 export function watchSentinel(sentinel, load) {
   let auto = 0;
@@ -31,7 +32,10 @@ export function watchSentinel(sentinel, load) {
     if (more && empty < MAX_EMPTY) io.observe(sentinel);
   }, { rootMargin: '0px 0px 800px 0px' });
   io.observe(sentinel);
-  return () => io.disconnect();
+  return {
+    stop: () => io.disconnect(),
+    resume: () => { empty = 0; io.unobserve(sentinel); io.observe(sentinel); },
+  };
 }
 
 export function pageSeparator(n) {

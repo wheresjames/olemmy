@@ -10,6 +10,7 @@ import { LemmyV3 } from '../api/v3.js';
 import { baseUrl, hostOf } from '../api/client.js';
 import { errorBox, setTitle, spinner, mdBlock, postHref, commentHref } from '../components/common.js';
 import { toast } from '../components/toast.js';
+import { instanceDirectory } from '../components/instance-directory.js';
 
 /** A few big general-purpose instances for the picker; any other can be typed in. */
 export const POPULAR = ['lemmy.world', 'lemmy.ml', 'sh.itjust.works', 'lemmy.zip', 'programming.dev', 'feddit.org', 'lemmy.ca', 'lemmy.dbzer0.com', 'sopuli.xyz', 'lemmy.today'];
@@ -75,9 +76,7 @@ export function instanceView(route, ctx) {
       h('label', { for: 'instance-input' }, 'instance address'),
       h('div.field-row', input, h('button.btn.btn-primary', { type: 'submit', disabled: () => busy.value }, () => (busy.value ? 'checking…' : 'use this instance')))),
     () => (error.value ? errorBox(error.value) : null),
-    h('h2', 'popular instances'),
-    h('ul.instance-list', POPULAR.map((i) => h('li', h('button.link-button', { type: 'button', onclick: () => use(i) }, i)))),
-    h('p.small', 'Find more at ', h('a', { href: 'https://join-lemmy.org/instances', target: '_blank', rel: 'noopener noreferrer' }, 'join-lemmy.org'), '.'));
+    instanceDirectory({ use, busy, popular: POPULAR }));
 }
 
 export function loginView(route, ctx) {

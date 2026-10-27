@@ -10,6 +10,63 @@ test.describe('first run', () => {
   await expect(page).toHaveURL(/#\/instance\?return=/);
   await expect(page.getByRole('heading', { name: 'Choose your Lemmy instance' })).toBeVisible();
   });
+
+  test('the picker lists instances to search, sort and star', async ({ page, errors }) => {
+    await page.goto('/#/instance');
+    const cards = page.locator('.instance-cards:not(.starred-instances) .instance-card');
+    // Ranked by Lemmyverse's score; flagged instances left out.
+    await expect(cards).toHaveCount(3);
+    await expect(cards.first().locator('.instance-card-name')).toHaveText('Big Place');
+    await expect(page.locator('[data-host="spam.example"]')).toHaveCount(0);
+    await expect(cards.nth(2)).toContainText('sign-ups closed');
+    await page.locator('#instance-search').fill('gardening');
+    await expect(cards).toHaveCount(1);
+    await expect(cards.first()).toHaveAttribute('data-host', 'quiet.example');
+    await page.locator('#instance-search').fill('');
+    await page.getByLabel('accepting sign-ups').check();
+    await expect(cards).toHaveCount(2);
+    // A star moves it to the top, and stays after a reload.
+    await page.getByRole('button', { name: 'Star Fixture' }).click();
+    await expect(page.locator('.starred-instances .instance-card')).toHaveAttribute('data-host', 'fixture.test');
+    await expect(cards).toHaveCount(1);
+    await page.reload();
+    await expect(page.locator('.starred-instances .instance-card')).toHaveAttribute('data-host', 'fixture.test');
+    await expect(page.getByRole('button', { name: 'Unstar Fixture' })).toHaveAttribute('aria-pressed', 'true');
+    // Choosing one checks it and switches to it.
+    await page.locator('.starred-instances .instance-card-name').click();
+    await expect(page.locator('.thing.link').first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test('without the instance list, the picker keeps its built-in few and starred ones', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('olemmy:starredInstances', JSON.stringify({ v: 1, data: { list: ['fixture.test'] } })));
+    await page.route('https://data.lemmyverse.net/**', (r) => r.fulfill({ status: 503, body: '' }));
+    await page.goto('/#/instance');
+    await expect(page.locator('.instance-directory .error-box')).toContainText('Couldn\'t load the instance list');
+    await expect(page.locator('.instance-list li')).toHaveCount(10);
+    await expect(page.locator('.starred-instances .instance-card-name')).toHaveText('fixture.test');
+  });
+});
+
+test('the header\'s instance is a link, or with starred instances a menu headed by the picker', async ({ page, errors }) => {
+  await page.goto('/#/');
+  await expect(page.locator('#header-bottom-right .instance-name a')).toHaveAttribute('href', '#/instance');
+  await page.evaluate(() => localStorage.setItem('olemmy:starredInstances', JSON.stringify({ v: 1, data: { list: ['fixture.test', 'big.example'] } })));
+  await page.reload();
+  const menu = page.locator('details.instance-menu');
+  await menu.locator('summary').click();
+  const items = menu.locator('.account-list li');
+  await expect(items).toHaveCount(3);
+  await expect(items.first()).toHaveText('choose an instance…');
+  await expect(items.nth(1)).toHaveClass(/current/);
+  // The fake instance is the only one that answers: no switch, and an explanation.
+  await items.nth(2).getByRole('button', { name: 'big.example' }).click();
+  await expect(page.locator('.toast-error')).toContainText('Couldn\'t switch to big.example');
+  await expect(menu.locator('summary')).toContainText('fixture.test');
+  await menu.locator('summary').click();
+  await items.first().locator('a').click();
+  await expect(page).toHaveURL(/#\/instance/);
+  expect(errors.filter((e) => !/Failed to load resource|ERR_FAILED|NetworkError|CORS/i.test(e))).toEqual([]);
 });
 
 test('front page lists posts with ranks, scores and sidebar', async ({ page, calls, errors }) => {
@@ -158,6 +215,17 @@ test('never-ending scroll loads the next page with a separator', async ({ page, 
   expect(second.query.page_cursor).toBeTruthy();
   expect(second.query.page).toBeUndefined();
   await expect(page.locator('.thing.link .rank').nth(30)).toHaveText('31');
+});
+
+test('never-ending scroll keeps loading after coming back to a listing', async ({ page }) => {
+  await page.goto('/#/');
+  await expect(page.locator('.thing.link')).toHaveCount(25);
+  await page.goto('/#/about');
+  await page.goBack();
+  await expect(page.locator('.thing.link')).toHaveCount(25);
+  await page.locator('.listing-status').scrollIntoViewIfNeeded();
+  await page.mouse.wheel(0, 3000);
+  await expect(page.locator('.ner-separator').first()).toContainText('page 2');
 });
 
 test.describe('replying', () => {

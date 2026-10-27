@@ -2,7 +2,7 @@
 // after it the error log (core/errors.js): the header's warning icon, and
 // #/errors to read, copy, share and clear.
 
-import { test, expect } from './fake-instance.mjs';
+import { test, expect, NOW } from './fake-instance.mjs';
 
 /**
  * Run [body] as a script file of the page's own ([times] over): errors from
@@ -87,12 +87,15 @@ test('a feature that throws is logged with its name, and the page carries on', a
 });
 
 test('before start-up: the red box has a report to copy', async ({ page }) => {
-  test.setTimeout(30000);
   await capture(page);
   await page.route(/\/js\/main\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: 'throw new Error("broken start");' }));
+  // The red box waits 8 seconds for the app; the fake clock skips them.
+  await page.clock.install({ time: NOW });
   await page.goto('/#/');
+  await page.waitForLoadState('load');
+  await page.clock.runFor(8000);
   const box = page.locator('#main .start-failed');
-  await expect(box).toBeVisible({ timeout: 12000 });
+  await expect(box).toBeVisible();
   await box.getByRole('button', { name: 'copy report' }).click();
   await expect(box.getByRole('button', { name: 'copied' })).toBeVisible();
   const report = await page.evaluate(() => window.copied.at(-1));

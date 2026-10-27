@@ -176,6 +176,9 @@ html:has(.comment-navigator) { scroll-padding-bottom: 4.5rem; }
 .account-list li > * { display: block; width: 100%; padding: var(--sp-2) var(--sp-4); text-align: left; }
 .account-list li.current { font-weight: bold; }
 .account-add, .account-manage { border-top: 1px solid var(--border); }
+.instance-choose { border-bottom: 1px solid var(--border); }
+/* Near the middle of the header on phones: open rightwards, inside the screen. */
+.instance-menu .account-list { right: auto; left: 0; max-width: calc(100vw - 2 * var(--sp-4)); }
 .add-account { font-weight: bold; padding: 0 3px; }
 .account-editor { padding: 0; list-style: none; }
 .account-editor li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); }
