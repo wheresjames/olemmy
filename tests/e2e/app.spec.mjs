@@ -239,9 +239,16 @@ test.describe('replying', () => {
     await box.fill('A **new** top-level comment');
     await page.reload();
     await expect(page.locator('.commentarea > .reply-form textarea')).toHaveValue('A **new** top-level comment');
+    // The language starts as the post's (English); pick German instead.
+    const lang = page.locator('.commentarea > .reply-form select.reply-language');
+    await expect(lang).toHaveValue('37');
+    await lang.selectOption({ label: 'Deutsch' });
     await page.locator('.commentarea > .reply-form button[type=submit]').click();
     await expect(page.locator('#c999 .md strong')).toHaveText('new');
-    expect(calls.find((c) => c.path === 'comment' && c.method === 'POST').body.content).toBe('A **new** top-level comment');
+    const sent = calls.find((c) => c.path === 'comment' && c.method === 'POST').body;
+    expect(sent.content).toBe('A **new** top-level comment');
+    expect(sent.language_id).toBe(32);
+    await expect(page.locator('#c999 .lang-label')).toHaveText('DE');
     await expect(page.locator('.commentarea > .reply-form textarea')).toHaveValue('');
     expect(await page.evaluate(() => localStorage.getItem('olemmy:drafts'))).not.toContain('top-level');
   });

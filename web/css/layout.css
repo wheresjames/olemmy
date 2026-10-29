@@ -395,3 +395,26 @@ body:not(.has-sidebar) .page { grid-template-columns: minmax(0, 1fr); grid-templ
   #sr-header-area .sr-settings { padding-block: 4px; }
 }
 
+
+/* --- user page profile header ------------------------------------------------------------------------------------ */
+
+.user-header { position: relative; margin: 0 0 var(--sp-4); padding: var(--sp-4); background: var(--side-box-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.user-header-banner { display: block; width: calc(100% + 2 * var(--sp-4)); max-width: none; height: 160px; margin: calc(-1 * var(--sp-4)) calc(-1 * var(--sp-4)) 0; object-fit: cover; }
+.user-header-main { display: flex; align-items: flex-end; gap: var(--sp-4); }
+.user-header.has-banner .user-header-avatar { margin-top: -48px; }
+.user-header-avatar { width: 96px; height: 96px; flex: none; border-radius: 50%; object-fit: cover; border: 3px solid var(--side-box-bg); background: var(--side-box-bg); }
+.user-header-names { min-width: 0; padding-bottom: var(--sp-2); }
+.user-header-name { margin: 0; font-size: var(--fs-h1); line-height: 1.2; overflow-wrap: anywhere; }
+.user-header-full { margin: 0; color: var(--text-muted); overflow-wrap: anywhere; }
+.user-header-bio { margin: var(--sp-4) 0 0; }
+.user-header-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: var(--sp-4) 0 0; padding: 0; list-style: none; font-size: var(--fs-sm); }
+.user-header-chips li { padding: var(--sp-1) var(--sp-3); border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-alt); font-weight: bold; }
+.user-header-langs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-4); margin: var(--sp-3) 0 0; font-size: var(--fs-sm); }
+.user-header-langs-label { color: var(--text-muted); }
+.lang-with-flag { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.user-header-dates { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-5); margin: var(--sp-3) 0 0; color: var(--text-muted); font-size: var(--fs-sm); }
+@media (max-width: 600px) {
+  .user-header-avatar { width: 72px; height: 72px; }
+  .user-header.has-banner .user-header-avatar { margin-top: -36px; }
+  .user-header-banner { height: 110px; }
+}

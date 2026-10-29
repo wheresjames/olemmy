@@ -5,7 +5,11 @@
 //   the network or with a 5xx is retried once;
 // - identical GETs in flight share one fetch, and GET responses are cached
 //   briefly (per user), so back/forward is instant;
-// - errors come back as ApiError with a kind the UI can explain.
+// - errors come back as ApiError with a kind the UI can explain;
+// - the demo's addresses are answered in the page (demo/, docs/demo.md),
+//   never on the network.
+
+import { isDemoBase, demoFetch } from '../demo/index.js';
 
 const MAX_AT_ONCE = 4;
 const MAX_429_RETRIES = 4;
@@ -180,7 +184,7 @@ export async function request(base, { method = 'GET', path, query, body, form, j
     for (let attempt = 0; ; attempt++) {
       let res;
       try {
-        res = await queue.run(() => fetch(url, {
+        res = await queue.run(() => (isDemoBase(base) ? demoFetch : fetch)(url, {
           method, headers, body: payload,
           // A shared GET isn't cancelled by one caller leaving; writes are.
           signal: isGet ? AbortSignal.timeout(TIMEOUT) : anySignal(signal, AbortSignal.timeout(TIMEOUT)),

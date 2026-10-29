@@ -37,6 +37,7 @@ test('hover card shows account facts after a pause', async ({ page }) => {
   await expect(card).toBeVisible();
   await expect(card).toContainText('posts');
   await expect(card).toContainText('comments');
+  await expect(card).toContainText('cake day');
   await page.keyboard.press('Escape');
   await expect(card).toHaveCount(0);
 });
@@ -95,6 +96,97 @@ test('gallery mode shows image posts as a grid', async ({ page }) => {
   await expect(page.locator('#siteTable')).toBeHidden();
   await page.locator('.gallery-button').click();
   await expect(page.locator('.gallery-grid')).toHaveCount(0);
+});
+
+test('listing toggles survive going into a post and back', async ({ page }) => {
+  await page.goto('/#/');
+  await page.locator('.show-images').click();
+  await page.locator('.videos-button').click();
+  await page.locator('.gallery-button').click();
+  await expect(page.locator('.gallery-grid')).toBeVisible();
+  await page.locator('.gallery-tile').first().click();
+  await expect(page).toHaveURL(/\/post\//);
+  await page.goBack();
+  await expect(page.locator('.show-images')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.videos-button')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.gallery-button')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.gallery-grid')).toBeVisible();
+  await expect(page.locator('#siteTable.videos-only')).toHaveCount(1);
+  // And a reload keeps them too.
+  await page.reload();
+  await expect(page.locator('.videos-button')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.gallery-grid')).toBeVisible();
+  // A fresh visit starts with them off.
+  await page.goto('/#/all');
+  await expect(page.locator('.show-images')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.gallery-button')).toHaveAttribute('aria-pressed', 'false');
+});
+
+test('avatars beside names are off until turned on; broken ones leave no gap', async ({ page }) => {
+  // Remote images are a pixel (fake-instance.mjs); this user's avatar is gone.
+  await page.route('https://assets.example/avatars/300079.png', (r) => r.fulfill({ status: 404, body: '' }));
+  await page.goto('/#/');
+  await expect(page.locator('.thing.link').first()).toBeVisible();
+  await expect(page.locator('.tagline-avatar')).toHaveCount(0);
+  await setLocal(page, 'olemmy:settings', { instance: 'fixture.test', features: { avatars: { enabled: true } } });
+  await page.reload();
+  await expect(page.locator('.thing.link .tagline-avatar').first()).toBeVisible();
+  await expect(page.locator('.tagline-avatar[src$="300079.png"]')).toHaveCount(0);
+});
+
+test('language labels: codes by default, on posts, comments and user pages; optionally not for your own languages', async ({ page }) => {
+  await page.goto('/#/');
+  await expect(page.locator('.thing.link .lang-label').first()).toHaveText('EN');
+  await page.goto('/#/u/harbor_reader@fixture.test');
+  await expect(page.locator('.user-listing .thing.link .lang-label').first()).toHaveText('EN');
+  await expect(page.locator('.user-listing .comment .lang-label').first()).toHaveText('EN');
+  await setLocal(page, 'olemmy:settings', { instance: 'fixture.test', features: { languageLabels: { hideMine: true } } });
+  await page.goto('/#/');
+  await page.reload();   // the hash change alone doesn't reload, and the seed needs one
+  await expect(page.locator('.thing.link').first()).toBeVisible();
+  await expect(page.locator('.lang-label')).toHaveCount(0);
+});
+
+test('language labels as a name or a flag', async ({ page }) => {
+  await setLocal(page, 'olemmy:settings', { instance: 'fixture.test', features: { languageLabels: { style: 'name' } } });
+  await page.goto('/#/');
+  await expect(page.locator('.thing.link .lang-label').first()).toHaveText('English');
+  await expect(page.locator('.thing.link .lang-code')).toHaveCount(0);
+  await page.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem('olemmy:settings'));
+    s.data.features.languageLabels.style = 'flag';
+    localStorage.setItem('olemmy:settings', JSON.stringify(s));
+  });
+  await page.reload();
+  const flag = page.locator('.thing.link img.lang-flag').first();
+  await expect(flag).toHaveAttribute('src', /flags\/4x3\/gb\.svg$/);
+  await expect(flag).toHaveAttribute('title', 'Written in English');
+  await expect.poll(() => flag.evaluate((img) => img.naturalWidth)).toBeGreaterThan(0);
+});
+
+test.describe('language labels in another locale', () => {
+  test.use({ locale: 'de-DE' });
+  test('an English post says so', async ({ page }) => {
+    await page.goto('/#/');
+    await expect(page.locator('.thing.link .lang-label').first()).toHaveText('EN');
+  });
+});
+
+test('a user page opens with their profile: avatar, bio, counts and cake day', async ({ page }) => {
+  await page.goto('/#/u/harbor_reader@fixture.test');
+  const header = page.locator('.user-header');
+  await expect(header.locator('.user-header-name')).toHaveText('Harbor Reader');
+  await expect(header.locator('.user-header-full')).toHaveText('@harbor_reader@fixture.test');
+  await expect(header.locator('.user-header-avatar')).toBeVisible();
+  await expect(header).toContainText('Enjoys quiet projects');
+  await expect(header.locator('.user-header-chips')).toContainText('posts');
+  await expect(header).toContainText('Cake day: April 12');
+  // Languages come from the posts and comments on the page (the fixture's are English or untagged).
+  await expect(header.locator('.user-header-langs')).toContainText('Writes in');
+  await expect(header.locator('.user-header-langs .lang-with-flag')).toHaveText(['English']);
+  await expect(header.locator('.user-header-langs img.lang-flag')).toHaveAttribute('src', /gb\.svg$/);
+  // The bio moved up; the sidebar keeps the facts and actions.
+  await expect(page.locator('.user-box .side-md')).toHaveCount(0);
 });
 
 test('saved searches', async ({ page }) => {

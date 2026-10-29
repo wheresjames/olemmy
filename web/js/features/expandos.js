@@ -17,12 +17,16 @@ export function setAllImages(root, open) {
   }
 }
 
-export function showImagesButton(getRoot) {
+/** The "show images" button for a feed (views/listing.js), which keeps its state. */
+export function showImagesButton(feed) {
   return h('button.btn.btn-small.show-images', {
     type: 'button',
     'aria-pressed': () => String(allImagesOpen.value),
-    onclick: () => setAllImages(getRoot(), !allImagesOpen.peek()),
-  }, () => (allImagesOpen.value ? 'hide images' : 'show images'));
+    onclick: () => {
+      setAllImages(feed.list, !allImagesOpen.peek());
+      feed.keep('images', allImagesOpen.peek());
+    },
+  }, 'show images');
 }
 
 /** Should new rows open their image expandos (auto-expand, or "show images" is on)? */

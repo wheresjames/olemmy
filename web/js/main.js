@@ -3,6 +3,8 @@
 // Every module of the app is reached from here by static imports, so the
 // development cache buster (cache-bust.js) can find them all.
 
+// First: it moves the old test server's saved accounts to the demo before any store reads them.
+import './demo/index.js';
 import { updated, watchForUpdates, applyPendingUpdate, updatePending, watchCopyright, refresh } from './update.js';
 import { h, fill } from './core/h.js';
 import { effect, root, untrack, getOwner, setFallbackOwner } from './core/signal.js';
@@ -10,7 +12,8 @@ import { route, start, beforeNavigate, navigate, href } from './core/router.js';
 import { storageFailed } from './core/store.js';
 import { registerKey } from './core/events.js';
 import { settings } from './state/settings.js';
-import { api, site, siteError, loginExpired, startSession, loadSite, account } from './state/session.js';
+import { api, site, siteError, loginExpired, startSession, loadSite, account, base } from './state/session.js';
+import { isDemoBase } from './demo/index.js';
 import { setCustomEmojis } from './markdown/md.js';
 import { mountHeader, chrome } from './components/header.js';
 import { banner, removeBanner } from './components/toast.js';
@@ -311,6 +314,12 @@ async function boot() {
   startSession();
   startFeatures();
   effect(() => setCustomEmojis(site.value?.customEmojis));
+  // In the demo: its bar, and its DEMO button and panel (loaded only there).
+  let demoPanel = null;
+  effect(() => {
+    if (isDemoBase(base.value)) (demoPanel ??= import('./demo/panel.js')).then((m) => m.showPanel());
+    else demoPanel?.then((m) => m.hidePanel());
+  });
 
   receiveShare();
   start(ROUTES);

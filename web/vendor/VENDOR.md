@@ -12,6 +12,12 @@ Olemmy's only runtime library is markdown-it, with the plugins Lemmy-UI uses for
 
 markdown-it 15.0.2 was chosen over 15.0.3 because 15.0.3 was only nine days old when vendored (2026-10-25). Pin releases that have been out for at least two weeks.
 
+## Flags
+
+`flag-icons@7.5.0/` holds the flags for the language labels' flag style (`js/features/language-flags.js`): 68 of flag-icons' 4×3 SVGs, MIT, from npm `flag-icons` 7.5.0, `flags/4x3/`, copied unchanged, with its `LICENSE`. Only the flags `LANGUAGE_FLAGS` names are kept (477,216 B, 135,474 B gzipped together; `rs.svg` alone is 181,634 B). They're images, loaded with `<img>` when shown, so they need no `index.html` entry or hash. 7.6.0 was 14 days old when vendored (2026-10-29), so the release before it was used.
+
+To add a flag: `npm pack flag-icons@7.5.0`, copy `package/flags/4x3/<country>.svg` here, and add the language to `LANGUAGE_FLAGS`. A test checks every flag it names is here.
+
 ## Upgrading
 
 1. `npm pack markdown-it@<version>` (and the plugins), and copy the files above into new `<name>@<version>/` folders with their `LICENSE`. Delete the old folders.

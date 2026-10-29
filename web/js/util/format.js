@@ -42,6 +42,28 @@ export function shortDate(iso) {
   return t ? short.format(t) : '';
 }
 
+const monthDay = new Intl.DateTimeFormat(undefined, { month: 'long', day: 'numeric' });
+/** An account's cake day, "April 12": the day of the year it was made. */
+export function cakeDayText(iso) {
+  const t = parseTime(iso);
+  return t ? monthDay.format(t) : '';
+}
+
+/**
+ * Is it [iso]'s anniversary today (not the day itself)? Local time, as Lemmy's
+ * own site does; a 29 February account has its day on the 28th in other years.
+ */
+export function isCakeDay(iso, now = new Date()) {
+  const t = parseTime(iso);
+  if (!t) return false;
+  const d = new Date(t);
+  if (d.getFullYear() >= now.getFullYear()) return false;
+  let day = d.getDate();
+  const leap = (y) => new Date(y, 1, 29).getMonth() === 1;
+  if (d.getMonth() === 1 && day === 29 && !leap(now.getFullYear())) day = 28;
+  return d.getMonth() === now.getMonth() && day === now.getDate();
+}
+
 /** Account age, "2 years". */
 export function age(iso, now = Date.now()) {
   const t = parseTime(iso);

@@ -10,11 +10,13 @@ import { api, me } from '../state/session.js';
 import { voteArrows } from './vote.js';
 import { timeEl, userLink, mdBlock, postHref, commentHref } from './common.js';
 import { editor, clearDraft } from './editor.js';
+import { languageSelect, selectedLanguage } from './language-select.js';
 import { ask, confirmAction } from './dialog.js';
 import { toastError } from './toast.js';
 import { moreMenu, share } from './post-row.js';
 import { commentTree } from '../api/normalize.js';
 import { runHook, passes } from '../features/registry.js';
+import { relabel } from '../features/language-labels.js';
 import { commentModHooks } from '../views/hooks.js';
 import { plural, compact } from '../util/format.js';
 
@@ -122,7 +124,7 @@ export function commentNode(c, ctx) {
             h('li.compact-only', h('button.link-button', { type: 'button', onclick: () => reportComment(c) }, 'report')),
           ],
         }))]),
-      () => (replying.value ? replyForm(c.postId, c.id, ctx, (created) => {
+      () => (replying.value ? replyForm(c.postId, c.id, { ...ctx, languageId: c.languageId || ctx.postLanguageId }, (created) => {
         replying.value = false;
         const fresh = { ...created, children: [] };
         c.children.unshift(fresh);
@@ -207,10 +209,20 @@ function jumpToParent(e, c, ctx) {
   setTimeout(() => target.classList.remove('flash'), 1500);
 }
 
-/** A reply box under a post ([parentId] null) or a comment. */
+/** The language picker beside a form's buttons. */
+function languageField(selected) {
+  const select = languageSelect({ selected, cls: 'reply-language' });
+  return { select, el: h('label.reply-language-field', { title: 'The language you\'re writing in' }, 'language ', select) };
+}
+
+/**
+ * A reply box under a post ([parentId] null) or a comment. Its language starts
+ * as ctx.languageId (the parent comment's), else ctx.postLanguageId.
+ */
 export function replyForm(postId, parentId, ctx, onCreated, onCancel) {
   const key = `reply:${postId}:${parentId || 0}`;
   const ed = editor({ draftKey: key, placeholder: 'What are your thoughts?', label: 'Reply', rows: parentId ? 4 : 5 });
+  const lang = languageField(ctx.languageId || ctx.postLanguageId || 0);
   const busy = signal(false);
   const form = h('form.reply-form', {
     onsubmit: async (e) => {
@@ -219,7 +231,7 @@ export function replyForm(postId, parentId, ctx, onCreated, onCancel) {
       if (!text) return;
       busy.value = true;
       try {
-        const created = await api.peek().createComment(postId, text, parentId);
+        const created = await api.peek().createComment(postId, text, parentId, selectedLanguage(lang.select));
         clearDraft(key);
         ed.clear();
         onCreated(created);
@@ -229,13 +241,15 @@ export function replyForm(postId, parentId, ctx, onCreated, onCancel) {
   ed.el,
   h('div.form-buttons',
     h('button.btn.btn-primary', { type: 'submit', disabled: () => busy.value }, () => (busy.value ? 'saving…' : 'save')),
-    onCancel && h('button.btn', { type: 'button', onclick: onCancel }, 'cancel')));
+    onCancel && h('button.btn', { type: 'button', onclick: onCancel }, 'cancel'),
+    lang.el));
   requestAnimationFrame(() => { if (parentId) ed.focus(); });
   return form;
 }
 
 function editForm(c, s, editing) {
   const ed = editor({ draftKey: `edit:${c.id}`, initial: s.content.peek(), label: 'Edit comment' });
+  const lang = languageField(c.languageId);
   const busy = signal(false);
   requestAnimationFrame(() => ed.focus());
   return h('form.reply-form', {
@@ -243,8 +257,13 @@ function editForm(c, s, editing) {
       e.preventDefault();
       busy.value = true;
       try {
-        const updated = await api.peek().editComment(c.id, ed.value());
+        const updated = await api.peek().editComment(c.id, ed.value(), selectedLanguage(lang.select));
         updateComment(updated);
+        if (updated.languageId !== c.languageId) {
+          c.languageId = updated.languageId;
+          const node = document.getElementById(`c${c.id}`);
+          if (node) relabel(node, c);
+        }
         clearDraft(`edit:${c.id}`);
         editing.value = false;
       } catch (err) { toastError(err); } finally { busy.value = false; }
@@ -253,7 +272,8 @@ function editForm(c, s, editing) {
   ed.el,
   h('div.form-buttons',
     h('button.btn.btn-primary', { type: 'submit', disabled: () => busy.value }, 'save'),
-    h('button.btn', { type: 'button', onclick: () => { clearDraft(`edit:${c.id}`); editing.value = false; } }, 'cancel')));
+    h('button.btn', { type: 'button', onclick: () => { clearDraft(`edit:${c.id}`); editing.value = false; } }, 'cancel'),
+    lang.el));
 }
 
 async function deleteComment(c, s) {

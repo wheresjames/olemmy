@@ -4,7 +4,7 @@
 /** (community) => Node: extra pieces for a community page's sidebar. */
 export const communitySideHooks = [];
 
-/** () => Node: extra buttons in a listing's toolbar. */
+/** (feed) => Node: extra buttons in a listing's toolbar (feed: listing.js Feed). */
 export const listingToolbarHooks = [];
 
 /** (post, ctx) => Node[]: moderator buttons for a post row. */

@@ -175,11 +175,10 @@ html:has(.comment-navigator) { scroll-padding-bottom: 4.5rem; }
 }
 .account-list li > * { display: block; width: 100%; padding: var(--sp-2) var(--sp-4); text-align: left; }
 .account-list li.current { font-weight: bold; }
-.account-add, .account-manage { border-top: 1px solid var(--border); }
+.account-add, .account-browse, .account-manage { border-top: 1px solid var(--border); }
 .instance-choose { border-bottom: 1px solid var(--border); }
 /* Near the middle of the header on phones: open rightwards, inside the screen. */
 .instance-menu .account-list { right: auto; left: 0; max-width: calc(100vw - 2 * var(--sp-4)); }
-.add-account { font-weight: bold; padding: 0 3px; }
 .account-editor { padding: 0; list-style: none; }
 .account-editor li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); }
 .account-editor li > span:first-child { flex: 1 1 12rem; }
@@ -418,7 +417,9 @@ html:has(.comment-navigator) { scroll-padding-bottom: 4.5rem; }
 /* --- videos only ----------------------------------------------------------------------------------------------- */
 
 .videos-button { display: inline-flex; align-items: center; }
-.btn.videos-button[aria-pressed="true"], .btn.gallery-button[aria-pressed="true"] { background: var(--tab-bg); border-color: var(--header-border); }
+/* The listing toolbar's toggles ("show images", gallery, videos) keep their label; on, they're filled. */
+.listing-toolbar .btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.listing-toolbar .btn[aria-pressed="true"]:hover { background: var(--header-border); border-color: var(--header-border); }
 .videos-only > .thing.link:not(.has-video), .videos-only > .ner-separator { display: none; }
 .videos-only:not(:has(> .thing.has-video))::before { content: "No video posts loaded yet."; color: var(--text-muted); padding: var(--sp-4) 0; }
 
@@ -428,3 +429,34 @@ html:has(.comment-navigator) { scroll-padding-bottom: 4.5rem; }
 .save-search[aria-pressed="true"] { color: var(--locked); }
 .custom-css textarea { width: 100%; font-family: var(--font-mono); font-size: var(--fs-sm); padding: var(--sp-2); border: 1px solid var(--input-border); border-radius: var(--radius); background: var(--input-bg); }
 .custom-css { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+/* --- avatars, cake day, language labels --------------------------------------------------------------------------- */
+
+.tagline-avatar { width: 16px; height: 16px; margin-right: 3px; vertical-align: -3px; }
+.cake-day { margin-left: 2px; cursor: default; }
+.lang-flag { width: 20px; height: 15px; vertical-align: -2px; border-radius: 2px; box-shadow: 0 0 0 1px var(--border); }
+.lang-code { font-family: var(--font-mono); font-size: 0.85em; letter-spacing: 0.03em; }
+.lang-label { display: inline-block; padding: 0 var(--sp-1); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.9em; line-height: 1.3; color: var(--text-muted); }
+
+/* --- the demo (docs/demo.md): its offer on the instance picker, its bar, and the DEMO button and panel --------------- */
+
+.demo-offer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-3) var(--sp-5); margin: 0 0 var(--sp-5); padding: var(--sp-4); background: var(--demo-bg); border: 1px solid var(--demo-border); border-radius: var(--radius); }
+.demo-offer h2 { margin: 0 0 var(--sp-1); font-size: var(--fs-title); }
+.demo-offer p { margin: 0; }
+.demo-offer > div { flex: 1 1 22em; }
+.banner-demo { background: var(--demo-bg); border-color: var(--demo-border); }
+.demo-leave { font-weight: bold; }
+.demo-ui { position: fixed; left: var(--sp-4); bottom: var(--sp-4); z-index: 900; display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-2); font-size: var(--fs-sm); }
+.demo-button { padding: var(--sp-1) var(--sp-3); border: 2px solid #b8860b; border-radius: var(--radius); background: #ffd54f; color: #3a2a00; font-weight: bold; letter-spacing: 0.08em; cursor: pointer; box-shadow: 0 1px 4px rgb(0 0 0 / 0.25); }
+.demo-button[aria-expanded="true"] { background: #ffca28; }
+.demo-panel { width: min(300px, calc(100vw - 2 * var(--sp-4))); max-height: 70vh; overflow-y: auto; padding: var(--sp-3) var(--sp-4); background: var(--side-box-bg); border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: 0 4px 16px rgb(0 0 0 / 0.25); }
+.demo-panel-title { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3); margin: 0 0 var(--sp-3); }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); margin: var(--sp-2) 0; }
+.demo-mods { margin: var(--sp-2) 0; padding: var(--sp-2) var(--sp-3); border: 1px solid var(--border); border-radius: var(--radius); }
+.demo-mods legend { padding: 0 var(--sp-1); color: var(--text-muted); }
+.demo-mods label { display: block; padding: 1px 0; }
+.demo-mods:disabled { opacity: 0.55; }
+.demo-panel-note { margin: var(--sp-3) 0 0; color: var(--text-muted); }
+/* In the sidebar: stacked, the buttons side by side underneath. */
+.side .demo-offer { flex-direction: column; align-items: stretch; margin: 0; }
+.side .demo-offer > div { flex: none; }

@@ -9,7 +9,7 @@ import { addFilter } from '../filters.js';
 import { tagBadge } from '../user-tagger.js';
 import { avatar, mdBlock, spinner, errorBox } from '../../components/common.js';
 import { confirmAction } from '../../components/dialog.js';
-import { age, number, shortDate, clip } from '../../util/format.js';
+import { age, number, shortDate, clip, cakeDayText } from '../../util/format.js';
 
 const cache = new Map();
 
@@ -60,6 +60,7 @@ function content(p) {
       h('li', h('strong', { title: shortDate(p.published) }, age(p.published)), ' old'),
       h('li', h('strong', number(p.postCount)), ' posts'),
       h('li', h('strong', number(p.commentCount)), ' comments'),
+      p.published && h('li', 'cake day ', h('strong', cakeDayText(p.published))),
       p.admin && h('li.userattr.adm', 'admin'),
       p.bot && h('li', 'bot'),
       p.banned && h('li.banned', 'banned')),

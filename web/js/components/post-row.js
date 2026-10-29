@@ -19,6 +19,10 @@ import { plural } from '../util/format.js';
 import { runHook } from '../features/registry.js';
 import { addFilter } from '../features/filters.js';
 import { postModHooks } from '../views/hooks.js';
+import { isDemoAddress } from '../demo/index.js';
+
+/** Where [apId] lives, to open: not for the demo's, which no browser can reach. */
+const originalUrl = (apId) => (isDemoAddress(apId) ? null : safeUrl(apId));
 
 /**
  * @param {import('../api/normalize.js').Post} post
@@ -87,7 +91,7 @@ export function postRow(post, ctx = {}) {
     guest ? h('ul.flat-list.buttons',
       h('li.first', h('a.comments', { href: link }, () => (s.comments.value ? plural(s.comments.value, 'comment') : 'comment'))),
       h('li', h('button.link-button.share-button', { type: 'button', onclick: () => share(post) }, 'share')),
-      safeUrl(post.apId) && h('li', h('a', { href: safeUrl(post.apId), rel: 'noopener noreferrer', target: '_blank' }, 'original')))
+      originalUrl(post.apId) && h('li', h('a', { href: originalUrl(post.apId), rel: 'noopener noreferrer', target: '_blank' }, 'original')))
     : h('ul.flat-list.buttons',
       h('li.first', h('a.comments', { href: postHref(post) }, () => (s.comments.value ? plural(s.comments.value, 'comment') : 'comment'))),
       h('li.secondary', h('button.link-button.share-button', { type: 'button', onclick: () => share(post) }, 'share')),
@@ -155,6 +159,6 @@ export function moreMenu(item, kind = 'post', { own = false, compact = [] } = {}
       kind === 'post' && !own && community && h('li', h('button.link-button', { type: 'button', onclick: async () => { if (await confirmAction(`Block ${community.fullName}?`, 'Blocking is saved on your account.', 'Block')) blockCommunity(community); } }, `block ${community.name}`)),
       person && h('li', h('a', { href: href('/message/compose', { to: person.fullName }) }, 'message user')),
       community && h('li', h('a', { href: communityHref(community) }, `go to ${community.name}`)),
-      safeUrl(item.apId) && h('li', h('a', { href: safeUrl(item.apId), rel: 'noopener noreferrer', target: '_blank' }, 'view original')),
+      originalUrl(item.apId) && h('li', h('a', { href: originalUrl(item.apId), rel: 'noopener noreferrer', target: '_blank' }, 'view original')),
       h('li.menu-sep', h('a', { href: href('/settings', { tab: 'filters' }) }, 'edit filters…'))));
 }

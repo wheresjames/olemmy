@@ -40,26 +40,29 @@ function subscriptionsMenu() {
 }
 
 /**
- * The username, with the account switcher: every stored account, each on
- * its own instance (§7 Tier 2).
+ * The username, with the account menu: your profile, every other stored
+ * account, each on its own instance (§7 Tier 2), adding an account, and
+ * browsing another instance (the picker, or a starred one), logged out
+ * there, with the accounts kept.
  */
 function accountMenu(a) {
   const { list, active } = accounts.value;
-  if (list.length < 2) {
-    return h('span.account-menu', h('a.username', { href: href(`/u/${a.username}@${hostOf(a.instance)}`), title: `${a.username}@${site.value?.host || hostOf(a.instance)}` }, a.username),
-      h('a.add-account', { href: href('/login', { add: 1 }), title: 'Add another account', 'aria-label': 'Add another account' }, '+'));
-  }
+  const here = hostOf(a.instance);
+  const close = (e) => { e.currentTarget.closest('details').open = false; };
+  const elsewhere = starred.value.list.filter((host) => host !== here);
   return h('details.account-menu',
-    h('summary', h('span.username', a.username), h('span.host', `@${hostOf(a.instance)}`)),
-    h('ul.account-list', { 'aria-label': 'Switch account' },
+    h('summary', h('span.username', a.username), h('span.host', `@${here}`)),
+    h('ul.account-list', { 'aria-label': 'Your accounts' },
       list.map((x, i) => h('li', { class: { current: i === active } },
         i === active
           ? h('a', { href: href(`/u/${x.username}@${hostOf(x.instance)}`) }, `${x.username}@${hostOf(x.instance)}`, h('span.small', ' (profile)'))
           : h('button.link-button', {
             type: 'button',
-            onclick: (e) => { e.currentTarget.closest('details').open = false; switchAccount(i); },
+            onclick: (e) => { close(e); switchAccount(i); },
           }, `${x.username}@${hostOf(x.instance)}`, !hasToken(x) && h('span.small', ' (log in again)')))),
       h('li.account-add', h('a', { href: href('/login', { add: 1 }) }, '+ add an account')),
+      h('li.account-browse', h('a', { href: href('/instance') }, 'browse another instance…')),
+      elsewhere.map((host) => h('li.account-browse-starred', h('button.link-button', { type: 'button', onclick: (e) => { close(e); switchInstance(host); } }, `browse ${host}`))),
       h('li.account-manage', h('a', { href: href('/settings', { feature: 'accounts' }) }, 'manage accounts'))));
 }
 

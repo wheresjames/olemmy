@@ -174,7 +174,7 @@ export class LemmyV4 {
     return V.comment(r.comment_view);
   }
 
-  async editComment(id, content) { return V.comment((await this.send('PUT', 'comment', { comment_id: id, content })).comment_view); }
+  async editComment(id, content, languageId) { return V.comment((await this.send('PUT', 'comment', { comment_id: id, content, language_id: languageId || undefined })).comment_view); }
   async deleteComment(id, deleted = true) { return V.comment((await this.send('DELETE', 'comment', { comment_id: id, deleted })).comment_view); }
   async voteComment(id, score) { return V.comment((await this.send('POST', 'comment/like', { comment_id: id, is_upvote: score === 0 ? undefined : score === 1 })).comment_view); }
   async saveComment(id, save) { return V.comment((await this.send('PUT', 'comment/save', { comment_id: id, save })).comment_view); }

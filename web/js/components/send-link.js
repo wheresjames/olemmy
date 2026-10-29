@@ -8,6 +8,8 @@
 // copy stopped the whole app (tests/unit/core.test.mjs checks file names).
 
 import { toast } from './toast.js';
+import { base } from '../state/session.js';
+import { isDemoBase } from '../demo/index.js';
 
 /** The full address of route [hash] ("#/c/linux@lemmy.ml") in this copy of Olemmy. */
 export const appUrl = (hash) => `${location.origin}${location.pathname}${hash}`;
@@ -41,6 +43,11 @@ export async function copyText(text) {
 export const canShare = () => typeof navigator.share === 'function';
 
 export async function shareLink(url, title = '') {
+  // The demo is in this browser only: its links would open nothing for anyone else.
+  if (isDemoBase(base.peek())) {
+    toast('Links from the demo only work in your own browser, so there\'s nothing to share.', { ms: 6000 });
+    return;
+  }
   try {
     if (canShare() && matchMedia('(pointer: coarse)').matches) {
       await navigator.share({ title, url });

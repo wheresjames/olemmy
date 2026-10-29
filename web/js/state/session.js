@@ -10,6 +10,7 @@ import { persisted, readRaw, writeRaw } from '../core/store.js';
 import { baseUrl, hostOf, clearCache } from '../api/client.js';
 import { LemmyV3 } from '../api/v3.js';
 import { settings, setSettings } from './settings.js';
+import { isDemoBase } from '../demo/index.js';
 
 /** @typedef {{ instance: string, username: string, jwt: string|null, remember: boolean }} Account */
 
@@ -60,7 +61,8 @@ async function probeVersion(b) {
     return;
   }
   let v = 3;
-  try {
+  // The demo speaks v3 only, and isn't on the network.
+  if (!isDemoBase(b)) try {
     const r = await fetch(`${b}/api/v4/site`, { credentials: 'omit', signal: AbortSignal.timeout(5000) });
     if (r.ok && (await r.json())?.site_view) v = 4;
   } catch { /* no v4 */ }

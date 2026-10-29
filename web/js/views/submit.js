@@ -5,12 +5,13 @@
 import { h } from '../core/h.js';
 import { signal } from '../core/signal.js';
 import { href, navigate } from '../core/router.js';
-import { api, site, subscriptions, me } from '../state/session.js';
+import { api, subscriptions } from '../state/session.js';
 import { requireLogin } from '../state/actions.js';
 import { tabMenu } from '../components/tab-menu.js';
 import { spinner, errorBox, setTitle, postHref } from '../components/common.js';
 import { editor, clearDraft, readDraft, saveDraft } from '../components/editor.js';
 import { toastError } from '../components/toast.js';
+import { languageSelect, selectedLanguage } from '../components/language-select.js';
 
 const TITLE_MAX = 200;
 
@@ -75,7 +76,7 @@ function form(initial, { editId, type, ctx }) {
   });
   const options = h('datalist#community-options', subscriptions.peek().map((c) => h('option', { value: c.fullName }, c.title)));
   const nsfw = h('input#post-nsfw', { type: 'checkbox', checked: initial.nsfw });
-  const language = h('select#post-language', languageOptions(initial.languageId));
+  const language = languageSelect({ id: 'post-language', selected: initial.languageId });
   const busy = signal(false);
   const uploadNote = signal('');
   const error = signal(null);
@@ -133,7 +134,7 @@ function form(initial, { editId, type, ctx }) {
           url: type.peek() === 'link' ? url.value.trim() : '',
           body: body.value(),
           nsfw: nsfw.checked,
-          languageId: Number(language.value) || undefined,
+          languageId: selectedLanguage(language),
           altText: altText.value.trim(),
         };
         let post;
@@ -169,11 +170,4 @@ function form(initial, { editId, type, ctx }) {
     h('label.checkbox', nsfw, ' NSFW'),
     h('label', { for: 'post-language' }, 'language '), language),
   h('div.form-buttons', h('button.btn.btn-primary', { type: 'submit', disabled: () => busy.value }, () => (busy.value ? 'submitting…' : editId ? 'save' : 'submit'))));
-}
-
-function languageOptions(selected) {
-  const s = site.peek();
-  const allowed = new Set(me.peek()?.discussionLanguages?.length ? me.peek().discussionLanguages : s?.discussionLanguages || []);
-  const langs = (s?.languages || []).filter((l) => l.id === 0 || !allowed.size || allowed.has(l.id));
-  return langs.map((l) => h('option', { value: l.id, selected: l.id === selected }, l.id === 0 ? 'undetermined' : l.name));
 }

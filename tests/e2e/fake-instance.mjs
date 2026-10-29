@@ -148,7 +148,7 @@ export async function fakeInstance(page, { loggedIn = false, siteFails = false, 
         if (req.method() !== 'POST') return json({ error: 'not_found_in_fixtures' }, 404);
         const body = req.postDataJSON();
         const view = structuredClone(fixture('comments').comments[0]);
-        Object.assign(view.comment, { id: 999, content: body.content, path: body.parent_id ? `0.${body.parent_id}.999` : '0.999', published: '2026-10-25T20:00:00Z' });
+        Object.assign(view.comment, { id: 999, content: body.content, language_id: body.language_id ?? 0, path: body.parent_id ? `0.${body.parent_id}.999` : '0.999', published: '2026-10-25T20:00:00Z' });
         view.creator = { ...view.creator, id: 424242, name: 'tester', actor_id: `${ORIGIN}/u/tester`, local: true };
         view.counts = { ...view.counts, score: 1, child_count: 0 };
         return json({ comment_view: view });

@@ -10,6 +10,9 @@ import './filters.js';
 import './shortcut-bar.js';
 // Phase 2: tags, cards and other helpers
 import './user-tagger.js';
+import './avatars.js';
+import './cake-day.js';
+import './language-labels.js';
 import './hover-cards.js';
 import './comment-navigator.js';
 import './show-parent.js';

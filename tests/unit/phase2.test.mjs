@@ -9,6 +9,9 @@ import * as N from '../../web/js/api/normalize.js';
 import * as M from '../../web/js/api/normalize-mod.js';
 import { postSort } from '../../web/js/api/v4.js';
 import { readCursor } from '../../web/js/api/v3.js';
+import { isCakeDay } from '../../web/js/util/format.js';
+import { LANGUAGE_FLAGS, flagFor } from '../../web/js/features/language-flags.js';
+import { existsSync } from 'node:fs';
 import { createMerger, comparator, hotRank } from '../../web/js/api/merge.js';
 import { contrastText } from '../../web/js/features/user-tagger.js';
 import { videoThumbnail, embedFor } from '../../web/js/util/links.js';
@@ -158,4 +161,26 @@ test('video stills: YouTube from its video ID, imgur from its file name', () => 
   for (const u of ['https://vimeo.com/123456', 'https://example.com/v.mp4', 'https://www.youtube.com/watch?v=bad id', 'not a url']) assert.equal(videoThumbnail(u), null, u);
   // The player still gets the same video.
   assert.equal(embedFor('https://youtu.be/TESTVIDEO01?t=90').src, 'https://www.youtube-nocookie.com/embed/TESTVIDEO01?start=90');
+});
+
+test('cake day: the account\'s anniversary, not the day it was made', () => {
+  const at = (y, m, d) => new Date(y, m - 1, d, 12);
+  const made = at(2024, 4, 12).toISOString();
+  assert.equal(isCakeDay(made, at(2025, 4, 12)), true);
+  assert.equal(isCakeDay(made, at(2025, 4, 13)), false);
+  assert.equal(isCakeDay(made, at(2024, 4, 12)), false);
+  const leap = at(2024, 2, 29).toISOString();
+  assert.equal(isCakeDay(leap, at(2025, 2, 28)), true);
+  assert.equal(isCakeDay(leap, at(2028, 2, 28)), false);
+  assert.equal(isCakeDay(leap, at(2028, 2, 29)), true);
+  assert.equal(isCakeDay(null), false);
+});
+
+test('language flags: every flag the map names is vendored', () => {
+  for (const [lang, country] of Object.entries(LANGUAGE_FLAGS)) {
+    assert.ok(existsSync(new URL(`../../web/${flagFor(lang)}`, import.meta.url)), `${lang} -> ${country}.svg`);
+  }
+  assert.equal(flagFor('DE'), 'vendor/flag-icons@7.5.0/flags/4x3/de.svg');
+  assert.equal(flagFor('eo'), null);
+  assert.equal(flagFor(undefined), null);
 });

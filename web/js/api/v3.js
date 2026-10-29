@@ -169,7 +169,7 @@ export class LemmyV3 {
     return N.comment(r.comment_view);
   }
 
-  async editComment(id, content) { return N.comment((await this.send('PUT', 'comment', { comment_id: id, content })).comment_view); }
+  async editComment(id, content, languageId) { return N.comment((await this.send('PUT', 'comment', { comment_id: id, content, language_id: languageId || undefined })).comment_view); }
   async deleteComment(id, deleted = true) { return N.comment((await this.send('POST', 'comment/delete', { comment_id: id, deleted })).comment_view); }
   async voteComment(id, score) { return N.comment((await this.send('POST', 'comment/like', { comment_id: id, score })).comment_view); }
   async saveComment(id, save) { return N.comment((await this.send('PUT', 'comment/save', { comment_id: id, save })).comment_view); }
@@ -344,7 +344,8 @@ export class LemmyV3 {
     const r = await request(this.base, { method: 'POST', path: 'pictrs/image', form, jwt: this.getJwt(), ...opts });
     const f = r.files?.[0];
     if (r.msg !== 'ok' || !f) throw new Error(r.msg || 'The upload failed');
-    return { url: `${this.base}/pictrs/image/${f.file}`, deleteToken: f.delete_token };
+    // 0.19.4 and later say where the image is; before, it's under pictrs/image.
+    return { url: r.url || `${this.base}/pictrs/image/${f.file}`, deleteToken: f.delete_token };
   }
 }
 

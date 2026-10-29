@@ -10,19 +10,21 @@ import { listingToolbarHooks } from '../views/hooks.js';
 
 export const videosOnly = signal(false);
 
-function button() {
-  videosOnly.value = false;
+function button(feed) {
+  const set = (on) => {
+    videosOnly.value = on;
+    feed.list.classList.toggle('videos-only', on);
+  };
+  set(feed.kept('videos') && enabled('videos'));
   return () => (enabled('videos') ? h('button.btn.btn-small.videos-button', {
     type: 'button',
     'aria-pressed': () => String(videosOnly.value),
-    title: () => (videosOnly.value ? 'Show all posts again' : 'Show only posts with videos'),
-    onclick: (e) => {
-      const list = e.currentTarget.closest('.feed')?.querySelector('.sitetable');
-      if (!list) return;
-      videosOnly.value = !videosOnly.value;
-      list.classList.toggle('videos-only', videosOnly.value);
+    title: 'Show only posts with videos',
+    onclick: () => {
+      set(!videosOnly.peek());
+      feed.keep('videos', videosOnly.peek());
     },
-  }, icon('play'), () => (videosOnly.value ? ' all posts' : ' videos')) : null);
+  }, icon('play'), ' videos') : null);
 }
 
 export default defineFeature({

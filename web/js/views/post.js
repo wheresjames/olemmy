@@ -93,6 +93,7 @@ export function postPage(route, ctx, { postId, focusId, highlightId = null, gues
     const threadCtx = {
       postId: post.id,
       opId: post.creator?.id,
+      postLanguageId: post.languageId,
       locked: post.locked,
       sort,
       maxDepth: MAX_DEPTH,

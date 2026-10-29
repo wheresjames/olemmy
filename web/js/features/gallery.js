@@ -9,20 +9,28 @@ import { listingToolbarHooks } from '../views/hooks.js';
 
 export const galleryOn = signal(false);
 
-function button() {
+function button(feed) {
   let detach = null;
+  const set = async (on) => {
+    galleryOn.value = on;
+    if (on) {
+      const { attach } = await import('./impl/gallery.js');
+      if (galleryOn.peek() && !detach) detach = attach(feed.list);
+    } else { detach?.(); detach = null; }
+  };
+  // Back to a listing that was in gallery mode: the import is async, so the
+  // list is in the feed by the time the grid goes in before it.
   galleryOn.value = false;
+  if (feed.kept('gallery') && enabled('gallery')) set(true);
   return () => (enabled('gallery') ? h('button.btn.btn-small.gallery-button', {
     type: 'button',
     'aria-pressed': () => String(galleryOn.value),
-    onclick: async (e) => {
-      const list = e.currentTarget.closest('.feed')?.querySelector('.sitetable');
-      if (!list) return;
-      galleryOn.value = !galleryOn.value;
-      if (galleryOn.value) detach = (await import('./impl/gallery.js')).attach(list);
-      else { detach?.(); detach = null; }
+    onclick: () => {
+      const on = !galleryOn.peek();
+      feed.keep('gallery', on);
+      set(on);
     },
-  }, icon('grid'), () => (galleryOn.value ? ' list' : ' gallery')) : null);
+  }, icon('grid'), ' gallery') : null);
 }
 
 export default defineFeature({

@@ -182,14 +182,21 @@ export function frag(...children) {
   return f;
 }
 
-/** An inline SVG icon from the sprite (assets/icons.svg#name). */
+/**
+ * The icon sprite. Named on its own, in quotes: the cache buster
+ * (cache-bust.js) finds files by quoted paths, and wouldn't see one with
+ * "#name" after it.
+ */
+export const SPRITE = 'assets/icons.svg';
+
+/** An inline SVG icon from the sprite (SPRITE#name). */
 export function icon(name, cls = '') {
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('class', `icon icon-${name} ${cls}`.trim());
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('focusable', 'false');
   const use = document.createElementNS(SVG_NS, 'use');
-  use.setAttribute('href', `assets/icons.svg#${name}`);
+  use.setAttribute('href', `${SPRITE}#${name}`);
   svg.appendChild(use);
   return svg;
 }

@@ -87,3 +87,5 @@
 
 .reply-form { margin: var(--sp-3) 0; max-width: 52em; }
 .form-buttons { display: flex; gap: var(--sp-3); margin-top: var(--sp-2); }
+.form-buttons .reply-language-field { margin-left: auto; display: inline-flex; align-items: center; gap: var(--sp-2); color: var(--text-muted); font-size: var(--fs-sm); }
+.reply-language { max-width: 11em; }

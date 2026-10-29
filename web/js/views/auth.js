@@ -4,13 +4,15 @@
 import { h, add, fill } from '../core/h.js';
 import { signal } from '../core/signal.js';
 import { href, navigate } from '../core/router.js';
-import { instance, site, siteError, chooseInstance, login, loadSite, api, hostOrUrl, loggedIn } from '../state/session.js';
+import { instance, site, siteError, chooseInstance, login, loadSite, api, hostOrUrl, loggedIn, setActiveAccount } from '../state/session.js';
 import { validHost } from '../util/links.js';
 import { LemmyV3 } from '../api/v3.js';
 import { baseUrl, hostOf } from '../api/client.js';
 import { errorBox, setTitle, spinner, mdBlock, postHref, commentHref } from '../components/common.js';
 import { toast } from '../components/toast.js';
 import { instanceDirectory } from '../components/instance-directory.js';
+import { DEMO_HOST, isDemoBase, demoAccount, demoChanged, resetDemo } from '../demo/index.js';
+import { confirmAction } from '../components/dialog.js';
 
 /** A few big general-purpose instances for the picker; any other can be typed in. */
 export const POPULAR = ['lemmy.world', 'lemmy.ml', 'sh.itjust.works', 'lemmy.zip', 'programming.dev', 'feddit.org', 'lemmy.ca', 'lemmy.dbzer0.com', 'sopuli.xyz', 'lemmy.today'];
@@ -68,15 +70,48 @@ export function instanceView(route, ctx) {
     }
   }
 
+  // The demo offer: in the sidebar when there's room for one (as wide as
+  // layout.css shows it), else at the top of the page.
+  const wide = matchMedia('(min-width: 901px)');
+  const roomy = signal(wide.matches);
+  const placeDemo = () => { roomy.value = wide.matches; ctx.chrome.sidebar.value = wide.matches ? h('div.side', demoBox(ret)) : null; };
+  placeDemo();
+  wide.addEventListener('change', placeDemo);
+  ctx.signal.addEventListener('abort', () => wide.removeEventListener('change', placeDemo), { once: true });
+
   return h('div.form-page.instance-page',
     offer,
+    () => (roomy.value ? null : demoBox(ret)),
     h('h1', 'Choose your Lemmy instance'),
     h('p', 'Olemmy runs in your browser and talks straight to the Lemmy instance you choose. Pick the one where you have an account, or any instance to browse.'),
+    loggedIn.peek() && h('p.small.instance-logged-in-note', 'You\'ll browse the instance you choose logged out. Your accounts stay saved: switch back to one from the menu under your name.'),
     h('form', { onsubmit: (e) => { e.preventDefault(); use(input.value.trim()); } },
       h('label', { for: 'instance-input' }, 'instance address'),
       h('div.field-row', input, h('button.btn.btn-primary', { type: 'submit', disabled: () => busy.value }, () => (busy.value ? 'checking…' : 'use this instance')))),
     () => (error.value ? errorBox(error.value) : null),
     instanceDirectory({ use, busy, popular: POPULAR }));
+}
+
+/**
+ * The demo (docs/demo.md): a pretend instance in the page, to try Olemmy
+ * without an account. Once you've changed something there, it's "continue",
+ * with "start over" beside it.
+ */
+function demoBox(ret) {
+  const go = () => { setActiveAccount(demoAccount()); navigate(ret); };
+  const startOver = async () => {
+    if (!await confirmAction('Start the demo over?', 'Every vote, comment, post and moderator action you made in the demo goes, and it starts as new.', 'Start over')) return;
+    await resetDemo();
+    go();
+  };
+  const browse = h('button.btn', { type: 'button', onclick: () => { chooseInstance(DEMO_HOST); navigate(ret); } }, 'browse it logged out');
+  return h('section.demo-offer',
+    () => (demoChanged.value
+      ? h('div', h('h2', 'Continue the demo'), h('p', 'What you did in the demo is still here, in this browser. Pick up where you left off, or start over.'))
+      : h('div', h('h2', 'Try the demo'), h('p', 'Not sure yet? Look around a pretend instance with made-up people and posts: vote, reply, and try the moderator tools. Nothing you do leaves your browser.'))),
+    h('p.field-row', () => (demoChanged.value
+      ? [h('button.btn.btn-primary', { type: 'button', onclick: go }, 'continue the demo'), h('button.btn', { type: 'button', onclick: startOver }, 'start over')]
+      : [h('button.btn.btn-primary', { type: 'button', onclick: go }, 'try the demo'), browse])));
 }
 
 export function loginView(route, ctx) {
@@ -88,13 +123,18 @@ export function loginView(route, ctx) {
   const totp = h('input#login-totp', { type: 'text', inputmode: 'numeric', autocomplete: 'one-time-code', pattern: '[0-9]{6}', maxlength: 6 });
   const remember = h('input#login-remember', { type: 'checkbox', checked: true });
   const needTotp = signal(false);
+  // The demo takes any name and password: say so when it's the instance.
+  const demoNote = signal(false);
+  const checkDemo = () => { demoNote.value = isDemoBase(baseUrl(inst.value.trim())); };
+  inst.addEventListener('input', checkDemo);
+  queueMicrotask(checkDemo);
   const busy = signal(false);
   const error = signal(null);
 
   // "name@instance" in the username box fills in the instance.
   user.addEventListener('change', () => {
     const m = user.value.match(/^@?([^@\s]+)@([\w.-]+\.\w+)$/);
-    if (m) { user.value = m[1]; inst.value = m[2]; }
+    if (m) { user.value = m[1]; inst.value = m[2]; checkDemo(); }
   });
 
   return h('div.form-page.login-page',
@@ -116,6 +156,7 @@ export function loginView(route, ctx) {
     },
     h('label', { for: 'login-instance' }, 'instance'), inst,
     h('datalist#instance-options', POPULAR.map((i) => h('option', { value: i }))),
+    () => (demoNote.value ? h('p.small.demo-login-note', 'This is the demo: any username and password work, and you\'ll be that name.') : null),
     h('label', { for: 'login-user' }, 'username or email'), user,
     h('label', { for: 'login-pass' }, 'password'), pass,
     h('div.field', { hidden: () => !needTotp.value }, h('label', { for: 'login-totp' }, 'two-factor code'), totp),

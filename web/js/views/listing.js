@@ -9,7 +9,8 @@
 import { h, add } from '../core/h.js';
 import { signal } from '../core/signal.js';
 import { href, entryState, restoreScroll } from '../core/router.js';
-import { api, account, loggedIn, me, site } from '../state/session.js';
+import { api, account, loggedIn, me, site, base, setActiveAccount } from '../state/session.js';
+import { isDemoBase, demoAccount } from '../demo/index.js';
 import { settings, setSettings } from '../state/settings.js';
 import { postRow } from '../components/post-row.js';
 import { tabMenu, navSelect } from '../components/tab-menu.js';
@@ -60,7 +61,11 @@ export function sortTabs(path, sort, extra = {}) {
  * (?after=<cursor>&count=<rank so far>). [fetchPage]
  * (cursor, signal) resolves to { posts, next }. Used by listings and favorites.
  * @param {{ route: any, ctx: any, fetchPage: (cursor: string|undefined, signal: AbortSignal) => Promise<{ posts: any[], next: string|null }>,
- *           showCommunity?: boolean, emptyText?: string, toolbar?: any[] }} o
+ *           showCommunity?: boolean, emptyText?: string, toolbar?: any[] | ((feed: Feed) => any[]) }} o
+ *
+ * @typedef {{ list: HTMLElement, kept: (name: string) => boolean, keep: (name: string, on: boolean) => void }} Feed
+ *   What toolbar buttons get: the list, and toggles kept with the history
+ *   entry, so going back (or reloading) returns to them as they were.
  */
 export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyText = 'There doesn\'t seem to be anything here.', toolbar = [] }) {
   const client = api.peek();
@@ -82,6 +87,14 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
   // feed is mounted, so it can't be inserted next to [status] later.
   const sentinel = ner ? h('div.ner-sentinel', { 'aria-hidden': 'true' }) : null;
   const pages = [];                // { posts, cursor } per page loaded
+  const saved = route.revisit ? entryState(route.key) : null;
+  const toggles = { ...(saved?.scope === scope ? saved.toggles : null) };
+  /** @type {Feed} */
+  const feed = {
+    list,
+    kept: (name) => !!toggles[name],
+    keep: (name, on) => { toggles[name] = on; remember(); },
+  };
 
   function renderPage(posts, n) {
     const frag = document.createDocumentFragment();
@@ -99,7 +112,7 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
     snapshots.delete(route.key);
     snapshots.set(route.key, { client, pages: pages.slice(), cursor, ended });
     if (snapshots.size > MAX_SNAPSHOTS) snapshots.delete(snapshots.keys().next().value);
-    entryState(route.key, { scope, cursors: pages.map((pg) => pg.cursor ?? null) });
+    entryState(route.key, { scope, cursors: pages.map((pg) => pg.cursor ?? null), toggles });
   }
 
   /** Load the next page; resolves to whether there may be more. A call while
@@ -147,6 +160,8 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
 
   const cached = route.revisit ? snapshots.get(route.key) : null;
   const snap = cached?.client === client ? cached : null;
+  // Before the rows render (a snapshot renders right away), so they open.
+  allImagesOpen.value = feed.kept('images');
   (async () => {
     if (snap) {
       for (const pg of snap.pages) { pages.push(pg); renderPage(pg.posts, pages.length); }
@@ -156,7 +171,6 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
       status.replaceChildren(footer());
     } else {
       // A reload of a long never-ending listing: fetch the pages it had.
-      const saved = route.revisit ? entryState(route.key) : null;
       const want = ner && saved?.scope === scope ? Math.min(saved.cursors?.length || 1, 10) : 1;
       for (let i = 0; i < want; i++) if (!await loadNext()) break;
     }
@@ -167,11 +181,10 @@ export function postFeed({ route, ctx, fetchPage, showCommunity = true, emptyTex
     }
   })();
 
-  allImagesOpen.value = false;
   return h('div.feed',
     h('div.listing-toolbar',
-      showImagesButton(() => list),
-      ...toolbar,
+      showImagesButton(feed),
+      ...(typeof toolbar === 'function' ? toolbar(feed) : toolbar),
       () => (filteredNote.value ? h('span.small.filtered-note', `${filteredNote.value} hidden by your filters · `, h('a', { href: href('/settings', { tab: 'filters' }) }, 'edit filters')) : null)),
     list, status, sentinel);
 }
@@ -214,20 +227,21 @@ export function listingView(route, ctx) {
     showCommunity: !name,
     emptyText: type === 'Subscribed' ? 'Nothing here yet. Subscribe to some communities, or browse All.' : 'There doesn\'t seem to be anything here.',
     fetchPage: (cursor, signal) => api.peek().posts({ type, sort, community: name || undefined, cursor, limit: LIMIT }, { signal }),
-    toolbar: listingToolbarExtras(),
+    toolbar: (f) => listingToolbarHooks.map((fn) => fn(f)),
   });
   return h('div.listing-page', kind === 'front' && !loggedIn.peek() && welcome(), feed);
 }
 
 function communitySideExtras(community) { return communitySideHooks.map((fn) => fn(community)); }
-function listingToolbarExtras() { return listingToolbarHooks.map((fn) => fn()); }
 
 function welcome() {
-  if (settings.peek().hideWelcome) return null;
+  // In the demo, its own bar says where you are.
+  if (settings.peek().hideWelcome || isDemoBase(base.peek())) return null;
   const note = h('div.welcome-note',
     h('p', 'You\'re browsing ', h('strong', homeHost()), ' without an account. ',
       h('a', { href: href('/login') }, 'Log in'), ' or ', h('a', { href: href('/signup') }, 'sign up'),
-      ' to vote, comment and subscribe, or ', h('a', { href: href('/instance') }, 'choose another instance'), '.'),
+      ' to vote, comment and subscribe, or ', h('a', { href: href('/instance') }, 'choose another instance'), '. ',
+      'New to Olemmy? ', h('button.link-button', { type: 'button', onclick: () => setActiveAccount(demoAccount()) }, 'Try the demo'), ' first.'),
     // Closed for good, in this browser.
     h('button.banner-close', { type: 'button', 'aria-label': 'Close', title: 'Close', onclick: () => { setSettings({ hideWelcome: true }); note.remove(); } }, '×'));
   return note;
