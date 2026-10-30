@@ -9,6 +9,61 @@ test.use({ instanceOptions: { noInstance: true } });
 
 const storedVote = (page, id) => page.evaluate((pid) => JSON.parse(localStorage.getItem('olemmy:demo') || 'null')?.me.votes.post[pid], id);
 
+test('votes toggle per post, without changing another post by the same author', async ({ page, errors }) => {
+  await page.goto('/#/instance');
+  await page.getByRole('button', { name: 'try the demo' }).click();
+  const rows = page.locator('.thing.link');
+  await expect(rows.first()).toBeVisible();
+  await expect(page.locator('#header')).toContainText('visitor');
+  const pair = await rows.evaluateAll((nodes) => {
+    const seen = new Map();
+    for (let i = 0; i < nodes.length; i++) {
+      const author = nodes[i].dataset.author;
+      if (seen.has(author)) return [seen.get(author), i];
+      seen.set(author, i);
+    }
+    return null;
+  });
+  expect(pair).not.toBeNull();
+  const first = rows.nth(pair[0]);
+  const second = rows.nth(pair[1]);
+  const firstId = await first.getAttribute('data-id');
+  const firstScore = Number(await first.locator('.midcol .score').innerText());
+  const secondScore = await second.locator('.midcol .score').innerText();
+  const secondVote = await second.locator('.arrow.up').getAttribute('aria-pressed');
+
+  await first.locator('.arrow.up').click();
+  await expect(first.locator('.midcol .score')).toHaveText(String(firstScore + 1));
+  await expect.poll(() => storedVote(page, firstId)).toBe(1);
+  await first.locator('.arrow.up').click();
+  await expect(first.locator('.midcol .score')).toHaveText(String(firstScore));
+  await expect.poll(() => storedVote(page, firstId)).toBeUndefined();
+  await first.locator('.arrow.down').click();
+  await expect(first.locator('.midcol .score')).toHaveText(String(firstScore - 1));
+  await expect.poll(() => storedVote(page, firstId)).toBe(-1);
+  await first.locator('.arrow.down').click();
+  await expect(first.locator('.midcol .score')).toHaveText(String(firstScore));
+  await expect.poll(() => storedVote(page, firstId)).toBeUndefined();
+
+  // Two clicks before the first request finishes must leave no vote behind.
+  await first.locator('.arrow.up').click();
+  await first.locator('.arrow.up').click();
+  await expect(first.locator('.midcol .score')).toHaveText(String(firstScore));
+  await page.waitForTimeout(500);
+  expect(await storedVote(page, firstId)).toBeUndefined();
+
+  await expect(second.locator('.midcol .score')).toHaveText(secondScore);
+  await expect(second.locator('.arrow.up')).toHaveAttribute('aria-pressed', secondVote);
+
+  await first.locator('.arrow.up').click();
+  await expect.poll(() => storedVote(page, firstId)).toBe(1);
+  await first.locator('a.comments').click();
+  await expect(page.locator(`.thing.link[data-id="${firstId}"] .midcol .score`)).toHaveText(String(firstScore + 1));
+  await page.goBack();
+  await expect(page.locator(`.thing.link[data-id="${firstId}"] .midcol .score`)).toHaveText(String(firstScore + 1));
+  expect(errors).toEqual([]);
+});
+
 test('the demo: try it, browse, vote, reply, and become a moderator', async ({ page, errors }) => {
   await page.goto('/#/instance');
   await page.getByRole('button', { name: 'try the demo' }).click();
@@ -106,6 +161,37 @@ test('reset from the demo bar', async ({ page }) => {
   await expect(page.locator('.banner-demo .demo-reset')).toHaveCount(0);
 });
 
+test('reset clears demo vote weight, and a new comment counts its own upvote', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('seeded:demo-tags')) return;
+    localStorage.setItem('olemmy:tags', JSON.stringify({ v: 1, data: {
+      'visitor@demo.olemmy.invalid': { tag: 'mine', color: '#3498db', votes: -1 },
+      'remote@lemmy.world': { votes: 5 },
+      'iris@beta.olemmy.invalid': { votes: 2 },
+    } }));
+    sessionStorage.setItem('seeded:demo-tags', '1');
+  });
+  await page.goto('/#/instance');
+  await page.getByRole('button', { name: 'try the demo' }).click();
+  await expect(page.locator('#header')).toContainText('visitor');
+  await page.locator('.thing.link').nth(1).locator('.arrow.up').click();
+  await expect(page.locator('.banner-demo .demo-reset')).toBeVisible();
+  await page.locator('.banner-demo .demo-reset').click();
+  await Promise.all([
+    page.waitForEvent('load'),
+    page.locator('dialog').getByRole('button', { name: 'Reset', exact: true }).click(),
+  ]);
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('olemmy:tags')).data);
+  expect(stored['visitor@demo.olemmy.invalid']).toMatchObject({ tag: 'mine', votes: 0 });
+  expect(stored['iris@beta.olemmy.invalid']).toBeUndefined();
+  expect(stored['remote@lemmy.world'].votes).toBe(5);
+
+  await page.locator('.thing.link').first().locator('a.comments').click();
+  await page.locator('.commentarea > .reply-form textarea').fill('Fresh vote weight check');
+  await page.locator('.commentarea > .reply-form button[type=submit]').click();
+  await expect(page.locator('.comment.thing', { hasText: 'Fresh vote weight check' }).locator('.vote-weight')).toHaveText('[+1]');
+});
+
 test('the demo can be browsed logged out', async ({ page }) => {
   await page.goto('/#/instance');
   await expect(page.locator('.demo-offer')).toBeVisible();
@@ -113,6 +199,21 @@ test('the demo can be browsed logged out', async ({ page }) => {
   await expect(page.locator('.thing.link').first()).toBeVisible();
   await expect(page.locator('#header')).toContainText(/log in/);
   await expect(page.locator('.welcome-note')).toHaveCount(0);
+});
+
+test('the account menu stays open while the account finishes loading after login', async ({ page }) => {
+  await page.goto('/#/login');
+  await page.locator('#login-instance').fill('demo.olemmy.invalid');
+  await page.locator('#login-user').fill('bob');
+  await page.locator('#login-pass').fill('whatever');
+  await page.getByRole('button', { name: 'log in' }).click();
+  await expect(page.locator('#header .username')).toHaveText('bob');
+  // Opened at once: unread counts and the account's details arrive after.
+  const menu = page.locator('#header details.account-menu');
+  await menu.locator('> summary').click();
+  await page.waitForTimeout(1000);
+  await expect(menu).toHaveAttribute('open', '');
+  await expect(menu.locator('.account-list a', { hasText: '(profile)' })).toBeVisible();
 });
 
 test('the login page takes any name and password for the demo', async ({ page }) => {

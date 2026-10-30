@@ -12,6 +12,7 @@ import { spinner, errorBox, setTitle, postHref } from '../components/common.js';
 import { editor, clearDraft, readDraft, saveDraft } from '../components/editor.js';
 import { toastError } from '../components/toast.js';
 import { languageSelect, selectedLanguage } from '../components/language-select.js';
+import { runHook } from '../features/registry.js';
 
 const TITLE_MAX = 200;
 
@@ -146,6 +147,7 @@ function form(initial, { editId, type, ctx }) {
           post = await client.createPost({ ...data, communityId: c.id });
         }
         if (ctx.signal.aborted || api.peek() !== client) return;
+        if (!editId) runHook('onVote', post.creator, 0, post.myVote);
         clearDraft(`${draftKey}:title`);
         clearDraft(`${draftKey}:body`);
         navigate(postHref(post));

@@ -1,5 +1,5 @@
 name            olemmy
-version         1.0.0
+version         1.1.0
 description     An old-school, information-dense web client for Lemmy.
 company         wheresjames
 author          Robert Umbehant

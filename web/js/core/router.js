@@ -90,19 +90,52 @@ export function beforeNavigate(fn) { beforeHooks.push(fn); }
 
 // --- scroll positions ----------------------------------------------------------
 
+// A position is the pixel offset plus an anchor: the post or comment at the
+// top of the screen and how far it sat from the top. Rows above can come
+// back taller or shorter (images loading, expandos closed), so the anchor is
+// what's restored; the offset is the fallback when it's gone.
+
+const ANCHORS = '[data-kind][data-id]';
+
 function positions() { return readJSON(SCROLL_KEY, 'session') || {}; }
+
+/** The innermost post or comment at the top of the screen, else the first below it. */
+function topAnchor() {
+  let best = null;
+  for (const el of document.querySelectorAll(ANCHORS)) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom <= 0 || (!r.width && !r.height)) continue;
+    if (r.top <= 0) { best = el; continue; }
+    best ||= el;
+    break;
+  }
+  if (!best) return null;
+  return { kind: best.dataset.kind, id: best.dataset.id, top: Math.round(best.getBoundingClientRect().top) };
+}
 
 export function saveScroll(key, y = window.scrollY) {
   if (!key) return;
   const all = positions();
   delete all[key];
-  all[key] = Math.round(y);
+  all[key] = { y: Math.round(y), anchor: y > 0 ? topAnchor() : null };
   const keys = Object.keys(all);
   for (const k of keys.slice(0, Math.max(0, keys.length - MAX_SCROLL_ENTRIES))) delete all[k];
   writeJSON(SCROLL_KEY, all, 'session');
 }
 
-export function savedScroll(key) { return positions()[key]; }
+/** { y, anchor } for entry [key], or undefined. */
+export function savedScroll(key) {
+  const p = positions()[key];
+  return typeof p === 'number' ? { y: p, anchor: null } : p;
+}
+
+/** Where to scroll for [pos]: its anchor back where it was, else its offset. */
+function targetY(pos) {
+  const a = pos.anchor;
+  const el = a && document.querySelector(`[data-kind="${CSS.escape(a.kind)}"][data-id="${CSS.escape(a.id)}"]`);
+  if (!el) return pos.y;
+  return Math.max(0, Math.round(window.scrollY + el.getBoundingClientRect().top - a.top));
+}
 
 /**
  * Per-entry view state ({ pages, cursor... }) in sessionStorage, so a reload
@@ -154,17 +187,44 @@ export function start(routes) {
   onChange();
 }
 
+/** How long a restored position is held while images load and the browser settles. */
+const HOLD_MS = 2500;
+const USER_INPUT = ['touchstart', 'wheel', 'keydown', 'pointerdown'];
+
 /**
  * Scroll to where entry [key] was left, if it's a revisit, once the view
- * has content. Retries briefly while the page is still too short.
+ * has content. Retries briefly while the page is still too short, then holds
+ * the anchor in place for a moment: images above it load and change the
+ * page's height, and Firefox for Android ignores scrollRestoration 'manual'
+ * on hash navigation, adding its own saved offset on top of ours. Any user
+ * input ends the hold.
  */
 export function restoreScroll(r) {
-  const y = r.revisit ? savedScroll(r.key) : 0;
-  if (!y) { window.scrollTo(0, 0); return; }
+  const pos = r.revisit ? savedScroll(r.key) : null;
+  if (!pos?.y) { window.scrollTo(0, 0); return; }
   let tries = 0;
+  let holding = true;
+  const resized = new ResizeObserver(() => hold());
+  const release = () => {
+    holding = false;
+    resized.disconnect();
+    window.removeEventListener('scroll', hold);
+    for (const t of USER_INPUT) window.removeEventListener(t, release, true);
+  };
+  const hold = () => {
+    if (!holding) return;
+    const y = targetY(pos);
+    if (Math.abs(window.scrollY - y) > 2) window.scrollTo(0, y);
+  };
   const attempt = () => {
+    if (!holding) return;
+    const y = targetY(pos);
     window.scrollTo(0, y);
     if (Math.abs(window.scrollY - y) > 2 && tries++ < 20) requestAnimationFrame(attempt);
   };
+  for (const t of USER_INPUT) window.addEventListener(t, release, { capture: true, passive: true });
+  window.addEventListener('scroll', hold, { passive: true });
+  resized.observe(document.body);
+  setTimeout(release, HOLD_MS);
   requestAnimationFrame(attempt);
 }

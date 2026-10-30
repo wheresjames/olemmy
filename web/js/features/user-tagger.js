@@ -29,6 +29,19 @@ export function setTag(fullName, patch) {
   });
 }
 
+/** A demo reset removes its vote history, including votes tracked beside names. */
+export function resetDemoVoteWeights() {
+  tags.update((all) => {
+    const next = { ...all };
+    for (const [name, entry] of Object.entries(all)) {
+      if (!/@(?:demo|beta|gamma)\.olemmy\.invalid$/i.test(name) || !entry?.votes) continue;
+      if (entry.tag) next[name] = { ...entry, votes: 0 };
+      else delete next[name];
+    }
+    return next;
+  });
+}
+
 /** The tag editor (impl/tag-editor.js, loaded when first used). */
 export async function editTag(person) {
   (await import('./impl/tag-editor.js')).editTag(person);

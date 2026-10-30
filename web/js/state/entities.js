@@ -7,6 +7,9 @@ import { signal, batch } from '../core/signal.js';
 const MAX = 2000;
 const posts = new Map();
 const comments = new Map();
+// A saved listing can render the same model object again after a vote. Its
+// old counts must not replace the newer answer already held in the signals.
+const seenItems = new WeakMap();
 
 function remember(map, id, state) {
   map.delete(id);
@@ -32,24 +35,40 @@ function sync(state, item, keys) {
 const keyOf = (item) => item.stateKey ?? item.id;
 
 /** The live state of post [p]; newer data from the server updates it. */
-export function postState(p) {
+export function postState(p, { syncFromItem = true } = {}) {
   const k = keyOf(p);
   let s = posts.get(k);
-  if (s) sync(s, p, POST_KEYS);
-  else s = fields(p, POST_KEYS);
+  if (s) {
+    const seen = seenItems.get(s);
+    if (syncFromItem && !seen.has(p)) { sync(s, p, POST_KEYS); seen.add(p); }
+  } else {
+    s = fields(p, POST_KEYS);
+    seenItems.set(s, new WeakSet([p]));
+  }
   remember(posts, k, s);
   return s;
 }
 
-export function commentState(c) {
+export function commentState(c, { syncFromItem = true } = {}) {
   const k = keyOf(c);
   let s = comments.get(k);
-  if (s) sync(s, c, COMMENT_KEYS);
-  else s = fields(c, COMMENT_KEYS);
+  if (s) {
+    const seen = seenItems.get(s);
+    if (syncFromItem && !seen.has(c)) { sync(s, c, COMMENT_KEYS); seen.add(c); }
+  } else {
+    s = fields(c, COMMENT_KEYS);
+    seenItems.set(s, new WeakSet([c]));
+  }
   remember(comments, k, s);
   return s;
 }
 
 /** Apply a server answer for a post (after a vote, edit...). */
-export function updatePost(p) { if (posts.has(p.id)) sync(posts.get(p.id), p, POST_KEYS); }
-export function updateComment(c) { if (comments.has(c.id)) sync(comments.get(c.id), c, COMMENT_KEYS); }
+export function updatePost(p) {
+  const s = posts.get(p.id);
+  if (s) { sync(s, p, POST_KEYS); seenItems.get(s).add(p); }
+}
+export function updateComment(c) {
+  const s = comments.get(c.id);
+  if (s) { sync(s, c, COMMENT_KEYS); seenItems.get(s).add(c); }
+}

@@ -3,7 +3,7 @@
 // Views fill the page name, tabs and sidebar through the `chrome` object.
 
 import { h, icon, fill } from '../core/h.js';
-import { signal } from '../core/signal.js';
+import { signal, computed } from '../core/signal.js';
 import { href, navigate } from '../core/router.js';
 import { loggedIn, account, accounts, instance, subscriptions, unread, unreadTotal, logout, site, switchAccount, hasToken, moderated, isAdmin, reportCount, chooseInstance } from '../state/session.js';
 import { starred } from '../state/starred-instances.js';
@@ -44,25 +44,30 @@ function subscriptionsMenu() {
  * account, each on its own instance (§7 Tier 2), adding an account, and
  * browsing another instance (the picker, or a starred one), logged out
  * there, with the accounts kept.
+ *
+ * Built once, its insides reactive: the account list and starred instances
+ * change after login, and rebuilding the menu would close it under you.
  */
-function accountMenu(a) {
-  const { list, active } = accounts.value;
-  const here = hostOf(a.instance);
+function accountMenu() {
+  const here = () => hostOf(account.value?.instance || '');
   const close = (e) => { e.currentTarget.closest('details').open = false; };
-  const elsewhere = starred.value.list.filter((host) => host !== here);
   return h('details.account-menu',
-    h('summary', h('span.username', a.username), h('span.host', `@${here}`)),
+    h('summary', h('span.username', () => account.value?.username || ''), h('span.host', () => `@${here()}`)),
     h('ul.account-list', { 'aria-label': 'Your accounts' },
-      list.map((x, i) => h('li', { class: { current: i === active } },
-        i === active
-          ? h('a', { href: href(`/u/${x.username}@${hostOf(x.instance)}`) }, `${x.username}@${hostOf(x.instance)}`, h('span.small', ' (profile)'))
-          : h('button.link-button', {
-            type: 'button',
-            onclick: (e) => { close(e); switchAccount(i); },
-          }, `${x.username}@${hostOf(x.instance)}`, !hasToken(x) && h('span.small', ' (log in again)')))),
+      () => {
+        const { list, active } = accounts.value;
+        return list.map((x, i) => h('li', { class: { current: i === active } },
+          i === active
+            ? h('a', { href: href(`/u/${x.username}@${hostOf(x.instance)}`) }, `${x.username}@${hostOf(x.instance)}`, h('span.small', ' (profile)'))
+            : h('button.link-button', {
+              type: 'button',
+              onclick: (e) => { close(e); switchAccount(i); },
+            }, `${x.username}@${hostOf(x.instance)}`, !hasToken(x) && h('span.small', ' (log in again)'))));
+      },
       h('li.account-add', h('a', { href: href('/login', { add: 1 }) }, '+ add an account')),
       h('li.account-browse', h('a', { href: href('/instance') }, 'browse another instance…')),
-      elsewhere.map((host) => h('li.account-browse-starred', h('button.link-button', { type: 'button', onclick: (e) => { close(e); switchInstance(host); } }, `browse ${host}`))),
+      () => starred.value.list.filter((host) => host !== here())
+        .map((host) => h('li.account-browse-starred', h('button.link-button', { type: 'button', onclick: (e) => { close(e); switchInstance(host); } }, `browse ${host}`))),
       h('li.account-manage', h('a', { href: href('/settings', { feature: 'accounts' }) }, 'manage accounts'))));
 }
 
@@ -131,6 +136,8 @@ function srHeader() {
 }
 
 function userArea() {
+  // Only the login state rebuilds the area; what changes within it is reactive in place.
+  const hasAccounts = computed(() => accounts.value.list.length > 0);
   return h('div#header-bottom-right',
     () => {
       if (!loggedIn.value) {
@@ -140,23 +147,22 @@ function userArea() {
           h('a.login-link', { href: href('/login') }, 'log in'),
           ' or ',
           h('a', { href: href('/signup') }, 'sign up'),
-          accounts.value.list.length > 0 && [h('span.separator', '|'), h('details.account-menu',
+          () => hasAccounts.value && [h('span.separator', '|'), h('details.account-menu',
             h('summary', 'accounts'),
-            h('ul.account-list', accounts.value.list.map((x, i) => h('li', h('button.link-button', {
+            h('ul.account-list', () => accounts.value.list.map((x, i) => h('li', h('button.link-button', {
               type: 'button', onclick: () => switchAccount(i),
             }, `${x.username}@${hostOf(x.instance)}`)))))]);
       }
-      const a = account.value;
       return h('span.user',
-        accountMenu(a),
+        accountMenu(),
         h('span.separator', '|'),
         h('a.inbox-link', {
-          href: href('/inbox', { tab: unreadTotal.value ? 'unread' : '' }),
+          href: () => href('/inbox', { tab: unreadTotal.value ? 'unread' : '' }),
           class: { 'has-mail': () => unreadTotal.value > 0 },
           title: () => (unreadTotal.value ? `${unreadTotal.value} unread${unread.value.replies == null ? '' : ` (${unread.value.replies} replies, ${unread.value.mentions} mentions, ${unread.value.messages} messages)`}` : 'Inbox: no new messages'),
           'aria-label': () => (unreadTotal.value ? `Inbox, ${unreadTotal.value} unread` : 'Inbox'),
         }, icon('mail'), () => (unreadTotal.value ? h('span.badge', String(unreadTotal.value)) : null)),
-        (moderated.value.size > 0 || isAdmin.value) && [h('span.separator', '|'), h('a.mod-link', {
+        () => (moderated.value.size > 0 || isAdmin.value) && [h('span.separator', '|'), h('a.mod-link', {
           href: href('/reports'),
           class: { 'has-reports': () => reportCount.value > 0 },
           title: () => (reportCount.value ? `${reportCount.value} open reports` : 'Reports queue'),

@@ -47,8 +47,11 @@ export function demoAccount() {
 
 /** Start the demo over: everything you did in it goes. */
 export async function resetDemo() {
-  const [{ resetWorld }, { clearCache }] = await Promise.all([import('./server.js'), import('../api/client.js')]);
+  const [{ resetWorld }, { clearCache }, { resetDemoVoteWeights }] = await Promise.all([
+    import('./server.js'), import('../api/client.js'), import('../features/user-tagger.js'),
+  ]);
   resetWorld();
+  resetDemoVoteWeights();
   clearCache();   // the app's short-lived copies of the old answers, too
 }
 

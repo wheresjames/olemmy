@@ -232,6 +232,7 @@ export function replyForm(postId, parentId, ctx, onCreated, onCancel) {
       busy.value = true;
       try {
         const created = await api.peek().createComment(postId, text, parentId, selectedLanguage(lang.select));
+        runHook('onVote', created.creator, 0, created.myVote);
         clearDraft(key);
         ed.clear();
         onCreated(created);

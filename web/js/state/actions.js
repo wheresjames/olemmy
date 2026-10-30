@@ -60,40 +60,74 @@ function voteDelta(state, score) {
   };
 }
 
+// Send votes for the same item in click order. The demo and real instances
+// both store one vote per item, so overlapping requests must not arrive out
+// of order. Keep the latest intent on screen while earlier calls finish.
+const voteRequests = new WeakMap();
+const voteFields = (item) => ({
+  myVote: item.myVote, score: item.score,
+  upvotes: item.upvotes, downvotes: item.downvotes,
+});
+
+function castVote(state, dir, send, apply, person) {
+  const score = nextVote(state.myVote.peek(), dir);
+  let request = voteRequests.get(state);
+  if (!request) {
+    request = { sequence: 0, pending: 0, tail: Promise.resolve(), confirmed: voteFields({
+      myVote: state.myVote.peek(), score: state.score.peek(),
+      upvotes: state.upvotes.peek(), downvotes: state.downvotes.peek(),
+    }) };
+    voteRequests.set(state, request);
+  }
+  const mine = ++request.sequence;
+  request.pending++;
+  batch(() => { for (const [key, value] of Object.entries(voteDelta(state, score))) state[key].value = value; });
+
+  const call = request.tail.then(() => send(score));
+  request.tail = call.catch(() => {});
+  return call.then((item) => {
+    const before = request.confirmed.myVote;
+    request.confirmed = voteFields(item);
+    if (mine === request.sequence) apply(item);
+    runHook('onVote', person, before, item.myVote);
+    return item;
+  }).catch((error) => {
+    if (mine === request.sequence) batch(() => {
+      for (const [key, value] of Object.entries(request.confirmed)) state[key].value = value;
+    });
+    toastError(error);
+    return null;
+  }).finally(() => {
+    if (--request.pending === 0) voteRequests.delete(state);
+  });
+}
+
 export function votePost(post, dir) {
   if (!requireLogin('Log in to vote')) return;
   if (dir === -1 && !downvotesEnabled()) return;
-  const s = postState(post);
-  const before = s.myVote.peek();
-  const score = nextVote(before, dir);
-  return optimistic(s, voteDelta(s, score), () => api.peek().vote(post.id, score), (p, newest) => {
-    if (newest) updatePost(p);
-    runHook('onVote', post.creator, before, score);
-  });
+  const s = postState(post, { syncFromItem: false });
+  const client = api.peek();
+  return castVote(s, dir, (score) => client.vote(post.id, score), updatePost, post.creator);
 }
 
 export function voteComment(comment, dir) {
   if (!requireLogin('Log in to vote')) return;
   if (dir === -1 && !downvotesEnabled()) return;
-  const s = commentState(comment);
-  const before = s.myVote.peek();
-  const score = nextVote(before, dir);
-  return optimistic(s, voteDelta(s, score), () => api.peek().voteComment(comment.id, score), (c, newest) => {
-    if (newest) updateComment(c);
-    runHook('onVote', comment.creator, before, score);
-  });
+  const s = commentState(comment, { syncFromItem: false });
+  const client = api.peek();
+  return castVote(s, dir, (score) => client.voteComment(comment.id, score), updateComment, comment.creator);
 }
 
 export function savePost(post) {
   if (!requireLogin('Log in to save posts')) return;
-  const s = postState(post);
+  const s = postState(post, { syncFromItem: false });
   const save = !s.saved.peek();
   return optimistic(s, { saved: save }, () => api.peek().save(post.id, save), (p, newest) => newest && updatePost(p));
 }
 
 export function saveComment(comment) {
   if (!requireLogin('Log in to save comments')) return;
-  const s = commentState(comment);
+  const s = commentState(comment, { syncFromItem: false });
   const save = !s.saved.peek();
   return optimistic(s, { saved: save }, () => api.peek().saveComment(comment.id, save), (c, newest) => newest && updateComment(c));
 }
@@ -101,7 +135,7 @@ export function saveComment(comment) {
 /** Hide on the account (server-side). Local hiding is the filters feature. */
 export function hidePost(post) {
   if (!requireLogin('Log in to hide posts')) return;
-  const s = postState(post);
+  const s = postState(post, { syncFromItem: false });
   const hide = !s.hidden.peek();
   return optimistic(s, { hidden: hide }, async () => {
     await api.peek().hide(post.id, hide);
@@ -112,7 +146,7 @@ export function hidePost(post) {
 
 export function markPostRead(post) {
   if (!loggedIn.peek()) return;
-  const s = postState(post);
+  const s = postState(post, { syncFromItem: false });
   if (s.read.peek()) return;
   s.read.value = true;
   api.peek().markRead(post.id, true).catch(() => { /* not worth a message */ });
